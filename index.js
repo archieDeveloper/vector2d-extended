@@ -1,0 +1,1 @@
+"use strict";var Vector2d;Vector2d=function(){function t(t,r){this.x=null!=t?t:0,this.y=null!=r?r:0}return t.prototype.add=function(t){return this.addX(t),this.addY(t),this},t.prototype.addX=function(t){return this.x+=t.x,this},t.prototype.addY=function(t){return this.y+=t.y,this},t}(),module.exports=Vector2d;
