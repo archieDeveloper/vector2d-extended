@@ -12,11 +12,20 @@ class Vector2d
   @zero: ->
     new Vector2d
 
+  @one: ->
+    new Vector2d 1, 1
+
   @up: ->
     new Vector2d 0, 1
 
+  @down: ->
+    new Vector2d 0, -1
+
   @right: ->
     new Vector2d 1, 0
+
+  @left: ->
+    new Vector2d -1, 0
 
   # Methods
 
@@ -66,6 +75,11 @@ class Vector2d
   clone: ->
     new Vector2d @x, @y
 
+  invert: ->
+    @x = -@x
+    @y = -@y
+    @
+
   # Returns number
 
   magnitude: ()->
@@ -82,7 +96,18 @@ class Vector2d
     Math.atan2(@y, @x) * 180 / Math.PI
 
   dot: (b)->
-    @x * b.x + @y * b.y;
+    @x * b.x + @y * b.y
+
+  cross: (b)->
+    @x * b.y - @y * b.x
+
+  distance: (b)->
+    Math.sqrt distanceSquared b
+
+  distanceSquared: (b)->
+    dx = @x - b.x
+    dy = @y - b.y
+    dx * dx + dy * dy
 
   # Returns boolean
 
@@ -91,6 +116,9 @@ class Vector2d
 
   isEqual: (b)->
     @x is b.x and @y is b.y
+
+  isNaN: ->
+    isNaN @.x or isNaN @.y
 
 
 module.exports = Vector2d
