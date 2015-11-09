@@ -1,6 +1,6 @@
 {
   "name": "vector2d-extended",
-  "version": "0.0.2",
+  "version": "0.0.5",
   "description": "Vector2d class",
   "main": "index.js",
   "scripts": {
