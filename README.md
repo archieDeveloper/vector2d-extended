@@ -22,7 +22,7 @@ summVec1AndVec2 = vec1
     .add(vec2);
 ```
 
-Set the length of the vector:
+Or set the length of the vector:
 
 ```javascript
 var vec1, vec2, newLength;
