@@ -58,70 +58,62 @@ class Vector2d
     new Vector2d -1, 0
 
   #
-  @angle: (vec1, vec2)->
-    1
+  @angle: (a, b)->
+    dot = Vector2d::dot Vector2d::normalize(a), Vector2d::normalize(b)
+    if dot < -1 then dot = -1
+    if dot > 1 then dot = 1
+    Math.acos(dot) * 57.29578
 
   #
-  @clampMagnitude: (vec1, maxLength)->
-    new Vector2d
+  @clampMagnitude: (a, maxLength)->
+    b = a.clone()
+    if b.magnitudeSquared() > maxLength * maxLength
+      b.normalize().multiply(maxLength)
+    b
 
   #
-  @distance: (vec1, vec2)->
-    1
-  
+  @distance: (a, b)->
+    Vector2d::subtract(a, b).magnitude()
+
   #
-  @dot: (vec1, vec2)->
-    1
+  @dot: (a, b)->
+    a.x * b.x + a.y * b.y
 
   # l = 1 = vec1, l = 0 = vec2, l = 0.5 = middle point of vec1 and vec2
-  @lerp: (vec1, vec2, l)->
-    new Vector2d
+  @lerp: (a, b, l)->
+    if l < 0 then l = 0
+    if l > 1 then l = 1
+    new Vector2d(a.x+(b.x-a.x)*l, a.y+(b.y-a.y)*l)
   
   #
-  @scale: (vec1, vec2)->
-    new Vector2d
+  @scale: (a, b)->
+    new Vector2d a.x*b.x, a.y*b.y
 
-  @add: (vec1, vec2)->
-    vx = vec1.x + vec2.x
-    vy = vec1.y + vec2.y
-    new Vector2d vx, vy
+  @add: (a, b)->
+    new Vector2d a.x+b.x, a.y+b.y
 
-  @subtract: (vec1, vec2)->
-    vx = vec1.x - vec2.x
-    vy = vec1.y - vec2.y
-    new Vector2d vx, vy
+  @subtract: (a, b)->
+    new Vector2d a.x-b.x, a.y-b.y
 
-  @multiply: (vec1, scalar)->
-    vx = vec1.x * scalar
-    vy = vec1.y * scalar
-    new Vector2d vx, vy
+  @multiply: (a, scalar)->
+    new Vector2d a.x*scalar, a.y*scalar
 
-  @divide: (vec1, scalar)->
-    vx = vec1.x / scalar
-    vy = vec1.y / scalar
-    new Vector2d vx, vy
+  @divide: (a, scalar)->
+    new Vector2d a.x/scalar, a.y/scalar
 
-  @normalize: (vec1)->
-    magnitude = do vec1.magnitude
-    vx = vec1.x / magnitude
-    vy = vec1.y / magnitude
-    new Vector2d vx, vy
+  @normalize: (a)->
+    magnitude = do a.magnitude
+    new Vector2d a.x/magnitude, a.y/magnitude
 
-  @project: (vec1, vec2)->
-    c = ((vec1.x * vec2.x)+(vec1.y * vec2.y)) / ((vec2.x*vec2.x)+(vec2.y*vec2.y))
-    vx = vec2.x * c
-    vy = vec2.y * c
-    new Vector2d vx, vy
+  @project: (a, b)->
+    c = ((a.x * b.x)+(a.y * b.y)) / ((b.x*b.x)+(b.y*b.y))
+    new Vector2d b.x*c, b.y*c
 
-  @round: (vec1)->
-    vx = Math.round(vec1.x)
-    vy = Math.round(vec1.y)
-    new Vector2d vx, vy
+  @round: (a)->
+    new Vector2d Math.round(a.x), Math.round(a.y)
 
-  @invert: (vec1)->
-    vx = -vec1.x
-    vy = -vec1.y
-    new Vector2d vx, vy
+  @invert: (a)->
+    new Vector2d -a.x, -a.y
 
   # Methods
 
@@ -227,17 +219,23 @@ class Vector2d
     @
 
   # l = 1 = vec1, l = 0 = vec2, l = 0.5 = middle point of vec1 and vec2
-  lerp: (vec2, l)->
+  lerp: (b, l)->
+    if l < 0 then l = 0
+    if l > 1 then l = 1
+    @x = @x+(b.x-@x)*l
+    @y = @y+(b.y-@y)*l
     @
   
   #
-  scale: (vec2)->
+  scale: (b)->
+    @x *= b.x
+    @y *= b.y
     @
 
-    #
   clampMagnitude: (maxLength)->
+    if @magnitudeSquared() > maxLength * maxLength
+      @normalize().multiply(maxLength)
     @
-
 
   # Returns number
 
@@ -305,16 +303,11 @@ class Vector2d
     dx * dx + dy * dy
 
   # возвращает угол между векторами
-  angle: (vec2)->
-    1
-
-  #
-  distance: (vec2)->
-    1
-  
-  #
-  dot: (vec2)->
-    1
+  angle: (b)->
+    dot = Vector2d::dot Vector2d::normalize(a), Vector2d::normalize(b)
+    if dot < -1 then dot = -1
+    if dot > 1 then dot = 1
+    Math.acos(dot) * 57.29578
 
   # Returns boolean
 
