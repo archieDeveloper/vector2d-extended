@@ -48,6 +48,32 @@ Holds the value for the X component.
 
 Holds the value for the Y component.
 
+### Static Methods
+
+#### zero:
+
+@peturn Vector2d A new zero vector
+
+#### one:
+
+@peturn Vector2d A new one vector
+
+#### up:
+
+@peturn Vector2d A new vector
+
+#### down:
+
+@peturn Vector2d A new vector
+
+#### right:
+
+@peturn Vector2d A new vector
+
+#### left:
+
+@peturn Vector2d A new vector
+
 ### Instance Methods
 
 
