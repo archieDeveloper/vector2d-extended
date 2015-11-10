@@ -1,55 +1,157 @@
 # vector2d-extended
 
-## API
+## Installation
+
+With npm do
+
+```bash
+npm install vector2d-extended
+```
+
+## Simple example
+
+Addition of two vectors:
+
+```javascript
+var vec1, vec2, summVec1AndVec2;
+
+vec1 = Vector2d(10,0);
+vec2 = Vector2d(25,30);
+summVec1AndVec2 = vec1.clone().add(vec2);
+```
+
+Set the length of the vector:
+
+```javascript
+var vec1, vec2, newLength;
+
+newLength = 30;
+
+vec1 = Vector2d(15, 35);
+vec2 = vec1.normalize().multiply(newLength);
+```
+
+## Documentation API
+
+### Propirties
+
+#### x
+
+Holds the value for the X component.
+
+#### y
+
+Holds the value for the Y component.
 
 ### Instance Methods
 
-### Returns myself
 
-#### add: (Vector2d)
+#### add: (vector)
 
-#### subtract: (Vector2d)
+@params Vector2d vector
 
-#### multiply: (Number)
+@peturn Vector2d this
 
-#### divide: (Number)
+#### subtract: (vector)
+
+@params Vector2d vector
+
+@peturn Vector2d this
+
+#### multiply: (scalar)
+
+@params Number scalar
+
+@peturn Vector2d this
+
+#### divide: (scalar)
+
+@params Number scalar
+
+@peturn Vector2d this
 
 #### normalize:
 
-#### project: (Vector2d)
+@peturn Vector2d this
+
+#### project: (vector)
+
+@params Vector2d vector
+
+@peturn Vector2d this
 
 #### round:
 
-#### zero:
+@peturn Vector2d this
 
-#### invert:
+#### zero
 
-#### clone: (It does not return myself, and an instance of the new Vector2d)
+@peturn Vector2d this
 
-### Returns number
+#### invert
+
+@peturn Vector2d this
+
+#### clone
+
+@peturn Vector2d A new vector
+
 
 #### magnitude:
 
+@peturn Number
+
 #### magnitudeSquared:
 
-#### length: @magnitude
+@peturn Number
 
-#### lengthSquared: @magnitudeSquared
+#### length:
+
+@peturn Number
+
+#### lengthSquared:
+
+@peturn Number
 
 #### rotate:
 
-#### dot: (Vector2d)
+@peturn Number
 
-#### cross: (Vector2d)
+#### dot: (vector)
 
-#### distance: (Vector2d)
+@params Vector2d vector
 
-#### distanceSquared: (Vector2d)
+@peturn Number
 
-### Returns boolean
+#### cross: (vector)
+
+@params Vector2d vector
+
+@peturn Number
+
+#### distance: (vector)
+
+@params Vector2d vector
+
+@peturn Number
+
+#### distanceSquared: (vector)
+
+@params Vector2d vector
+
+@peturn Number
+
 
 #### isZero
 
-#### isEqual: (Vector2d)
+@peturn Boolean
+
+#### isEqual: (vector)
+
+@params Vector2d vector
+
+@peturn Boolean
 
 #### isNaN
+
+@peturn Boolean
