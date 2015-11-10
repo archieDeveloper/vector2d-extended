@@ -13,11 +13,11 @@ npm install vector2d-extended
 Addition of two vectors:
 
 ```javascript
-var vec1, vec2, summVec1AndVec2;
+var vec1, vec2, sumVec1AndVec2;
 
 vec1 = Vector2d(10,0);
 vec2 = Vector2d(25,30);
-summVec1AndVec2 = vec1
+sumVec1AndVec2 = vec1
     .clone()
     .add(vec2);
 ```
