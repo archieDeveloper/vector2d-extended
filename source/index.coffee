@@ -27,6 +27,34 @@ class Vector2d
   @left: ->
     new Vector2d -1, 0
 
+  #
+  @angle: (vec1, vec2)->
+    1
+
+  #
+  @clampMagnitude: (vec1, maxLength)->
+    new Vector2d
+
+  #
+  @distance: (vec1, vec2)->
+    1
+  
+  #
+  @dot: (vec1, vec2)->
+    1
+
+  # l = 1 = vec1, l = 0 = vec2, l = 0.5 = middle point of vec1 and vec2
+  @lerp: (vec1, vec2, l)->
+    new Vector2d
+  
+  #
+  @scale: (vec1, vec2)->
+    new Vector2d
+
+  #
+  @isEqual: (vec1, vec2)->
+    true
+
   # Methods
 
   # Returns Vector2d
@@ -80,6 +108,19 @@ class Vector2d
     @y = -@y
     @
 
+  # l = 1 = vec1, l = 0 = vec2, l = 0.5 = middle point of vec1 and vec2
+  lerp: (vec2, l)->
+    @
+  
+  #
+  scale: (vec2)->
+    @
+
+    #
+  clampMagnitude: (maxLength)->
+    @
+
+
   # Returns number
 
   magnitude: ()->
@@ -108,6 +149,18 @@ class Vector2d
     dx = @x - b.x
     dy = @y - b.y
     dx * dx + dy * dy
+
+  # возвращает угол между векторами
+  angle: (vec2)->
+    1
+
+  #
+  distance: (vec2)->
+    1
+  
+  #
+  dot: (vec2)->
+    1
 
   # Returns boolean
 

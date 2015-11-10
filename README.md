@@ -52,25 +52,37 @@ Holds the value for the Y component.
 
 #### zero:
 
+Shorthand for writing Vector2d(0, 0).
+
 @peturn Vector2d A new zero vector
 
 #### one:
+
+Shorthand for writing Vector2d(1, 1).
 
 @peturn Vector2d A new unit vector
 
 #### up:
 
+Shorthand for writing Vector2d(0, -1).
+
 @peturn Vector2d A new vector
 
 #### down:
+
+Shorthand for writing Vector2d(0, 1).
 
 @peturn Vector2d A new vector
 
 #### right:
 
+Shorthand for writing Vector2d(1, 0).
+
 @peturn Vector2d A new vector
 
 #### left:
+
+Shorthand for writing Vector2d(0, -1).
 
 @peturn Vector2d A new vector
 
