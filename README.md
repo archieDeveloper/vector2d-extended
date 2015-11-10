@@ -56,7 +56,7 @@ Holds the value for the Y component.
 
 #### one:
 
-@peturn Vector2d A new one vector
+@peturn Vector2d A new unit vector
 
 #### up:
 
