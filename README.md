@@ -28,7 +28,10 @@ var vec1, vec2, newLength;
 newLength = 30;
 
 vec1 = Vector2d(15, 35);
-vec2 = vec1.normalize().multiply(newLength);
+vec2 = vec1
+    .clone()
+    .normalize()
+    .multiply(newLength);
 ```
 
 ## Documentation API
