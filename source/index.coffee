@@ -57,13 +57,12 @@ class Vector2d
   @left: ->
     new Vector2d -1, 0
 
+  # Укорачивает вектор до максимальной длинны
   #
-  @angle: (a, b)->
-    dot = Vector2d::dot Vector2d::normalize(a), Vector2d::normalize(b)
-    if dot < -1 then dot = -1
-    if dot > 1 then dot = 1
-    Math.acos(dot) * 57.29578
-
+  # @param [Vector2d] a Вектор который нужно укоротить
+  # @param [Number] maxLength Максимальная длинна вектора
+  #
+  # @return [Vector2d] A new vector
   #
   @clampMagnitude: (a, maxLength)->
     b = a.clone()
@@ -71,47 +70,105 @@ class Vector2d
       b.normalize().multiply(maxLength)
     b
 
+  # 
   #
-  @distance: (a, b)->
-    Vector2d::subtract(a, b).magnitude()
-
+  # @param [Vector2d] a Первый вектор
+  # @param [Vector2d] b Второй вектор
+  # @param [Number] l Коофицент (0 соответсвует вектору a, 1 - вектору b, 0.5 среднее между a и b)
   #
-  @dot: (a, b)->
-    a.x * b.x + a.y * b.y
-
-  # l = 1 = vec1, l = 0 = vec2, l = 0.5 = middle point of vec1 and vec2
+  # @return [Vector2d] A new vector
+  #
   @lerp: (a, b, l)->
     if l < 0 then l = 0
     if l > 1 then l = 1
     new Vector2d(a.x+(b.x-a.x)*l, a.y+(b.y-a.y)*l)
   
+  # Покомпонентное умножение векторов
+  #
+  # @param [Vector2d] a Первый вектор
+  # @param [Vector2d] b Второй вектор
+  #
+  # @return [Vector2d] A new vector
   #
   @scale: (a, b)->
     new Vector2d a.x*b.x, a.y*b.y
 
+  # Сложение векторов
+  #
+  # @param [Vector2d] a Первый вектор
+  # @param [Vector2d] b Второй вектор
+  #
+  # @return [Vector2d] A new vector
+  #
   @add: (a, b)->
     new Vector2d a.x+b.x, a.y+b.y
 
+  # Вычитание векторов
+  #
+  # @param [Vector2d] a Первый вектор
+  # @param [Vector2d] b Второй вектор
+  #
+  # @return [Vector2d] A new vector
+  #
   @subtract: (a, b)->
     new Vector2d a.x-b.x, a.y-b.y
 
+  # умножение вектора на скаляр
+  #
+  # @param [Vector2d] a Первый вектор
+  # @param [Vector2d] b Второй вектор
+  #
+  # @return [Vector2d] A new vector
+  #
   @multiply: (a, scalar)->
     new Vector2d a.x*scalar, a.y*scalar
 
+  # Деление вектора на скаляр
+  #
+  # @param [Vector2d] a Первый вектор
+  # @param [Vector2d] b Второй вектор
+  #
+  # @return [Vector2d] A new vector
+  #
   @divide: (a, scalar)->
     new Vector2d a.x/scalar, a.y/scalar
 
+  # Нормализация вектора
+  #
+  # @param [Vector2d] a Вектор
+  #
+  # @return [Vector2d] A new vector
+  #
   @normalize: (a)->
     magnitude = do a.magnitude
     new Vector2d a.x/magnitude, a.y/magnitude
 
+  # Проекция вектора a на вектор b
+  #
+  # @param [Vector2d] a Первый вектор
+  # @param [Vector2d] b Второй вектор
+  #
+  # @return [Vector2d] A new vector
+  #
   @project: (a, b)->
     c = ((a.x * b.x)+(a.y * b.y)) / ((b.x*b.x)+(b.y*b.y))
     new Vector2d b.x*c, b.y*c
 
+  # Округление компонент вектора
+  #
+  # @param [Vector2d] a Вектор
+  #
+  # @return [Vector2d] A new vector
+  #
   @round: (a)->
     new Vector2d Math.round(a.x), Math.round(a.y)
 
+  # Инвертирование вектора
+  #
+  # @param [Vector2d] a Вектор
+  #
+  # @return [Vector2d] A new vector
+  #
   @invert: (a)->
     new Vector2d -a.x, -a.y
 
@@ -226,12 +283,23 @@ class Vector2d
     @y = @y+(b.y-@y)*l
     @
   
+  # Умножение векторов по компонентно
+  #
+  # @param [Vector2d] b Второй вектор
+  #
+  # @return [Vector2d] this
   #
   scale: (b)->
     @x *= b.x
     @y *= b.y
     @
-
+  
+  # Обрезать вектор по максимальной длине
+  #
+  # @param [Number] maxLength Максимальная длинна вектора
+  #
+  # @return [Vector2d] this
+  #
   clampMagnitude: (maxLength)->
     if @magnitudeSquared() > maxLength * maxLength
       @normalize().multiply(maxLength)
@@ -302,9 +370,16 @@ class Vector2d
     dy = @y - b.y
     dx * dx + dy * dy
 
-  # возвращает угол между векторами
+  # Угол между векторами
+  #
+  # @param [Vector2d] b Второй вектор
+  #
+  # @return [Number]
+  #
   angle: (b)->
-    dot = Vector2d::dot Vector2d::normalize(a), Vector2d::normalize(b)
+    aMagnitude = do @magnitude
+    bMagnitude = do b.magnitude
+    dot = (@x/aMagnitude) * (b.x/bMagnitude) + (@y/aMagnitude) * (b.y/bMagnitude)
     if dot < -1 then dot = -1
     if dot > 1 then dot = 1
     Math.acos(dot) * 57.29578
