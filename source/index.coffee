@@ -244,7 +244,7 @@ class Vector2d
 
   # Округление вектора до целочисленного
   #
-  # @return [Vector2d]
+  # @return [Vector2d] this
   #
   round: ->
     @x = Math.round(@x)
@@ -253,7 +253,7 @@ class Vector2d
 
   # Устанавливает текущий вектор в 0
   #
-  # @return [Vector2d]
+  # @return [Vector2d] this
   #
   zero: ->
     @x = @y = 0
@@ -261,21 +261,27 @@ class Vector2d
 
   # Клонирует текущий вектор
   #
-  # @return [Vector2d]
+  # @return [Vector2d] A new vector
   #
   clone: ->
     new Vector2d @x, @y
 
   # Меняет направление вектора на противоположное
   #
-  # @return [Vector2d]
+  # @return [Vector2d] this
   #
   invert: ->
     @x = -@x
     @y = -@y
     @
 
-  # l = 1 = vec1, l = 0 = vec2, l = 0.5 = middle point of vec1 and vec2
+  # 
+  #
+  # @param [Vector2d] b Второй вектор
+  # @param [Number] l Коофицент
+  #
+  # @return [Vector2d] this
+  #
   lerp: (b, l)->
     if l < 0 then l = 0
     if l > 1 then l = 1
@@ -340,14 +346,14 @@ class Vector2d
   rotate: ->
     Math.atan2(@y, @x) * 180 / Math.PI
 
-  # 
+  # Dot product
   #
   # @return [Number]
   #
   dot: (b)->
     @x * b.x + @y * b.y
 
-  # 
+  # Cross product
   #
   # @return [Number]
   #
@@ -408,6 +414,13 @@ class Vector2d
   #
   isNaN: ->
     isNaN @.x or isNaN @.y
+
+  # Является ли вектор числом
+  #
+  # @return [Boolean]
+  #
+  isFinite: ->
+    isFinite @.x or isFinite @.y
 
 
 module.exports = Vector2d
