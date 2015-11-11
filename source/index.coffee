@@ -422,5 +422,7 @@ class Vector2d
   isFinite: ->
     isFinite @.x or isFinite @.y
 
-
-module.exports = Vector2d
+if module? and module.exports?
+  module.exports = Vector2d
+else
+  window.Vector2d = Vector2d
