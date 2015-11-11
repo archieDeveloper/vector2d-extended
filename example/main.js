@@ -1,23 +1,19 @@
-var requestAnimationFrame, render, gameLoop, canvas, context, init, drawVector2d, color;
+'use strict';
+
+var requestAnimationFrame, gameLoop, canvas, context, init, drawVector2d, color, drawGrid;
 
 color = {
-    orange: '#E6B428',
-    green: 'green',
-    red: 'red'
+    orange: '#AC6F5E',
+    green: '#A3BE81',
+    black: '#2B303B',
+    blue: '#8FA1B3',
+    yellow: '#EBCB7F',
+    pink: '#B48E9D',
+    white: '#C0C5CE'
 }
 
 canvas = document.createElement('canvas');
 context = canvas.getContext('2d');
-
-requestAnimationFrame =  window.requestAnimationFrame
-  || window.webkitRequestAnimationFrame
-  || window.mozRequestAnimationFrame
-  || window.oRequestAnimationFrame
-  || window.msRequestAnimationFrame
-  || function (callback) {
-       window.setTimeout(callback, 1000/60)
-     }
-
 
 var lengthdirX = function(len, dir){
   return Math.cos(dir*Math.PI/180)*len;
@@ -27,50 +23,68 @@ var lengthdirY = function(len, dir){
   return Math.sin(dir*Math.PI/180)*len;
 }
 
-drawVector2d = function(vector, color) {
+drawVector2d = function(color, vector, vec2) {
+  var cx, cy, vx, vy;
   cx = canvas.width/2;
   cy = canvas.height/2;
+  if (vec2 != null) {
+    cx += vec2.x;
+    cy += vec2.y;
+  }
   vx = cx + vector.x;
   vy = cy + vector.y;
-  context.strokeStyle = color;
-  context.lineWidth = 5;
-  context.moveTo(cx, cy);
-  context.lineTo(vx, vy);
-  context.lineWidth = 2;
-  context.lineTo(vx-lengthdirX(5, vector.rotate())-lengthdirX(5, vector.rotate()+90), vy-lengthdirY(5, vector.rotate())-lengthdirY(5, vector.rotate()+90));
-  context.moveTo(vx, vy);
-  context.lineTo(vx-lengthdirX(5, vector.rotate())+lengthdirX(5, vector.rotate()+90), vy-lengthdirY(5, vector.rotate())+lengthdirY(5, vector.rotate()+90));
-  context.stroke();
   context.beginPath();
   context.arc(cx, cy, 1, 0, 2 * Math.PI, false);
   context.fillStyle = color;
   context.fill();
+  context.strokeStyle = color;
+  context.moveTo(cx, cy);
+  context.lineTo(vx, vy);
+  context.lineWidth = 2;
+  if (!vector.isZero()) {
+    var vecRotate, ax, bx, ay, by;
+    vecRotate = vector.rotate();
+    ax = lengthdirX(5, vecRotate);
+    bx = lengthdirX(5, vecRotate+90);
+    ay = lengthdirY(5, vecRotate);
+    by = lengthdirY(5, vecRotate+90);
+    context.lineTo(vx-ax-bx, vy-ay-by);
+    context.moveTo(vx, vy);
+    context.lineTo(vx-ax+bx, vy-ay+by);
+  }
+  context.stroke();
+  context.closePath();
 }
 
-var vec1 = Vector2d(100, 50);
-var vec2 = Vector2d(58, -5);
-var vec3 = vec1
-  .clone()
-  .add(vec2);
-
-render = function() {
-  drawVector2d(vec1, color.orange);
-  drawVector2d(vec2, color.red);
-  drawVector2d(vec3, color.green);
+drawGrid = function() {
+  context.beginPath();
+  context.strokeStyle = '#474D5A';
+  context.lineWidth = 1;
+  for(var i = 0; i <= canvas.width/20; i++) {
+    context.moveTo(i*20, 0);
+    context.lineTo(i*20, canvas.height);
+  }
+  for(i = 0; i <= canvas.height/20; i++) {
+    context.moveTo(0, i*20);
+    context.lineTo(canvas.width, i*20);
+  }
+  context.stroke();
+  context.closePath();
 }
 
 gameLoop = function loop() {
   context.clearRect(0, 0, canvas.width, canvas.height);
+  drawGrid();
   render();
-  requestAnimationFrame(loop);
 }
 
 init = function() {
   canvas.width = 800;
   canvas.height = 600;
-  canvas.style.border = '2px solid #ddd';
+  canvas.style.border = '2px solid ' + color.white;
   canvas.style.margin = '50px auto';
   canvas.style.display = 'block';
+  canvas.style.backgroundColor = '#2B303B';
   document.body.appendChild(canvas);
   gameLoop();
 }
