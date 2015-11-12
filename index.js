@@ -280,6 +280,10 @@
       return isFinite(this.x || isFinite(this.y));
     };
 
+    Vector2d.prototype.isEqualRotate = function(b) {
+      return this.rotate.toFixed(2) === b.rotate.toFixed(2);
+    };
+
     return Vector2d;
 
   })();

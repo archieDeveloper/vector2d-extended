@@ -2,6 +2,7 @@
 
 var requestAnimationFrame, gameLoop, canvas, context, init, drawVector2d, color, drawGrid, lengthdirX, lengthdirY, Mouse;
 
+var sizeGrid = 20;
 color = {
     orange: '#AC6F5E',
     green: '#A3BE81',
@@ -23,23 +24,25 @@ lengthdirY = function(len, dir){
   return Math.sin(dir*Math.PI/180)*len;
 }
 
-drawVector2d = function(color, name, vector, vec2) {
+drawVector2d = function(color, name, vector, vec2, arrow) {
+  if (arrow == null) {
+    arrow = true;
+  }
   var cx, cy, vx, vy;
   cx = canvas.width/2;
   cy = canvas.height/2;
   if (vec2 != null) {
-    cx += vec2.x*20;
-    cy += vec2.y*20;
+    cx += vec2.x*sizeGrid;
+    cy += vec2.y*sizeGrid;
   }
-  vx = cx + vector.x*20;
-  vy = cy + vector.y*20;
+  vx = cx + vector.x*sizeGrid;
+  vy = cy + vector.y*sizeGrid;
   context.beginPath();
-  
   if (!vector.isZero()) {
     var vecRotate, ax, bx, ay, by, vecLength, textW;
     vecRotate = vector.rotate;
-    vecLength = vector.magnitude*20;
-    textW = name.length*9+20;
+    vecLength = vector.magnitude*sizeGrid;
+    textW = name.length*9+sizeGrid;
 
     var f = 0;
 
@@ -66,14 +69,16 @@ drawVector2d = function(color, name, vector, vec2) {
     context.beginPath();
   }
 
-  context.arc(cx, cy, 1, 0, 2 * Math.PI, false);
-  context.fillStyle = color;
-  context.fill();
+  if (arrow) {
+    context.arc(cx, cy, 1, 0, 2 * Math.PI, false);
+    context.fillStyle = color;
+    context.fill();
+  }
   context.strokeStyle = color;
   context.moveTo(cx, cy);
   context.lineTo(vx, vy);
   context.lineWidth = 2;
-  if (!vector.isZero()) {
+  if (arrow && !vector.isZero()) {
     vecRotate = vector.rotate;
     ax = lengthdirX(5, vecRotate);
     bx = lengthdirX(5, vecRotate+90);
@@ -86,18 +91,17 @@ drawVector2d = function(color, name, vector, vec2) {
   context.stroke();
   context.closePath();
 }
-
 drawGrid = function() {
   context.beginPath();
   context.strokeStyle = '#474D5A';
   context.lineWidth = 1;
-  for(var i = 0; i <= canvas.width/20; i++) {
-    context.moveTo(i*20, 0);
-    context.lineTo(i*20, canvas.height);
+  for(var i = 0; i <= canvas.width/sizeGrid; i++) {
+    context.moveTo(i*sizeGrid, 0);
+    context.lineTo(i*sizeGrid, canvas.height);
   }
-  for(i = 0; i <= canvas.height/20; i++) {
-    context.moveTo(0, i*20);
-    context.lineTo(canvas.width, i*20);
+  for(i = 0; i <= canvas.height/sizeGrid; i++) {
+    context.moveTo(0, i*sizeGrid);
+    context.lineTo(canvas.width, i*sizeGrid);
   }
   context.stroke();
   context.closePath();
@@ -105,14 +109,22 @@ drawGrid = function() {
 
 gameLoop = function loop() {
   context.clearRect(0, 0, canvas.width, canvas.height);
+  canvas.width = 50*sizeGrid;
+  canvas.height = 30*sizeGrid;
   drawGrid();
+
+  var vx1 = Vector2d(-canvas.width/2/sizeGrid+1, 0);
+  var vx2 = Vector2d(canvas.width/sizeGrid-2, 0);
+
+  var vy1 = Vector2d(0, -canvas.height/2/sizeGrid+1);
+  var vy2 = Vector2d(0, canvas.height/sizeGrid-2);
+  drawVector2d(color.white, '', vx2, vx1);
+  drawVector2d(color.white, '', vy2, vy1);
   render();
 }
 
 init = function() {
-  canvas.width = 800;
-  canvas.height = 600;
-  canvas.style.border = '2px solid ' + color.white;
+  canvas.style.border = '2px solid ' + color.black;
   canvas.style.margin = '50px auto';
   canvas.style.display = 'block';
   canvas.style.backgroundColor = '#2B303B';

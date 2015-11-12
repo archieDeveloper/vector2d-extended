@@ -449,6 +449,9 @@ class Vector2d
   isFinite: ->
     isFinite @.x or isFinite @.y
 
+  isEqualRotate: (b)->
+    @rotate.toFixed(2) is b.rotate.toFixed(2)
+
 
 if module? and module.exports?
   module.exports = Vector2d

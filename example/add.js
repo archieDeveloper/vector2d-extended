@@ -31,7 +31,7 @@ love = function() {
 
 add = function() {
   var vec1, vec2;
-  vec1 = Vector2d(mouse.position.x/20-canvas.width/2/20, mouse.position.y/20-canvas.height/2/20);
+  vec1 = Vector2d(mouse.position.x/sizeGrid-canvas.width/2/sizeGrid, mouse.position.y/sizeGrid-canvas.height/2/sizeGrid);
   vec2 = Vector2d(2, -5);
   vec3 = vec1.clone().add(vec2);
   drawVector2d(color.yellow, 'a', vec1);
@@ -39,23 +39,13 @@ add = function() {
   drawVector2d(color.green, 'c = a + b', vec3);
 }
 
-scale = function() {
-  var vec1, vec2, vec3;
-  vec1 = Vector2d(2, 5);
-  vec2 = Vector2d(2, -5);
-  vec3 = vec1.clone().scale(vec2);
-  drawVector2d(color.yellow, 'a', vec1);
-  drawVector2d(color.orange, 'b', vec2);
-  drawVector2d(color.green, 'c', vec3);
-}
-
 project = function() {
   var vec1, vec2, vec3;
-  vec1 = Vector2d(mouse.position.x/20-canvas.width/2/20, mouse.position.y/20-canvas.height/2/20);
-  vec2 = Vector2d(0, -5);
+  vec1 = Vector2d(mouse.position.x/sizeGrid-canvas.width/2/sizeGrid, mouse.position.y/sizeGrid-canvas.height/2/sizeGrid);
+  vec2 = Vector2d(2, -5);
   vec3 = vec1.clone().project(vec2);
   drawVector2d(color.orange, 'b', vec2);
-  if (vec2.angle(vec3) === 0 && vec3.length <= vec2.length) {
+  if (vec2.isEqualRotate(vec3) && vec3.length <= vec2.length) {
     drawVector2d(color.green, 'c', vec3);
   }
 }
@@ -63,6 +53,5 @@ project = function() {
 examples = [
   love,
   add,
-  scale,
   project
 ];

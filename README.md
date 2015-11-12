@@ -38,6 +38,71 @@ vec2 = vec1
 
 ## Documentation API
 
+
+1. Properties
+
+  1. x
+  2. y
+  3. magnitude
+  4. magnitudeSquared
+  5. length
+  6. lengthSquared
+  7. rotate
+
+2. Static Methods
+
+  1. zero
+  2. one
+  3. up
+  4. down
+  5. right
+  6. left
+  7. clampMagnitude
+  8. lerp
+  9. scale
+  10. add
+  11. subtract
+  12. multiply
+  13. divide
+  14. normalize
+  15. project
+  16. round
+  17. invert
+
+3. Instance Methods
+
+  1. Return Vector2d
+
+    1. add
+    2. subtract
+    3. multiply
+    4. divide
+    5. normalize
+    6. project
+    7. round
+    8. zero
+    9. clone
+    10. invert
+    11. lerp
+    12. scale
+    13. clampMagnitude
+
+  2. Return Number
+
+    1. dot
+    2. cross
+    3. distance
+    4. distanceSquared
+    5. angle
+
+  3. Return Boolean
+
+    1. isZero
+    2. isEqual
+    3. isNaN
+    4. isFinite
+    5. isEqualRotate
+
 ### Propirties
 
 #### x
@@ -198,3 +263,4 @@ Shorthand for writing Vector2d(0, -1).
 #### isNaN
 
 @peturn Boolean
+
