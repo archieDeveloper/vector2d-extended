@@ -66,7 +66,7 @@ class Vector2d
   #
   @clampMagnitude: (a, maxLength)->
     b = a.clone()
-    if b.magnitudeSquared() > maxLength * maxLength
+    if b.magnitudeSquared > maxLength * maxLength
       b.normalize().multiply(maxLength)
     b
 
@@ -140,7 +140,7 @@ class Vector2d
   # @return [Vector2d] A new vector
   #
   @normalize: (a)->
-    magnitude = do a.magnitude
+    magnitude = a.magnitude
     new Vector2d a.x/magnitude, a.y/magnitude
 
   # Проекция вектора a на вектор b
@@ -225,9 +225,7 @@ class Vector2d
   # @return [Vector2d] this
   #
   normalize: ->
-    magnitude = do @magnitude
-    @x /= magnitude
-    @y /= magnitude
+    @length = 1
     @
 
   # Проекция вектора b на текущий вектор
@@ -307,7 +305,7 @@ class Vector2d
   # @return [Vector2d] this
   #
   clampMagnitude: (maxLength)->
-    if @magnitudeSquared() > maxLength * maxLength
+    if @magnitudeSquared > maxLength * maxLength
       @normalize().multiply(maxLength)
     @
 
@@ -317,34 +315,63 @@ class Vector2d
   #
   # @return [Number]
   #
-  magnitude: ->
-    Math.sqrt @magnitudeSquared()
+  Object.defineProperty Vector2d::, 'magnitude', {
+    get: ->
+      Math.sqrt @magnitudeSquared
+    set: (value)->
+      magnitude = @magnitude
+      @x = (@x / magnitude) * value
+      @y = (@y / magnitude) * value
+      value
+  }
 
   # Длинна ветора в квадрате
   #
   # @return [Number]
   #
-  magnitudeSquared: ()->
-    @x * @x + @y * @y
-  
+  Object.defineProperty Vector2d::, 'magnitudeSquared', {
+    get: ->
+      @x*@x+@y*@y
+    set: (value)->
+      @length = Math.sqrt value
+      value
+  }
+
   # Длинна вектора
   #
   # @return [Number]
   #
-  length: @magnitude
+  Object.defineProperty Vector2d::, 'length', {
+    get: ->
+      @magnitude
+    set: (value)->
+      @magnitude = value
+  }
 
   # Длинна ветора в квадрате
   #
   # @return [Number]
   #
-  lengthSquared: @magnitudeSquared
+  Object.defineProperty Vector2d::, 'lengthSquared', {
+    get: ->
+      @magnitudeSquared
+    set: (value)->
+      @magnitudeSquared = value
+  }
 
   # Поворот вектора в градусах
   #
   # @return [Number]
   #
-  rotate: ->
-    Math.atan2(@y, @x) * 180 / Math.PI
+  Object.defineProperty Vector2d::, 'rotate', {
+    get: ->
+      Math.atan2(@y, @x) * 180 / Math.PI
+    set: (dir)->
+      len = @magnitude
+      @x = Math.cos(dir*Math.PI/180)*len
+      @y = Math.sin(dir*Math.PI/180)*len
+      dir
+  }
 
   # Dot product
   #
@@ -383,8 +410,8 @@ class Vector2d
   # @return [Number]
   #
   angle: (b)->
-    aMagnitude = do @magnitude
-    bMagnitude = do b.magnitude
+    aMagnitude = @magnitude
+    bMagnitude = b.magnitude
     dot = (@x/aMagnitude) * (b.x/bMagnitude) + (@y/aMagnitude) * (b.y/bMagnitude)
     if dot < -1 then dot = -1
     if dot > 1 then dot = 1
@@ -421,6 +448,7 @@ class Vector2d
   #
   isFinite: ->
     isFinite @.x or isFinite @.y
+
 
 if module? and module.exports?
   module.exports = Vector2d

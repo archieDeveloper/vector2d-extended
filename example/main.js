@@ -37,23 +37,29 @@ drawVector2d = function(color, name, vector, vec2) {
   
   if (!vector.isZero()) {
     var vecRotate, ax, bx, ay, by, vecLength, textW;
-    vecRotate = vector.rotate();
-    vecLength = vector.magnitude()*20;
+    vecRotate = vector.rotate;
+    vecLength = vector.magnitude*20;
     textW = name.length*9+20;
 
-    ax = lengthdirX(vecLength/2+textW/2, vecRotate);
-    bx = lengthdirX(-25, vecRotate+90);
-    ay = lengthdirY(vecLength/2+textW/2, vecRotate);
-    by = lengthdirY(-25, vecRotate+90);
+    var f = 0;
+
+    if (vecRotate < -90 || vecRotate >= 90) {
+      f = 1;
+    }
+
+    ax = lengthdirX(vecLength/2-(textW/2)*(-1+f+f), (vecRotate));
+    bx = lengthdirX(25*(-1+f+f), (vecRotate)+90);
+    ay = lengthdirY(vecLength/2-(textW/2)*(-1+f+f), (vecRotate));
+    by = lengthdirY(25*(-1+f+f), (vecRotate)+90);
 
     context.save();
     context.fillStyle = "rgba(0,0,0,0.5)";
 
     context.translate(vx-ax+bx, vy-ay+by);
-    context.rotate(vecRotate * Math.PI / 180);
+    context.rotate((vecRotate+180*f) * Math.PI / 180);
 
-    context.rect(0, 0, textW, 20);
-    context.fill();
+    // context.rect(0, 0, textW, 20);
+    // context.fill();
     context.fillStyle = color;
     context.font = "bold 12pt Arial";
     context.fillText(name, 10, 14);
@@ -70,7 +76,7 @@ drawVector2d = function(color, name, vector, vec2) {
   context.lineTo(vx, vy);
   context.lineWidth = 2;
   if (!vector.isZero()) {
-    vecRotate = vector.rotate();
+    vecRotate = vector.rotate;
     ax = lengthdirX(5, vecRotate);
     bx = lengthdirX(5, vecRotate+90);
     ay = lengthdirY(5, vecRotate);

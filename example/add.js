@@ -1,5 +1,7 @@
 var render, love;
 
+mouse = Mouse.getInstance();
+
 love = function() {
   var vec1, vec2, vec3, vec4, vec5, vec6, vec7, vecResult, len;
   len = 2;
@@ -29,15 +31,47 @@ love = function() {
 
 var add = function() {
   var vec1, vec2;
-  vec1 = Vector2d(5, 0);
-  vec2 = Vector2d(10, 10);
+  vec1 = Vector2d(mouse.position.x/20-canvas.width/2/20, mouse.position.y/20-canvas.height/2/20);
+  vec2 = Vector2d(2, -5);
   vec3 = vec1.clone().add(vec2);
-  // drawVector2d(color.yellow, vec1);
-  // drawVector2d(color.orange, vec2);
-  drawVector2d(color.green, 'c', vec1);
+  drawVector2d(color.yellow, 'a', vec1);
+  drawVector2d(color.orange, 'b', vec2, vec1);
+  drawVector2d(color.green, 'c = a + b', vec3);
+}
+
+var scale = function() {
+  var vec1, vec2, vec3;
+  vec1 = Vector2d(2, 5);
+  vec2 = Vector2d(2, -5);
+  vec3 = vec1.clone().scale(vec2);
+  drawVector2d(color.yellow, 'a', vec1);
+  drawVector2d(color.orange, 'b', vec2);
+  drawVector2d(color.green, 'c', vec3);
+}
+
+var project = function() {
+  var vec1, vec2, vec3;
+  vec1 = Vector2d(mouse.position.x/20-canvas.width/2/20, mouse.position.y/20-canvas.height/2/20);
+  vec2 = Vector2d(0, -5);
+  vec3 = vec1.clone().project(vec2);
+  // drawVector2d(color.yellow, 'a', vec1);
+  drawVector2d(color.orange, 'b', vec2);
+  if (vec2.angle(vec3) === 0 && vec3.length <= vec2.length) {
+    drawVector2d(color.green, 'c', vec3);
+  }
+}
+
+var examples = [love, add, scale, project];
+var selectExample = 0;
+
+var nextExample = function() {
+  selectExample += 1;
+  if (selectExample >= examples.length) {
+    selectExample = 0;
+  }
+  gameLoop();
 }
 
 render = function() {
-  love();
-  // add();
+  examples[selectExample]();
 }
