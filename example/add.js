@@ -50,8 +50,19 @@ project = function() {
   }
 }
 
+lerp = function() {
+  var vec1, vec2, vec3;
+  vec1 = Vector2d(mouse.position.x/sizeGrid-canvas.width/2/sizeGrid, mouse.position.y/sizeGrid-canvas.height/2/sizeGrid);
+  vec2 = Vector2d(2, -5);
+  vec3 = vec1.clone().lerp(vec2, 0.5);
+  drawVector2d(color.orange, 'a', vec1);
+  drawVector2d(color.green, 'b', vec2);
+  drawVector2d(color.blue, 'c', vec3);
+}
+
 examples = [
-  love,
+  lerp,
   add,
-  project
+  project,
+  love
 ];
