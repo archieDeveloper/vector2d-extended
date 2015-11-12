@@ -23,17 +23,45 @@ var lengthdirY = function(len, dir){
   return Math.sin(dir*Math.PI/180)*len;
 }
 
-drawVector2d = function(color, vector, vec2) {
+drawVector2d = function(color, name, vector, vec2) {
   var cx, cy, vx, vy;
   cx = canvas.width/2;
   cy = canvas.height/2;
   if (vec2 != null) {
-    cx += vec2.x;
-    cy += vec2.y;
+    cx += vec2.x*20;
+    cy += vec2.y*20;
   }
-  vx = cx + vector.x;
-  vy = cy + vector.y;
+  vx = cx + vector.x*20;
+  vy = cy + vector.y*20;
   context.beginPath();
+  
+  if (!vector.isZero()) {
+    var vecRotate, ax, bx, ay, by, vecLength, textW;
+    vecRotate = vector.rotate();
+    vecLength = vector.magnitude()*20;
+    textW = name.length*9+20;
+
+    ax = lengthdirX(vecLength/2+textW/2, vecRotate);
+    bx = lengthdirX(-25, vecRotate+90);
+    ay = lengthdirY(vecLength/2+textW/2, vecRotate);
+    by = lengthdirY(-25, vecRotate+90);
+
+    context.save();
+    context.fillStyle = "rgba(0,0,0,0.5)";
+
+    context.translate(vx-ax+bx, vy-ay+by);
+    context.rotate(vecRotate * Math.PI / 180);
+
+    context.rect(0, 0, textW, 20);
+    context.fill();
+    context.fillStyle = color;
+    context.font = "bold 12pt Arial";
+    context.fillText(name, 10, 14);
+    context.closePath();
+    context.beginPath();
+    context.restore();
+  }
+
   context.arc(cx, cy, 1, 0, 2 * Math.PI, false);
   context.fillStyle = color;
   context.fill();
@@ -42,7 +70,6 @@ drawVector2d = function(color, vector, vec2) {
   context.lineTo(vx, vy);
   context.lineWidth = 2;
   if (!vector.isZero()) {
-    var vecRotate, ax, bx, ay, by;
     vecRotate = vector.rotate();
     ax = lengthdirX(5, vecRotate);
     bx = lengthdirX(5, vecRotate+90);

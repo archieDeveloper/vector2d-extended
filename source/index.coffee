@@ -318,7 +318,7 @@ class Vector2d
   # @return [Number]
   #
   magnitude: ->
-    Math.sqrt @lengthSquared()
+    Math.sqrt @magnitudeSquared()
 
   # Длинна ветора в квадрате
   #
