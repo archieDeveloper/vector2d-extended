@@ -1,6 +1,6 @@
 'use strict';
 
-var requestAnimationFrame, gameLoop, canvas, context, init, drawVector2d, color, drawGrid;
+var requestAnimationFrame, gameLoop, canvas, context, init, drawVector2d, color, drawGrid, lengthdirX, lengthdirY, Mouse;
 
 color = {
     orange: '#AC6F5E',
@@ -15,11 +15,11 @@ color = {
 canvas = document.createElement('canvas');
 context = canvas.getContext('2d');
 
-var lengthdirX = function(len, dir){
+lengthdirX = function(len, dir){
   return Math.cos(dir*Math.PI/180)*len;
 }
 
-var lengthdirY = function(len, dir){
+lengthdirY = function(len, dir){
   return Math.sin(dir*Math.PI/180)*len;
 }
 
@@ -58,14 +58,12 @@ drawVector2d = function(color, name, vector, vec2) {
     context.translate(vx-ax+bx, vy-ay+by);
     context.rotate((vecRotate+180*f) * Math.PI / 180);
 
-    // context.rect(0, 0, textW, 20);
-    // context.fill();
     context.fillStyle = color;
     context.font = "bold 12pt Arial";
     context.fillText(name, 10, 14);
+    context.restore();
     context.closePath();
     context.beginPath();
-    context.restore();
   }
 
   context.arc(cx, cy, 1, 0, 2 * Math.PI, false);
@@ -121,5 +119,84 @@ init = function() {
   document.body.appendChild(canvas);
   gameLoop();
 }
+
+var selectExample = 0;
+
+var nextExample = function() {
+  selectExample += 1;
+  if (selectExample >= examples.length) {
+    selectExample = 0;
+  }
+  gameLoop();
+}
+
+var prevExample = function() {
+  selectExample -= 1;
+  if (selectExample <= -1) {
+    selectExample = examples.length;
+  }
+  gameLoop();
+}
+
+var render = function() {
+  examples[selectExample]();
+}
+
+Mouse = (function() {
+var instance, mouseDown, mousePress, mouseUp;
+
+mousePress = {};
+
+mouseDown = {};
+
+mouseUp = {};
+
+instance = null;
+
+Mouse.prototype.position = new Vector2d(0, 0);
+
+function Mouse() {
+  canvas.addEventListener('mousemove', (function(_this) {
+    return function(e) {
+      gameLoop();
+      _this.position.x = e.offsetX == null ? e.layerX : e.offsetX;
+      return _this.position.y = e.offsetY == null ? e.layerY : e.offsetY;
+    };
+  })(this));
+  canvas.addEventListener('mouseDown', function(e) {
+    mousePress[e.which] = true;
+    return mouseDown[e.which] = true;
+  });
+  canvas.addEventListener('mouseUp', function(e) {
+    delete mousePress[e.which];
+    return mouseUp[e.which] = true;
+  });
+  canvas.oncontextmenu = function() {
+    return false;
+  };
+}
+
+Mouse.getInstance = function() {
+  if (instance == null) {
+    instance = new Mouse;
+  }
+  return instance;
+};
+
+Mouse.prototype.isPressed = function(code) {
+  return mousePress[code] != null;
+};
+
+Mouse.prototype.isDown = function(code) {
+  return mouseDown[code] != null;
+};
+
+Mouse.prototype.isUp = function(code) {
+  return mouseUp[code] != null;
+};
+
+return Mouse;
+
+})();
 
 window.onload = init
