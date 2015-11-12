@@ -43,8 +43,6 @@ vec2 = vec1
 
   * x
   * y
-  * magnitude
-  * magnitudeSquared
   * length
   * lengthSquared
   * rotate
