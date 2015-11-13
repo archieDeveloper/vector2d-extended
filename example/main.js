@@ -2,6 +2,15 @@
 
 var requestAnimationFrame, gameLoop, canvas, context, init, drawVector2d, color, drawGrid, lengthdirX, lengthdirY, Mouse;
 
+requestAnimationFrame = window.requestAnimationFrame
+    || window.webkitRequestAnimationFrame 
+    || window.mozRequestAnimationFrame
+    || window.oRequestAnimationFrame
+    || window.msRequestAnimationFrame
+    || function(callback) {
+        window.setTimeout(callback, 1000/60)
+    };
+
 var sizeGrid = 20;
 color = {
     orange: '#AC6F5E',
@@ -121,6 +130,7 @@ gameLoop = function loop() {
   drawVector2d(color.white, '', vx2, vx1);
   drawVector2d(color.white, '', vy2, vy1);
   render();
+  requestAnimationFrame(gameLoop);
 }
 
 init = function() {
@@ -170,16 +180,15 @@ Mouse = (function() {
   function Mouse() {
     canvas.addEventListener('mousemove', (function(_this) {
       return function(e) {
-        gameLoop();
         _this.position.x = e.offsetX == null ? e.layerX : e.offsetX;
         return _this.position.y = e.offsetY == null ? e.layerY : e.offsetY;
       };
     })(this));
-    canvas.addEventListener('mouseDown', function(e) {
+    canvas.addEventListener('mousedown', function(e) {
       mousePress[e.which] = true;
       return mouseDown[e.which] = true;
     });
-    canvas.addEventListener('mouseUp', function(e) {
+    canvas.addEventListener('mouseup', function(e) {
       delete mousePress[e.which];
       return mouseUp[e.which] = true;
     });

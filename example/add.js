@@ -1,4 +1,4 @@
-var love, add, scale, project, examples;
+var love, add, scale, project, examples, mouse, car;
 
 mouse = Mouse.getInstance();
 
@@ -27,7 +27,7 @@ love = function() {
   drawVector2d(color.yellow, 'g', vec7, vecResult);
   vecResult.add(vec7);
   drawVector2d(color.green, 'a+b+c+d+e+f+g', vecResult);
-}
+};
 
 add = function() {
   var vec1, vec2;
@@ -37,7 +37,7 @@ add = function() {
   drawVector2d(color.yellow, 'a', vec1);
   drawVector2d(color.orange, 'b', vec2, vec1);
   drawVector2d(color.green, 'c = a + b', vec3);
-}
+};
 
 project = function() {
   var vec1, vec2, vec3;
@@ -48,7 +48,7 @@ project = function() {
   if (vec2.isEqualRotate(vec3) && vec3.length <= vec2.length) {
     drawVector2d(color.green, 'c', vec3);
   }
-}
+};
 
 lerp = function() {
   var vec1, vec2, vec3;
@@ -58,9 +58,58 @@ lerp = function() {
   drawVector2d(color.orange, 'a', vec1);
   drawVector2d(color.green, 'b', vec2);
   drawVector2d(color.blue, 'c', vec3);
-}
+};
+
+
+car = (function() {
+  var car, vFtraction, vU, Engineforce, vFdrag, vFrr, vFlong, vA, vV, vP, Crr, Cdrag, M;
+
+  vVisual = Vector2d.right();
+
+  vU = Vector2d.right();
+  Engineforce = 2;
+  vV = Vector2d.zero();
+  Cdrag = 0.4257;
+  Crr = Cdrag * 30;
+  M = 100;
+  dt = 0.3;
+
+  vV = Vector2d();
+  vP = Vector2d();
+
+  vFtraction = vU.clone().multiply(Engineforce);
+  vFdrag = vV.clone().multiply(-Cdrag).multiply(vV.length)
+  vFrr = vV.clone().multiply(-Crr)
+  vFlong = vFtraction.clone().add(vFdrag).add(vFrr)
+  vA = vFlong.clone().divide(M)
+  vV = vA.clone().multiply(dt).add(vV)
+  vP = vV.clone().multiply(dt).add(vP)
+
+
+  car = function() {
+    vU.rotate += 1;
+    vVisual.rotate = vU.rotate;
+    vFtraction.equate(vU).multiply(Engineforce);
+    vFdrag.equate(vV).multiply(-Cdrag).multiply(vV.length)
+    vFrr.equate(vV).multiply(-Crr)
+    vFlong.equate(vFtraction).add(vFdrag).add(vFrr)
+    vA.equate(vFlong).divide(M)
+    vV.add(vA.clone().multiply(dt))
+    vP.add(vV.clone().multiply(dt))
+    drawVector2d(color.orange, '', vVisual, vP);
+    if (mouse.isPressed(1)) {
+      Engineforce = 3;
+    } else {
+      Engineforce = 0;
+    }
+  };
+
+  return car;
+
+})();
 
 examples = [
+  car,
   lerp,
   add,
   project,

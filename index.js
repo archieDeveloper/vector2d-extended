@@ -146,6 +146,12 @@
       return new Vector2d(this.x, this.y);
     };
 
+    Vector2d.prototype.equate = function(b) {
+      this.x = b.x;
+      this.y = b.y;
+      return this;
+    };
+
     Vector2d.prototype.invert = function() {
       this.x = -this.x;
       this.y = -this.y;

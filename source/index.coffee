@@ -187,6 +187,7 @@ class Vector2d
     @y += b.y
     @
 
+
   # Вычесть из текущего вектора вектор b
   #
   # @param [Vector2d] b 
@@ -263,6 +264,15 @@ class Vector2d
   #
   clone: ->
     new Vector2d @x, @y
+
+  # Копирует компоненты вектора b
+  #
+  # @return [Vector2d] this
+  #
+  equate: (b)->
+    @x = b.x
+    @y = b.y
+    @
 
   # Меняет направление вектора на противоположное
   #
