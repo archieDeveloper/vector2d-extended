@@ -22,7 +22,10 @@ color = {
     white: '#C0C5CE'
 }
 
+var div = document.createElement('div');
 canvas = document.createElement('canvas');
+var backgroundCanvas = document.createElement('canvas');
+var backgroundContext = backgroundCanvas.getContext('2d');
 context = canvas.getContext('2d');
 
 lengthdirX = function(len, dir){
@@ -33,9 +36,12 @@ lengthdirY = function(len, dir){
   return Math.sin(dir*Math.PI/180)*len;
 }
 
-drawVector2d = function(color, name, vector, vec2, arrow) {
+drawVector2d = function(color, name, vector, vec2, arrow, contextC) {
   if (arrow == null) {
     arrow = true;
+  }
+  if (contextC == null) {
+    contextC = context;
   }
   var cx, cy, vx, vy;
   cx = canvas.width/2;
@@ -46,7 +52,9 @@ drawVector2d = function(color, name, vector, vec2, arrow) {
   }
   vx = cx + vector.x*sizeGrid;
   vy = cy + vector.y*sizeGrid;
-  context.beginPath();
+  contextC.beginPath();
+  contextC.fillStyle = color;
+  contextC.strokeStyle = color;
   if (!vector.isZero()) {
     var vecRotate, ax, bx, ay, by, vecLength, textW;
     vecRotate = vector.rotate;
@@ -64,81 +72,93 @@ drawVector2d = function(color, name, vector, vec2, arrow) {
     ay = lengthdirY(vecLength/2-(textW/2)*(-1+f+f), (vecRotate));
     by = lengthdirY(25*(-1+f+f), (vecRotate)+90);
 
-    context.save();
-    context.fillStyle = "rgba(0,0,0,0.5)";
-
-    context.translate(vx-ax+bx, vy-ay+by);
-    context.rotate((vecRotate+180*f) * Math.PI / 180);
-
-    context.fillStyle = color;
-    context.font = "bold 12pt Arial";
-    context.fillText(name, 10, 14);
-    context.restore();
-    context.closePath();
-    context.beginPath();
+    contextC.save();
+    contextC.translate(vx-ax+bx, vy-ay+by);
+    contextC.rotate((vecRotate+180*f) * Math.PI / 180);
+    contextC.font = "bold 12pt Arial";
+    contextC.fillText(name, 10, 14);
+    contextC.restore();
+    contextC.closePath();
+    contextC.beginPath();
   }
 
   if (arrow) {
-    context.arc(cx, cy, 1, 0, 2 * Math.PI, false);
-    context.fillStyle = color;
-    context.fill();
+    contextC.arc(cx, cy, 1, 0, 2 * Math.PI, false);
+    contextC.fill();
   }
-  context.strokeStyle = color;
-  context.moveTo(cx, cy);
-  context.lineTo(vx, vy);
-  context.lineWidth = 2;
+  contextC.moveTo(cx, cy);
+  contextC.lineTo(vx, vy);
+  contextC.lineWidth = 2;
   if (arrow && !vector.isZero()) {
     vecRotate = vector.rotate;
     ax = lengthdirX(5, vecRotate);
     bx = lengthdirX(5, vecRotate+90);
     ay = lengthdirY(5, vecRotate);
     by = lengthdirY(5, vecRotate+90);
-    context.lineTo(vx-ax-bx, vy-ay-by);
-    context.moveTo(vx, vy);
-    context.lineTo(vx-ax+bx, vy-ay+by);
+    contextC.lineTo(vx-ax-bx, vy-ay-by);
+    contextC.moveTo(vx, vy);
+    contextC.lineTo(vx-ax+bx, vy-ay+by);
   }
-  context.stroke();
-  context.closePath();
+  contextC.stroke();
+  contextC.closePath();
 }
 drawGrid = function() {
-  context.beginPath();
-  context.strokeStyle = '#474D5A';
-  context.lineWidth = 1;
+  backgroundContext.beginPath();
+  backgroundContext.strokeStyle = '#474D5A';
+  backgroundContext.lineWidth = 1;
   for(var i = 0; i <= canvas.width/sizeGrid; i++) {
-    context.moveTo(i*sizeGrid, 0);
-    context.lineTo(i*sizeGrid, canvas.height);
+    backgroundContext.moveTo(i*sizeGrid, 0);
+    backgroundContext.lineTo(i*sizeGrid, canvas.height);
   }
   for(i = 0; i <= canvas.height/sizeGrid; i++) {
-    context.moveTo(0, i*sizeGrid);
-    context.lineTo(canvas.width, i*sizeGrid);
+    backgroundContext.moveTo(0, i*sizeGrid);
+    backgroundContext.lineTo(canvas.width, i*sizeGrid);
   }
-  context.stroke();
-  context.closePath();
+  backgroundContext.stroke();
+  backgroundContext.closePath();
 }
 
 gameLoop = function loop() {
   context.clearRect(0, 0, canvas.width, canvas.height);
-  canvas.width = 50*sizeGrid;
-  canvas.height = 30*sizeGrid;
-  drawGrid();
-
-  var vx1 = Vector2d(-canvas.width/2/sizeGrid+1, 0);
-  var vx2 = Vector2d(canvas.width/sizeGrid-2, 0);
-
-  var vy1 = Vector2d(0, -canvas.height/2/sizeGrid+1);
-  var vy2 = Vector2d(0, canvas.height/sizeGrid-2);
-  drawVector2d(color.white, '', vx2, vx1);
-  drawVector2d(color.white, '', vy2, vy1);
   render();
   requestAnimationFrame(gameLoop);
 }
 
 init = function() {
-  canvas.style.border = '2px solid ' + color.black;
-  canvas.style.margin = '50px auto';
+  canvas.width = 50*sizeGrid;
+  canvas.height = 30*sizeGrid;
   canvas.style.display = 'block';
-  canvas.style.backgroundColor = '#2B303B';
-  document.body.appendChild(canvas);
+  canvas.style.position = 'absolute';
+  canvas.style.left = 0;
+  canvas.style.top = 0;
+
+  backgroundCanvas.width = 50*sizeGrid;
+  backgroundCanvas.height = 30*sizeGrid;
+  backgroundCanvas.style.display = 'block';
+  backgroundCanvas.style.position = 'absolute';
+  backgroundCanvas.style.left = 0;
+  backgroundCanvas.style.top = 0;
+  
+  backgroundCanvas.style.backgroundColor = '#2B303B';
+
+  div.style.position = 'relative';
+  div.style.width = 50*sizeGrid+'px';
+  div.style.height = 30*sizeGrid+'px';
+  div.style.margin = '50px auto';
+  div.style.border = '2px solid ' + color.black;
+  document.body.appendChild(div);
+  div.appendChild(backgroundCanvas);
+  div.appendChild(canvas);
+
+  drawGrid();
+  var vx1 = Vector2d(-canvas.width/2/sizeGrid+1, 0);
+  var vx2 = Vector2d(canvas.width/sizeGrid-2, 0);
+
+  var vy1 = Vector2d(0, -canvas.height/2/sizeGrid+1);
+  var vy2 = Vector2d(0, canvas.height/sizeGrid-2);
+  drawVector2d(color.white, '', vx2, vx1, true, backgroundContext);
+  drawVector2d(color.white, '', vy2, vy1, true, backgroundContext);
+
   gameLoop();
 }
 
@@ -216,6 +236,103 @@ Mouse = (function() {
   };
 
   return Mouse;
+
+})();
+
+var Keyboard;
+
+Keyboard = (function() {
+  var downKeys, instance, onDown, onPress, onUp, pressKeys, resetAll, resetDown, resetPress, resetUp, upKeys;
+
+  pressKeys = {};
+
+  downKeys = {};
+
+  upKeys = {};
+
+  instance = null;
+
+  function Keyboard() {
+    window.document.addEventListener('keydown', function(e) {
+      e.preventDefault();
+      resetUp(e.keyCode);
+      onPress(e.keyCode);
+      return onDown(e.keyCode);
+    });
+    window.document.addEventListener('keyup', function(e) {
+      resetPress(e.keyCode);
+      resetDown(e.keyCode);
+      return onUp(e.keyCode);
+    });
+    window.addEventListener('blur', function() {
+      return resetAll();
+    });
+  }
+
+  Keyboard.getInstance = function() {
+    if (instance == null) {
+      instance = new Keyboard;
+    }
+    return instance;
+  };
+
+  Keyboard.prototype.isPressed = function(code) {
+    return pressKeys[code] != null;
+  };
+
+  Keyboard.prototype.isDown = function(code) {
+    if ((downKeys[code] != null) && downKeys[code] === true) {
+      downKeys[code] = 2;
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  Keyboard.prototype.isUp = function(code) {
+    if ((upKeys[code] != null) && upKeys[code] === true) {
+      upKeys[code] = 2;
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  resetAll = function() {
+    pressKeys = {};
+    downKeys = {};
+    return upKeys = {};
+  };
+
+  resetUp = function(keyCode) {
+    return delete upKeys[keyCode];
+  };
+
+  resetDown = function(keyCode) {
+    return delete downKeys[keyCode];
+  };
+
+  resetPress = function(keyCode) {
+    return delete pressKeys[keyCode];
+  };
+
+  onDown = function(keyCode) {
+    if (downKeys[keyCode] == null) {
+      return downKeys[keyCode] = true;
+    }
+  };
+
+  onUp = function(keyCode) {
+    if (upKeys[keyCode] == null) {
+      return upKeys[keyCode] = true;
+    }
+  };
+
+  onPress = function(keyCode) {
+    return pressKeys[keyCode] = true;
+  };
+
+  return Keyboard;
 
 })();
 
