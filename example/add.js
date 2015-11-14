@@ -72,7 +72,7 @@ car = (function() {
   vV = Vector2d.zero();
   Cdrag = 0.4257;
   Crr = Cdrag * 30;
-  M = 1500;
+  M = 1500/10;
   dt = 0.3;
 
   vV = Vector2d();
@@ -86,27 +86,77 @@ car = (function() {
   vV = vA.clone().multiply(dt).add(vV)
   vP = vV.clone().multiply(dt).add(vP)
 
+  var posWheel1 = Vector2d();
+  var rotateWheel = Vector2d.right();
+  var rW = Vector2d();
+  var rectCar = Vector2d(2, 1);
+
+  var L = 1;
+  var R = 0;
+  var vW = Vector2d.one();
+
+  var ll = Vector2d(0.6128355544951826, -0.5142300877492314);
   car = function() {
+    if (keyboard.isDown('R'.charCodeAt(0))) {
+      window.location.href = window.location.href;
+    }
+
     vVisual.rotate = vU.rotate;
     vFtraction.equate(vU).multiply(Engineforce);
     vFdrag.equate(vV).multiply(-Cdrag).multiply(vV.length)
     vFrr.equate(vV).multiply(-Crr)
     vFlong.equate(vFtraction).add(vFdrag).add(vFrr)
     vA.equate(vFlong).divide(M)
-    vV.add(vA.clone().multiply(dt))
+    vV.add(vA.clone().multiply(dt));
+    
     vP.add(vV.clone().multiply(dt))
-    drawVector2d(color.orange, '', vVisual, vP);
     if (keyboard.isPressed('W'.charCodeAt(0))) {
-      Engineforce = 50;
+      Engineforce = 50/10;
+    } else if (keyboard.isPressed('S'.charCodeAt(0))) {
+      Engineforce = -50/10;
     } else {
       Engineforce = 0;
     }
     if (keyboard.isPressed('D'.charCodeAt(0))) {
-      vU.rotate += 5;
+      rotateWheel.rotate += 1;
     }
     if (keyboard.isPressed('A'.charCodeAt(0))) {
-      vU.rotate -= 5;
+      rotateWheel.rotate -= 1;
     }
+    if (rotateWheel.rotate < -45) {
+      rotateWheel.rotate = -45;
+    }
+    if (rotateWheel.rotate > 45) {
+      rotateWheel.rotate = 45;
+    }
+
+    R = L/Math.sin(90-rotateWheel.rotate);
+    vW.equate(vV).divide(R);
+
+    drawRect(vP, vU, rectCar.x, rectCar.y);
+    
+    ll.rotate = vU.rotate - 40;
+    posWheel1.equate(vP).add(ll);
+    rW.equate(vU).rotate += rotateWheel.rotate;
+    drawRect(posWheel1, rW, 0.2, 0.1);
+
+    ll.rotate = vU.rotate + 40;
+    posWheel1.equate(vP).add(ll);
+    rW.equate(vU).rotate += rotateWheel.rotate;
+    drawRect(posWheel1, rW, 0.2, 0.1);
+
+    ll.rotate = vU.rotate - 40;
+    posWheel1.equate(vP).subtract(ll);
+    rW.equate(vU).rotate += rotateWheel.rotate;
+    drawRect(posWheel1, vU, 0.2, 0.1);
+
+    ll.rotate = vU.rotate + 40;
+    posWheel1.equate(vP).subtract(ll);
+    rW.equate(vU).rotate += rotateWheel.rotate;
+    drawRect(posWheel1, vU, 0.2, 0.1);
+
+    // drawVector2d(color.pink, '', ll);
+    drawVector2d(color.pink, '', vW);
   };
 
   return car;

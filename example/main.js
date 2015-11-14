@@ -36,6 +36,22 @@ lengthdirY = function(len, dir){
   return Math.sin(dir*Math.PI/180)*len;
 }
 
+var drawRect = function(position, rotate, width, height) {
+  var cx, cy, vx, vy;
+  cx = canvas.width/2 + position.x*sizeGrid;
+  cy = canvas.height/2 + position.y*sizeGrid;
+  context.beginPath();
+  context.save();
+  context.strokeStyle = color.orange;
+  context.lineWidth = 2;
+  context.translate(cx, cy);
+  context.rotate(rotate.rotate * Math.PI / 180);
+  context.rect(-width*20/2, -height*20/2, width*20, height*20);
+  context.stroke();
+  context.restore();
+  context.closePath();
+};
+
 drawVector2d = function(color, name, vector, vec2, arrow, contextC) {
   if (arrow == null) {
     arrow = true;
@@ -53,7 +69,6 @@ drawVector2d = function(color, name, vector, vec2, arrow, contextC) {
   vx = cx + vector.x*sizeGrid;
   vy = cy + vector.y*sizeGrid;
   contextC.beginPath();
-  contextC.fillStyle = color;
   contextC.strokeStyle = color;
   if (!vector.isZero()) {
     var vecRotate, ax, bx, ay, by, vecLength, textW;
