@@ -72,7 +72,7 @@ car = (function() {
   vV = Vector2d.zero();
   Cdrag = 0.4257;
   Crr = Cdrag * 30;
-  M = 1500/10;
+  M = 1500;
   dt = 0.3;
 
   vV = Vector2d();
@@ -91,15 +91,18 @@ car = (function() {
   var rW = Vector2d();
   var rectCar = Vector2d(2, 1);
 
-  var L = 1;
+  var L = 0.6128355544951826*2;
   var R = 0;
   var vW = Vector2d.one();
 
   var ll = Vector2d(0.6128355544951826, -0.5142300877492314);
+
+  var vWW = Vector2d();
   car = function() {
     if (keyboard.isDown('R'.charCodeAt(0))) {
       window.location.href = window.location.href;
     }
+    rotateWheel.rotate *= 0.9;
 
     vVisual.rotate = vU.rotate;
     vFtraction.equate(vU).multiply(Engineforce);
@@ -109,19 +112,30 @@ car = (function() {
     vA.equate(vFlong).divide(M)
     vV.add(vA.clone().multiply(dt));
     
+
+    R = L/Math.cos(Math.PI/180*(90 - rotateWheel.rotate));
+    vW.length = R;
+    vW.rotate = rotateWheel.rotate - 90;
+
+    vWW.equate(vV).divide(R);
+    vWW.rotate += 90;
+
+    vU.add(vWW).normalize();
+    // vU.rotate += 1;
+
     vP.add(vV.clone().multiply(dt))
     if (keyboard.isPressed('W'.charCodeAt(0))) {
-      Engineforce = 50/10;
+      Engineforce = 50;
     } else if (keyboard.isPressed('S'.charCodeAt(0))) {
-      Engineforce = -50/10;
+      Engineforce = -50;
     } else {
       Engineforce = 0;
     }
     if (keyboard.isPressed('D'.charCodeAt(0))) {
-      rotateWheel.rotate += 1;
+      rotateWheel.rotate += 2.5;
     }
     if (keyboard.isPressed('A'.charCodeAt(0))) {
-      rotateWheel.rotate -= 1;
+      rotateWheel.rotate -= 2.5;
     }
     if (rotateWheel.rotate < -45) {
       rotateWheel.rotate = -45;
@@ -130,8 +144,6 @@ car = (function() {
       rotateWheel.rotate = 45;
     }
 
-    R = L/Math.sin(90-rotateWheel.rotate);
-    vW.equate(vV).divide(R);
 
     drawRect(vP, vU, rectCar.x, rectCar.y);
     
@@ -156,7 +168,6 @@ car = (function() {
     drawRect(posWheel1, vU, 0.2, 0.1);
 
     // drawVector2d(color.pink, '', ll);
-    drawVector2d(color.pink, '', vW);
   };
 
   return car;
