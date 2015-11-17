@@ -8,10 +8,10 @@ paths = coffee: ['source/**/*.coffee']
 
 gulp.task 'coffee', ->
   return gulp.src paths.coffee
-    .pipe coffee bare: true
+    .pipe coffee bare: false
     .on 'error', console.log
     .pipe concat 'index.js'
-    .pipe uglify()
+    # .pipe uglify()
     .pipe gulp.dest './'
 
 gulp.task 'watch', ->

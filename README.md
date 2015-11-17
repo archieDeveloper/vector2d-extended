@@ -38,6 +38,70 @@ vec2 = vec1
 
 ## Documentation API
 
+
+* Properties
+
+  * x
+  * y
+  * length
+  * lengthSquared
+  * rotate
+
+* Static Methods
+
+  * zero
+  * one
+  * up
+  * down
+  * right
+  * left
+  * clampMagnitude
+  * lerp
+  * scale
+  * add
+  * subtract
+  * multiply
+  * divide
+  * normalize
+  * project
+  * round
+  * invert
+
+* Instance Methods
+
+  * Return Vector2d
+
+    * add
+    * subtract
+    * multiply
+    * divide
+    * normalize
+    * project
+    * round
+    * zero
+    * clone
+    * equate
+    * invert
+    * lerp
+    * scale
+    * clampMagnitude
+
+  * Return Number
+
+    * dot
+    * cross
+    * distance
+    * distanceSquared
+    * angle
+
+  * Return Boolean
+
+    * isZero
+    * isEqual
+    * isNaN
+    * isFinite
+    * isEqualRotate
+
 ### Propirties
 
 #### x
@@ -139,6 +203,10 @@ Shorthand for writing Vector2d(0, -1).
 
 @peturn Vector2d A new vector
 
+#### equate
+
+@peturn Vector2d this
+
 
 #### magnitude:
 
@@ -198,3 +266,4 @@ Shorthand for writing Vector2d(0, -1).
 #### isNaN
 
 @peturn Boolean
+

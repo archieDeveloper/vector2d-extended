@@ -1,0 +1,1857 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset='UTF-8'>
+  <title>CoffeeScript API Documentation</title>
+  <script src='../javascript/application.js'></script>
+  <script src='../javascript/search.js'></script>
+  <link rel='stylesheet' href='../stylesheets/application.css' type='text/css'>
+</head>
+  <body>
+    <div id='base' data-path='../'></div>
+<div id='header'>
+  <div id='menu'>
+    <a href='../extra/README.md.html' title='Vector2d-extended'>
+      Vector2d-extended
+    </a>
+    &raquo;
+    <a href='../alphabetical_index.html' title='Index'>
+      Index
+    </a>
+    &raquo;
+    <span class='title'>Vector2d</span>
+  </div>
+</div>
+    <div id='content'>
+      <h1>
+        Class:
+        Vector2d
+      </h1>
+      <table class='box'>
+        <tr>
+          <td>Defined in:</td>
+          <td>source&#47;index.coffee</td>
+        </tr>
+      </table>
+      <h2>Class Method Summary</h2>
+      <ul class='summary'>
+  <li>
+    <span class='signature'>
+      <a href='#zero-static'>
+        .
+(Vector2d)
+<b>zero</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Нулевой вектор 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#one-static'>
+        .
+(Vector2d)
+<b>one</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Орт 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#up-static'>
+        .
+(Vector2d)
+<b>up</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Единичный вектор направленный вверх 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#down-static'>
+        .
+(Vector2d)
+<b>down</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Единичный вектор направленный вниз 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#right-static'>
+        .
+(Vector2d)
+<b>right</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Единичный вектор направленный вправо 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#left-static'>
+        .
+(Vector2d)
+<b>left</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Единичный вектор направленный влево 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#clampMagnitude-static'>
+        .
+(Vector2d)
+<b>clampMagnitude</b><span>(a, maxLength)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Укорачивает вектор до максимальной длинны 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#lerp-static'>
+        .
+(Vector2d)
+<b>lerp</b><span>(a, b, l)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#scale-static'>
+        .
+(Vector2d)
+<b>scale</b><span>(a, b)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Покомпонентное умножение векторов 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#add-static'>
+        .
+(Vector2d)
+<b>add</b><span>(a, b)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Сложение векторов 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#subtract-static'>
+        .
+(Vector2d)
+<b>subtract</b><span>(a, b)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Вычитание векторов 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#multiply-static'>
+        .
+(Vector2d)
+<b>multiply</b><span>(a, scalar)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      умножение вектора на скаляр 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#divide-static'>
+        .
+(Vector2d)
+<b>divide</b><span>(a, scalar)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Деление вектора на скаляр 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#normalize-static'>
+        .
+(Vector2d)
+<b>normalize</b><span>(a)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Нормализация вектора 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#project-static'>
+        .
+(Vector2d)
+<b>project</b><span>(a, b)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Проекция вектора a на вектор b 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#round-static'>
+        .
+(Vector2d)
+<b>round</b><span>(a)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Округление компонент вектора 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#invert-static'>
+        .
+(Vector2d)
+<b>invert</b><span>(a)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Инвертирование вектора 
+    </span>
+  </li>
+</ul>
+      <h2>Instance Method Summary</h2>
+      <ul class='summary'>
+  <li>
+    <span class='signature'>
+      <a href='#add-dynamic'>
+        #
+(Vector2d)
+<b>add</b><span>(b)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Прибавить к текущему вектору вектор b 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#subtract-dynamic'>
+        #
+(Vector2d)
+<b>subtract</b><span>(b)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Вычесть из текущего вектора вектор b 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#multiply-dynamic'>
+        #
+(Vector2d)
+<b>multiply</b><span>(scalar)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Умножить вектор на скаляр 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#divide-dynamic'>
+        #
+(Vector2d)
+<b>divide</b><span>(scalar)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Разделить вектор на скаляр 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#normalize-dynamic'>
+        #
+(Vector2d)
+<b>normalize</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Нормализация вектора 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#project-dynamic'>
+        #
+(Vector2d)
+<b>project</b><span>(b)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Проекция вектора b на текущий вектор 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#round-dynamic'>
+        #
+(Vector2d)
+<b>round</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Округление вектора до целочисленного 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#zero-dynamic'>
+        #
+(Vector2d)
+<b>zero</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Устанавливает текущий вектор в 0 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#clone-dynamic'>
+        #
+(Vector2d)
+<b>clone</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Клонирует текущий вектор 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#invert-dynamic'>
+        #
+(Vector2d)
+<b>invert</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Меняет направление вектора на противоположное 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#lerp-dynamic'>
+        #
+(Vector2d)
+<b>lerp</b><span>(b, l)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#scale-dynamic'>
+        #
+(Vector2d)
+<b>scale</b><span>(b)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Умножение векторов по компонентно 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#clampMagnitude-dynamic'>
+        #
+(Vector2d)
+<b>clampMagnitude</b><span>(maxLength)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Обрезать вектор по максимальной длине 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#dot-dynamic'>
+        #
+(Number)
+<b>dot</b><span>(b)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Dot product 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#cross-dynamic'>
+        #
+(Number)
+<b>cross</b><span>(b)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Cross product 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#distance-dynamic'>
+        #
+(Number)
+<b>distance</b><span>(b)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Дистанция между текущим вектором и вектором b 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#distanceSquared-dynamic'>
+        #
+(Number)
+<b>distanceSquared</b><span>(b)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Дистанция между текущим вектором и вектором b в квадрате 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#angle-dynamic'>
+        #
+(Number)
+<b>angle</b><span>(b)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Угол между векторами 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#isZero-dynamic'>
+        #
+(Boolean)
+<b>isZero</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Является ли вектор нулевым? 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#isEqual-dynamic'>
+        #
+(Boolean)
+<b>isEqual</b><span>(b)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Равен ли текущий вектор, вектору b? 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#isNaN-dynamic'>
+        #
+(Boolean)
+<b>isNaN</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Является ли вектор NaN 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#isFinite-dynamic'>
+        #
+(Boolean)
+<b>isFinite</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Является ли вектор числом 
+    </span>
+  </li>
+</ul>
+      <h2>Class Method Details</h2>
+      <div class='methods'>
+  <div class='method_details'>
+    <p class='signature' id='zero-static'>
+      .
+(Vector2d)
+<b>zero</b><span>()</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Нулевой вектор</p>
+</div>
+<div class='tags'>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      <tt><a href='../class/Vector2d.html'>Vector2d</a></tt>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='one-static'>
+      .
+(Vector2d)
+<b>one</b><span>()</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Орт</p>
+</div>
+<div class='tags'>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      <tt><a href='../class/Vector2d.html'>Vector2d</a></tt>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='up-static'>
+      .
+(Vector2d)
+<b>up</b><span>()</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Единичный вектор направленный вверх</p>
+</div>
+<div class='tags'>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      <tt><a href='../class/Vector2d.html'>Vector2d</a></tt>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='down-static'>
+      .
+(Vector2d)
+<b>down</b><span>()</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Единичный вектор направленный вниз</p>
+</div>
+<div class='tags'>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      <tt><a href='../class/Vector2d.html'>Vector2d</a></tt>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='right-static'>
+      .
+(Vector2d)
+<b>right</b><span>()</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Единичный вектор направленный вправо</p>
+</div>
+<div class='tags'>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      <tt><a href='../class/Vector2d.html'>Vector2d</a></tt>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='left-static'>
+      .
+(Vector2d)
+<b>left</b><span>()</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Единичный вектор направленный влево</p>
+</div>
+<div class='tags'>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      <tt><a href='../class/Vector2d.html'>Vector2d</a></tt>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='clampMagnitude-static'>
+      .
+(Vector2d)
+<b>clampMagnitude</b><span>(a, maxLength)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Укорачивает вектор до максимальной длинны</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>a</span>
+      <span class='type'>
+        (
+          <tt><a href='../class/Vector2d.html'>Vector2d</a></tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>Вектор который нужно укоротить </span>
+    </li>
+    <li>
+      <span class='name'>maxLength</span>
+      <span class='type'>
+        (
+          <tt>Number</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>Максимальная длинна вектора </span>
+    </li>
+  </ul>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (
+        <tt><a href='../class/Vector2d.html'>Vector2d</a></tt>
+      )
+      &mdash;
+      <span class='desc'>A new vector </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='lerp-static'>
+      .
+(Vector2d)
+<b>lerp</b><span>(a, b, l)</span>
+      <br>
+    </p>
+    <div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>a</span>
+      <span class='type'>
+        (
+          <tt><a href='../class/Vector2d.html'>Vector2d</a></tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>Первый вектор </span>
+    </li>
+    <li>
+      <span class='name'>b</span>
+      <span class='type'>
+        (
+          <tt><a href='../class/Vector2d.html'>Vector2d</a></tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>Второй вектор </span>
+    </li>
+    <li>
+      <span class='name'>l</span>
+      <span class='type'>
+        (
+          <tt>Number</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>Коофицент (0 соответсвует вектору a, 1 - вектору b, 0.5 среднее между a и b) </span>
+    </li>
+  </ul>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (
+        <tt><a href='../class/Vector2d.html'>Vector2d</a></tt>
+      )
+      &mdash;
+      <span class='desc'>A new vector </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='scale-static'>
+      .
+(Vector2d)
+<b>scale</b><span>(a, b)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Покомпонентное умножение векторов</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>a</span>
+      <span class='type'>
+        (
+          <tt><a href='../class/Vector2d.html'>Vector2d</a></tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>Первый вектор </span>
+    </li>
+    <li>
+      <span class='name'>b</span>
+      <span class='type'>
+        (
+          <tt><a href='../class/Vector2d.html'>Vector2d</a></tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>Второй вектор </span>
+    </li>
+  </ul>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (
+        <tt><a href='../class/Vector2d.html'>Vector2d</a></tt>
+      )
+      &mdash;
+      <span class='desc'>A new vector </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='add-static'>
+      .
+(Vector2d)
+<b>add</b><span>(a, b)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Сложение векторов</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>a</span>
+      <span class='type'>
+        (
+          <tt><a href='../class/Vector2d.html'>Vector2d</a></tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>Первый вектор </span>
+    </li>
+    <li>
+      <span class='name'>b</span>
+      <span class='type'>
+        (
+          <tt><a href='../class/Vector2d.html'>Vector2d</a></tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>Второй вектор </span>
+    </li>
+  </ul>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (
+        <tt><a href='../class/Vector2d.html'>Vector2d</a></tt>
+      )
+      &mdash;
+      <span class='desc'>A new vector </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='subtract-static'>
+      .
+(Vector2d)
+<b>subtract</b><span>(a, b)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Вычитание векторов</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>a</span>
+      <span class='type'>
+        (
+          <tt><a href='../class/Vector2d.html'>Vector2d</a></tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>Первый вектор </span>
+    </li>
+    <li>
+      <span class='name'>b</span>
+      <span class='type'>
+        (
+          <tt><a href='../class/Vector2d.html'>Vector2d</a></tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>Второй вектор </span>
+    </li>
+  </ul>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (
+        <tt><a href='../class/Vector2d.html'>Vector2d</a></tt>
+      )
+      &mdash;
+      <span class='desc'>A new vector </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='multiply-static'>
+      .
+(Vector2d)
+<b>multiply</b><span>(a, scalar)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>умножение вектора на скаляр</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>a</span>
+      <span class='type'>
+        (
+          <tt><a href='../class/Vector2d.html'>Vector2d</a></tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>Первый вектор </span>
+    </li>
+    <li>
+      <span class='name'>b</span>
+      <span class='type'>
+        (
+          <tt><a href='../class/Vector2d.html'>Vector2d</a></tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>Второй вектор </span>
+    </li>
+  </ul>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (
+        <tt><a href='../class/Vector2d.html'>Vector2d</a></tt>
+      )
+      &mdash;
+      <span class='desc'>A new vector </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='divide-static'>
+      .
+(Vector2d)
+<b>divide</b><span>(a, scalar)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Деление вектора на скаляр</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>a</span>
+      <span class='type'>
+        (
+          <tt><a href='../class/Vector2d.html'>Vector2d</a></tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>Первый вектор </span>
+    </li>
+    <li>
+      <span class='name'>b</span>
+      <span class='type'>
+        (
+          <tt><a href='../class/Vector2d.html'>Vector2d</a></tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>Второй вектор </span>
+    </li>
+  </ul>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (
+        <tt><a href='../class/Vector2d.html'>Vector2d</a></tt>
+      )
+      &mdash;
+      <span class='desc'>A new vector </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='normalize-static'>
+      .
+(Vector2d)
+<b>normalize</b><span>(a)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Нормализация вектора</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>a</span>
+      <span class='type'>
+        (
+          <tt><a href='../class/Vector2d.html'>Vector2d</a></tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>Вектор </span>
+    </li>
+  </ul>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (
+        <tt><a href='../class/Vector2d.html'>Vector2d</a></tt>
+      )
+      &mdash;
+      <span class='desc'>A new vector </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='project-static'>
+      .
+(Vector2d)
+<b>project</b><span>(a, b)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Проекция вектора a на вектор b</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>a</span>
+      <span class='type'>
+        (
+          <tt><a href='../class/Vector2d.html'>Vector2d</a></tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>Первый вектор </span>
+    </li>
+    <li>
+      <span class='name'>b</span>
+      <span class='type'>
+        (
+          <tt><a href='../class/Vector2d.html'>Vector2d</a></tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>Второй вектор </span>
+    </li>
+  </ul>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (
+        <tt><a href='../class/Vector2d.html'>Vector2d</a></tt>
+      )
+      &mdash;
+      <span class='desc'>A new vector </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='round-static'>
+      .
+(Vector2d)
+<b>round</b><span>(a)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Округление компонент вектора</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>a</span>
+      <span class='type'>
+        (
+          <tt><a href='../class/Vector2d.html'>Vector2d</a></tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>Вектор </span>
+    </li>
+  </ul>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (
+        <tt><a href='../class/Vector2d.html'>Vector2d</a></tt>
+      )
+      &mdash;
+      <span class='desc'>A new vector </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='invert-static'>
+      .
+(Vector2d)
+<b>invert</b><span>(a)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Инвертирование вектора</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>a</span>
+      <span class='type'>
+        (
+          <tt><a href='../class/Vector2d.html'>Vector2d</a></tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>Вектор </span>
+    </li>
+  </ul>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (
+        <tt><a href='../class/Vector2d.html'>Vector2d</a></tt>
+      )
+      &mdash;
+      <span class='desc'>A new vector </span>
+    </li>
+  </ul>
+</div>
+  </div>
+</div>
+      <h2>Constructor Details</h2>
+      <div class='methods'>
+  <div class='method_details'>
+    <p class='signature' id='constructor-dynamic'>
+      #
+(void)
+<b>constructor</b><span>(x, y)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Конструктор</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>x</span>
+      <span class='type'>
+        (
+          <tt>Number</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>Компонент вектора X </span>
+    </li>
+    <li>
+      <span class='name'>y</span>
+      <span class='type'>
+        (
+          <tt>Number</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>Компонент вектора Y </span>
+    </li>
+  </ul>
+</div>
+  </div>
+</div>
+      <h2>Instance Method Details</h2>
+      <div class='methods'>
+  <div class='method_details'>
+    <p class='signature' id='add-dynamic'>
+      #
+(Vector2d)
+<b>add</b><span>(b)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Прибавить к текущему вектору вектор b</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>b</span>
+      <span class='type'>
+        (
+          <tt><a href='../class/Vector2d.html'>Vector2d</a></tt>
+        )
+      </span>
+    </li>
+  </ul>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (
+        <tt><a href='../class/Vector2d.html'>Vector2d</a></tt>
+      )
+      &mdash;
+      <span class='desc'>this </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='subtract-dynamic'>
+      #
+(Vector2d)
+<b>subtract</b><span>(b)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Вычесть из текущего вектора вектор b</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>b</span>
+      <span class='type'>
+        (
+          <tt><a href='../class/Vector2d.html'>Vector2d</a></tt>
+        )
+      </span>
+    </li>
+  </ul>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (
+        <tt><a href='../class/Vector2d.html'>Vector2d</a></tt>
+      )
+      &mdash;
+      <span class='desc'>this </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='multiply-dynamic'>
+      #
+(Vector2d)
+<b>multiply</b><span>(scalar)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Умножить вектор на скаляр</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>scalar</span>
+      <span class='type'>
+        (
+          <tt>Number</tt>
+        )
+      </span>
+    </li>
+  </ul>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (
+        <tt><a href='../class/Vector2d.html'>Vector2d</a></tt>
+      )
+      &mdash;
+      <span class='desc'>this </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='divide-dynamic'>
+      #
+(Vector2d)
+<b>divide</b><span>(scalar)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Разделить вектор на скаляр</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>scalar</span>
+      <span class='type'>
+        (
+          <tt>Number</tt>
+        )
+      </span>
+    </li>
+  </ul>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (
+        <tt><a href='../class/Vector2d.html'>Vector2d</a></tt>
+      )
+      &mdash;
+      <span class='desc'>this </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='normalize-dynamic'>
+      #
+(Vector2d)
+<b>normalize</b><span>()</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Нормализация вектора</p>
+</div>
+<div class='tags'>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (
+        <tt><a href='../class/Vector2d.html'>Vector2d</a></tt>
+      )
+      &mdash;
+      <span class='desc'>this </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='project-dynamic'>
+      #
+(Vector2d)
+<b>project</b><span>(b)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Проекция вектора b на текущий вектор</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>b</span>
+      <span class='type'>
+        (
+          <tt><a href='../class/Vector2d.html'>Vector2d</a></tt>
+        )
+      </span>
+    </li>
+  </ul>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (
+        <tt><a href='../class/Vector2d.html'>Vector2d</a></tt>
+      )
+      &mdash;
+      <span class='desc'>this </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='round-dynamic'>
+      #
+(Vector2d)
+<b>round</b><span>()</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Округление вектора до целочисленного</p>
+</div>
+<div class='tags'>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (
+        <tt><a href='../class/Vector2d.html'>Vector2d</a></tt>
+      )
+      &mdash;
+      <span class='desc'>this </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='zero-dynamic'>
+      #
+(Vector2d)
+<b>zero</b><span>()</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Устанавливает текущий вектор в 0</p>
+</div>
+<div class='tags'>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (
+        <tt><a href='../class/Vector2d.html'>Vector2d</a></tt>
+      )
+      &mdash;
+      <span class='desc'>this </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='clone-dynamic'>
+      #
+(Vector2d)
+<b>clone</b><span>()</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Клонирует текущий вектор</p>
+</div>
+<div class='tags'>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (
+        <tt><a href='../class/Vector2d.html'>Vector2d</a></tt>
+      )
+      &mdash;
+      <span class='desc'>A new vector </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='invert-dynamic'>
+      #
+(Vector2d)
+<b>invert</b><span>()</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Меняет направление вектора на противоположное</p>
+</div>
+<div class='tags'>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (
+        <tt><a href='../class/Vector2d.html'>Vector2d</a></tt>
+      )
+      &mdash;
+      <span class='desc'>this </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='lerp-dynamic'>
+      #
+(Vector2d)
+<b>lerp</b><span>(b, l)</span>
+      <br>
+    </p>
+    <div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>b</span>
+      <span class='type'>
+        (
+          <tt><a href='../class/Vector2d.html'>Vector2d</a></tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>Второй вектор </span>
+    </li>
+    <li>
+      <span class='name'>l</span>
+      <span class='type'>
+        (
+          <tt>Number</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>Коофицент </span>
+    </li>
+  </ul>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (
+        <tt><a href='../class/Vector2d.html'>Vector2d</a></tt>
+      )
+      &mdash;
+      <span class='desc'>this </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='scale-dynamic'>
+      #
+(Vector2d)
+<b>scale</b><span>(b)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Умножение векторов по компонентно</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>b</span>
+      <span class='type'>
+        (
+          <tt><a href='../class/Vector2d.html'>Vector2d</a></tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>Второй вектор </span>
+    </li>
+  </ul>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (
+        <tt><a href='../class/Vector2d.html'>Vector2d</a></tt>
+      )
+      &mdash;
+      <span class='desc'>this </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='clampMagnitude-dynamic'>
+      #
+(Vector2d)
+<b>clampMagnitude</b><span>(maxLength)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Обрезать вектор по максимальной длине</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>maxLength</span>
+      <span class='type'>
+        (
+          <tt>Number</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>Максимальная длинна вектора </span>
+    </li>
+  </ul>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (
+        <tt><a href='../class/Vector2d.html'>Vector2d</a></tt>
+      )
+      &mdash;
+      <span class='desc'>this </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='dot-dynamic'>
+      #
+(Number)
+<b>dot</b><span>(b)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Dot product</p>
+</div>
+<div class='tags'>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      <tt>Number</tt>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='cross-dynamic'>
+      #
+(Number)
+<b>cross</b><span>(b)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Cross product</p>
+</div>
+<div class='tags'>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      <tt>Number</tt>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='distance-dynamic'>
+      #
+(Number)
+<b>distance</b><span>(b)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Дистанция между текущим вектором и вектором b</p>
+</div>
+<div class='tags'>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      <tt>Number</tt>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='distanceSquared-dynamic'>
+      #
+(Number)
+<b>distanceSquared</b><span>(b)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Дистанция между текущим вектором и вектором b в квадрате</p>
+</div>
+<div class='tags'>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      <tt>Number</tt>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='angle-dynamic'>
+      #
+(Number)
+<b>angle</b><span>(b)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Угол между векторами</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>b</span>
+      <span class='type'>
+        (
+          <tt><a href='../class/Vector2d.html'>Vector2d</a></tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>Второй вектор </span>
+    </li>
+  </ul>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      <tt>Number</tt>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='isZero-dynamic'>
+      #
+(Boolean)
+<b>isZero</b><span>()</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Является ли вектор нулевым?</p>
+</div>
+<div class='tags'>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      <tt>Boolean</tt>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='isEqual-dynamic'>
+      #
+(Boolean)
+<b>isEqual</b><span>(b)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Равен ли текущий вектор, вектору b?</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>b</span>
+      <span class='type'>
+        (
+          <tt><a href='../class/Vector2d.html'>Vector2d</a></tt>
+        )
+      </span>
+    </li>
+  </ul>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      <tt>Boolean</tt>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='isNaN-dynamic'>
+      #
+(Boolean)
+<b>isNaN</b><span>()</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Является ли вектор NaN</p>
+</div>
+<div class='tags'>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      <tt>Boolean</tt>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='isFinite-dynamic'>
+      #
+(Boolean)
+<b>isFinite</b><span>()</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Является ли вектор числом</p>
+</div>
+<div class='tags'>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      <tt>Boolean</tt>
+    </li>
+  </ul>
+</div>
+  </div>
+</div>
+    </div>
+    <div id='footer'>
+  November 12, 15 16:48:44 by
+  <a href='https://github.com/coffeedoc/codo' title='CoffeeScript API documentation generator'>
+    Codo
+  </a>
+  2.0.11
+  &#10034;
+  Press H to see the keyboard shortcuts
+  &#10034;
+  <a href='http://twitter.com/netzpirat' target='_parent'>@netzpirat</a>
+  &#10034;
+  <a href='http://twitter.com/_inossidabile' target='_parent'>@_inossidabile</a>
+</div>
+<iframe id='search_frame'></iframe>
+<div id='fuzzySearch'>
+  <input type='text'>
+  <ol></ol>
+</div>
+<div id='help'>
+  <p>
+    Quickly fuzzy find classes, mixins, methods, file:
+  </p>
+  <ul>
+    <li>
+      <span>T</span>
+      Open fuzzy finder dialog
+    </li>
+  </ul>
+  <p>
+    Control the navigation frame:
+  </p>
+  <ul>
+    <li>
+      <span>L</span>
+      Toggle list view
+    </li>
+    <li>
+      <span>C</span>
+      Show class list
+    </li>
+    <li>
+      <span>I</span>
+      Show mixin list
+    </li>
+    <li>
+      <span>F</span>
+      Show file list
+    </li>
+    <li>
+      <span>M</span>
+      Show method list
+    </li>
+    <li>
+      <span>E</span>
+      Show extras list
+    </li>
+  </ul>
+  <p>
+    You can focus and blur the search input:
+  </p>
+  <ul>
+    <li>
+      <span>S</span>
+      Focus search input
+    </li>
+    <li>
+      <span>Esc</span>
+      Blur search input
+    </li>
+  </ul>
+</div>
+  </body>
+</html>
