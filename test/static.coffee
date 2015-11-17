@@ -46,6 +46,36 @@ describe '#static', ->
     v2 = Vector2d -1, 0
     create v1, v2
 
+  describe '#clampMagnitude', ->
+    a = Vector2d 100, 101
+    maxLength = 10
+    v1 = Vector2d.clampMagnitude a, maxLength
+    v2 = a.clone().normalize().multiply maxLength
+    create v1, v2
+
+    a = Vector2d 1, 1
+    maxLength = 10
+    v1 = Vector2d.clampMagnitude a, maxLength
+    v2 = a.clone()
+    create v1, v2
+
+  describe '#lerp', ->
+    params = [
+      [0, 1]
+      [1, 2]
+      [0.5, 1.5]
+      [-1, 1]
+      [2, 2]
+    ]
+    itLerp = (param)->
+      a = Vector2d 1, 1
+      b = Vector2d 2, 2
+      v1 = Vector2d.lerp a, b, param[0]
+      v2 = Vector2d param[1], param[1]
+      create v1, v2
+    for ind, param of params
+      itLerp param
+
   describe '#scale', ->
     a = Vector2d 6, 7
     b = Vector2d 4, 3
@@ -89,6 +119,14 @@ describe '#static', ->
     it "Длина вектора равна единице", ->
       assert.propertyVal v1, 'length', 1, 'Длинна вектора не равна единице'
       assert.propertyVal v1, 'magnitude', 1, 'Длинна вектора не равна единице'
+
+  describe '#project', ->
+    a = Vector2d 11, 46
+    b = Vector2d 32, 34
+    c = ((a.x * b.x)+(a.y * b.y)) / ((b.x*b.x)+(b.y*b.y))
+    v1 = Vector2d.project a, b
+    v2 = Vector2d b.x*c, b.y*c
+    create v1, v2
 
   describe '#round', ->
     a = Vector2d 1.234, 1.234
