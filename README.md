@@ -80,6 +80,7 @@ vec2 = vec1
     * round
     * zero
     * clone
+    * equate
     * invert
     * lerp
     * scale
@@ -201,6 +202,10 @@ Shorthand for writing Vector2d(0, -1).
 #### clone
 
 @peturn Vector2d A new vector
+
+#### equate
+
+@peturn Vector2d this
 
 
 #### magnitude:
