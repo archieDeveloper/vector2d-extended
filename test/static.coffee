@@ -16,48 +16,78 @@ describe '#static', ->
       assert.propertyVal v1, 'x', v2.x, 'Свойство X не равно '+v2.x
       assert.propertyVal v1, 'y', v2.y, 'Свойство Y не равно '+v2.y
 
+  notChange = (o1, o2)->
+    it 'Объекты не изменяются', ->
+      assert.deepEqual(o1, o2);
+
+  checkMethod = (methodName, args)->
+    if args.length == 2
+      v1 = Vector2d[methodName]()
+      v2 = Vector2d args[0], args[1]
+      create v1, v2
+    else if args.length == 4
+      a = Vector2d args[0], args[1]
+      aClone = a.clone()
+      v1 = Vector2d[methodName] a
+      v2 = Vector2d args[2], args[3]
+      create v1, v2
+      notChange a, aClone
+    else if args.length == 5
+      a = Vector2d args[0], args[1]
+      b = args[2]
+      aClone = a.clone()
+      v1 = Vector2d[methodName] a, b
+      v2 = Vector2d args[3], args[4]
+      create v1, v2
+      notChange a, aClone
+    else if args.length == 6
+      a = Vector2d args[0], args[1]
+      b = Vector2d args[2], args[3]
+      aClone = a.clone()
+      bClone = b.clone()
+      v1 = Vector2d[methodName] a, b
+      v2 = Vector2d args[4], args[5]
+      create v1, v2
+      notChange a, aClone
+      notChange b, bClone
+
   describe '#zero', ->
-    v1 = Vector2d.zero()
-    v2 = Vector2d 0, 0
-    create v1, v2
+    args = [0, 0]
+    checkMethod 'zero', args
 
   describe '#one', ->
-    v1 = Vector2d.one()
-    v2 = Vector2d 1, 1
-    create v1, v2
+    args = [1, 1]
+    checkMethod 'one', args
 
   describe '#up', ->
-    v1 = Vector2d.up()
-    v2 = Vector2d 0, -1
-    create v1, v2
+    args = [0, -1]
+    checkMethod 'up', args
 
   describe '#down', ->
-    v1 = Vector2d.down()
-    v2 = Vector2d 0, 1
-    create v1, v2
+    args = [0, 1]
+    checkMethod 'down', args
 
   describe '#right', ->
-    v1 = Vector2d.right()
-    v2 = Vector2d 1, 0
-    create v1, v2
+    args = [1, 0]
+    checkMethod 'right', args
 
   describe '#left', ->
-    v1 = Vector2d.left()
-    v2 = Vector2d -1, 0
-    create v1, v2
+    args = [-1, 0]
+    checkMethod 'left', args
 
   describe '#clampMagnitude', ->
-    a = Vector2d 100, 101
-    maxLength = 10
-    v1 = Vector2d.clampMagnitude a, maxLength
-    v2 = a.clone().normalize().multiply maxLength
-    create v1, v2
-
-    a = Vector2d 1, 1
-    maxLength = 10
-    v1 = Vector2d.clampMagnitude a, maxLength
-    v2 = a.clone()
-    create v1, v2
+    args = [
+      100, 101
+      10
+      7.035801295960805, 7.106159308920414
+    ]
+    checkMethod 'clampMagnitude', args
+    args = [
+      1, 1
+      10
+      1, 1
+    ]
+    checkMethod 'clampMagnitude', args
 
   describe '#lerp', ->
     params = [
@@ -70,72 +100,81 @@ describe '#static', ->
     itLerp = (param)->
       a = Vector2d 1, 1
       b = Vector2d 2, 2
+      aClone = a.clone()
+      bClone = b.clone()
       v1 = Vector2d.lerp a, b, param[0]
       v2 = Vector2d param[1], param[1]
       create v1, v2
+      notChange a, aClone
+      notChange b, bClone
     for ind, param of params
       itLerp param
 
   describe '#scale', ->
-    a = Vector2d 6, 7
-    b = Vector2d 4, 3
-    v1 = Vector2d.scale a, b
-    v2 = Vector2d 6*4, 7*3
-    create v1, v2
+    args = [
+      6,7
+      4,3
+      6*4, 7*3
+    ]
+    checkMethod 'scale', args
 
   describe '#add', ->
-    a = Vector2d 6, 7
-    b = Vector2d 4, 3
-    v1 = Vector2d.add a, b
-    v2 = Vector2d 10, 10
-    create v1, v2
+    args = [
+      6,7
+      4,3
+      10, 10
+    ]
+    checkMethod 'add', args
 
   describe '#subtract', ->
-    a = Vector2d 6, 7
-    b = Vector2d 4, 3
-    v1 = Vector2d.subtract a, b
-    v2 = Vector2d 2, 4
-    create v1, v2
+    args = [
+      6,7
+      4,3
+      2, 4
+    ]
+    checkMethod 'subtract', args
 
   describe '#multiply', ->
-    a = Vector2d 6, 7
-    b = 5
-    v1 = Vector2d.multiply a, b
-    v2 = Vector2d 6*5, 7*5
-    create v1, v2
+    args = [
+      6, 7
+      5
+      6*5, 7*5
+    ]
+    checkMethod 'multiply', args
 
   describe '#divide', ->
-    a = Vector2d 6, 7
-    b = 5
-    v1 = Vector2d.divide a, b
-    v2 = Vector2d 6/5, 7/5
-    create v1, v2
+    args = [
+      6, 7
+      5
+      6/5, 7/5
+    ]
+    checkMethod 'divide', args
 
   describe '#normalize', ->
-    a = Vector2d 11, 46
-    v1 = Vector2d.normalize a
-    v2 = Vector2d a.x/a.magnitude, a.y/a.magnitude
-    create v1, v2
-    it "Длина вектора равна единице", ->
-      assert.propertyVal v1, 'length', 1, 'Длинна вектора не равна единице'
-      assert.propertyVal v1, 'magnitude', 1, 'Длинна вектора не равна единице'
+    args = [
+      11, 46
+      0.23257321322170788, 0.9725788916544148
+    ]
+    checkMethod 'normalize', args
 
   describe '#project', ->
-    a = Vector2d 11, 46
-    b = Vector2d 32, 34
-    c = ((a.x * b.x)+(a.y * b.y)) / ((b.x*b.x)+(b.y*b.y))
-    v1 = Vector2d.project a, b
-    v2 = Vector2d b.x*c, b.y*c
-    create v1, v2
+    args = [
+      11,46
+      32,34
+      28.124770642201835, 29.88256880733945
+    ]
+    checkMethod 'project', args
 
   describe '#round', ->
-    a = Vector2d 1.234, 1.234
-    v1 = Vector2d 1, 1
-    v2 = Vector2d.round a
-    create v1, v2
+    args = [
+      1.234, 1.234
+      1, 1
+    ]
+    checkMethod 'round', args
 
   describe '#invert', ->
-    a = Vector2d 1, 1
-    v1 = Vector2d -1, -1
-    v2 = Vector2d.invert a
-    create v1, v2
+    args = [
+      1, 1
+      -1, -1
+    ]
+    checkMethod 'invert', args
