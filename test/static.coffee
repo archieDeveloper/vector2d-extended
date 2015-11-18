@@ -18,7 +18,7 @@ describe '#static', ->
 
   notChange = (o1, o2)->
     it 'Объекты не изменяются', ->
-      assert.deepEqual(o1, o2);
+      assert.deepEqual o1, o2
 
   checkMethod = (methodName, args)->
     if args.length == 2
