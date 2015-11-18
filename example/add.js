@@ -99,6 +99,19 @@ car = (function() {
 
   var vWW = Vector2d();
   car = function() {
+    if (vP.x < -25) {
+      vP.x = 25
+    }
+    if (vP.x > 25) {
+      vP.x = -25
+    }
+
+    if (vP.y < -15) {
+      vP.y = 15
+    }
+    if (vP.y > 15) {
+      vP.y = -15
+    }
     if (keyboard.isDown('R'.charCodeAt(0))) {
       window.location.href = window.location.href;
     }
