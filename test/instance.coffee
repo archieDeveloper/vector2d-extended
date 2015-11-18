@@ -25,8 +25,12 @@ describe '#instance', ->
       assert.strictEqual v1, v2, 'Не является тем же самым объектом'
 
   checkMethod = (methodName, args)->
-    if args.length == 2
-    else if args.length == 4
+    if args.length == 4
+      a = Vector2d args[0], args[1]
+      v1 = a[methodName]()
+      v2 = Vector2d args[2], args[3]
+      create v1, v2
+      returnMyself a, v1
     else if args.length == 5
       a = Vector2d args[0], args[1]
       b = args[2]
@@ -60,6 +64,14 @@ describe '#instance', ->
     ]
     checkMethod 'subtract', args
 
+  describe '#scale', ->
+    args = [
+      6, 7
+      4, 3
+      6*4, 7*3
+    ]
+    checkMethod 'scale', args
+
   describe '#multiply', ->
     args = [
       6, 7
@@ -75,3 +87,47 @@ describe '#instance', ->
       6/5, 7/5
     ]
     checkMethod 'divide', args
+
+  describe '#normalize', ->
+    args = [
+      6, 7
+      0.6507913734559685, 0.7592566023652966
+    ]
+    checkMethod 'normalize', args
+
+  describe '#project', ->
+    args = [
+      6, 7
+      4, 3
+      7.2, 5.4
+    ]
+    checkMethod 'project', args
+
+  describe '#round', ->
+    args = [
+      1.231, 1.236
+      1, 1
+    ]
+    checkMethod 'round', args
+
+  describe '#zero', ->
+    args = [
+      45, -456
+      0, 0
+    ]
+    checkMethod 'zero', args
+
+  describe '#equate', ->
+    args = [
+      6, 7
+      4, 3
+      4, 3
+    ]
+    checkMethod 'equate', args
+
+  describe '#invert', ->
+    args = [
+      6, 7
+      -6, -7
+    ]
+    checkMethod 'invert', args
