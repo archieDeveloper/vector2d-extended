@@ -17,8 +17,8 @@ var vec1, vec2, sumVec1AndVec2;
 
 vec1 = Vector2d(10,0);
 vec2 = Vector2d(25,30);
-sumVec1AndVec2 = vec1
-    .clone()
+sumVec1AndVec2
+    .equate(vec1)
     .add(vec2);
 ```
 
@@ -30,8 +30,7 @@ var vec1, vec2, newLength;
 newLength = 30;
 
 vec1 = Vector2d(15, 35);
-vec2 = vec1
-    .clone()
+vec2.equate(vec1)
     .normalize()
     .multiply(newLength);
 ```

@@ -183,10 +183,29 @@ class Vector2d
   # @return [Vector2d] this
   #
   add: (b)->
-    @x += b.x
-    @y += b.y
+    @addX b
+    @addY b
     @
 
+  # Прибавить к текущему вектору вектор b
+  #
+  # @param [Vector2d] b 
+  #
+  # @return [Vector2d] this
+  #
+  addX: (b)->
+    @x += b.x
+    @
+
+  # Прибавить к текущему вектору вектор b
+  #
+  # @param [Vector2d] b 
+  #
+  # @return [Vector2d] this
+  #
+  addY: (b)->
+    @y += b.y
+    @
 
   # Вычесть из текущего вектора вектор b
   #
@@ -195,7 +214,27 @@ class Vector2d
   # @return [Vector2d] this
   #
   subtract: (b)->
+    @subtractX b
+    @subtractY b
+    @
+
+  # Вычесть из текущего вектора вектор b
+  #
+  # @param [Vector2d] b 
+  #
+  # @return [Vector2d] this
+  #
+  subtractX: (b)->
     @x -= b.x
+    @
+
+  # Вычесть из текущего вектора вектор b
+  #
+  # @param [Vector2d] b 
+  #
+  # @return [Vector2d] this
+  #
+  subtractY: (b)->
     @y -= b.y
     @
 
@@ -206,7 +245,27 @@ class Vector2d
   # @return [Vector2d] this
   #
   multiply: (scalar)->
+    @multiplyX scalar
+    @multiplyY scalar
+    @
+
+  # Умножить вектор на скаляр
+  #
+  # @param [Number] scalar 
+  #
+  # @return [Vector2d] this
+  #
+  multiplyX: (scalar)->
     @x *= scalar
+    @
+
+  # Умножить вектор на скаляр
+  #
+  # @param [Number] scalar 
+  #
+  # @return [Vector2d] this
+  #
+  multiplyY: (scalar)->
     @y *= scalar
     @
 
@@ -217,7 +276,27 @@ class Vector2d
   # @return [Vector2d] this
   #
   divide: (scalar)->
+    @divideX scalar
+    @divideY scalar
+    @
+
+  # Разделить вектор на скаляр
+  #
+  # @param [Number] scalar 
+  #
+  # @return [Vector2d] this
+  #
+  divideX: (scalar)->
     @x /= scalar
+    @
+
+  # Разделить вектор на скаляр
+  #
+  # @param [Number] scalar 
+  #
+  # @return [Vector2d] this
+  #
+  divideY: (scalar)->
     @y /= scalar
     @
 
@@ -246,7 +325,23 @@ class Vector2d
   # @return [Vector2d] this
   #
   round: ->
+    @roundX()
+    @roundY()
+    @
+
+  # Округление вектора до целочисленного
+  #
+  # @return [Vector2d] this
+  #
+  roundX: ->
     @x = Math.round(@x)
+    @
+
+  # Округление вектора до целочисленного
+  #
+  # @return [Vector2d] this
+  #
+  roundY: ->
     @y = Math.round(@y)
     @
 
@@ -255,7 +350,24 @@ class Vector2d
   # @return [Vector2d] this
   #
   zero: ->
-    @x = @y = 0
+    @zeroX()
+    @zeroY()
+    @
+
+  # Устанавливает текущий вектор в 0
+  #
+  # @return [Vector2d] this
+  #
+  zeroX: ->
+    @x = 0
+    @
+
+  # Устанавливает текущий вектор в 0
+  #
+  # @return [Vector2d] this
+  #
+  zeroY: ->
+    @y = 0
     @
 
   # Клонирует текущий вектор
@@ -270,7 +382,23 @@ class Vector2d
   # @return [Vector2d] this
   #
   equate: (b)->
+    @equateX b
+    @equateY b
+    @
+
+  # Копирует компоненты вектора b
+  #
+  # @return [Vector2d] this
+  #
+  equateX: (b)->
     @x = b.x
+    @
+
+  # Копирует компоненты вектора b
+  #
+  # @return [Vector2d] this
+  #
+  equateY: (b)->
     @y = b.y
     @
 
@@ -279,7 +407,23 @@ class Vector2d
   # @return [Vector2d] this
   #
   invert: ->
+    @invertX()
+    @invertY()
+    @
+
+  # Меняет направление вектора на противоположное
+  #
+  # @return [Vector2d] this
+  #
+  invertX: ->
     @x = -@x
+    @
+
+  # Меняет направление вектора на противоположное
+  #
+  # @return [Vector2d] this
+  #
+  invertY: ->
     @y = -@y
     @
 
@@ -304,7 +448,27 @@ class Vector2d
   # @return [Vector2d] this
   #
   scale: (b)->
+    @scaleX b
+    @scaleY b
+    @
+  
+  # Умножение векторов по компонентно
+  #
+  # @param [Vector2d] b Второй вектор
+  #
+  # @return [Vector2d] this
+  #
+  scaleX: (b)->
     @x *= b.x
+    @
+  
+  # Умножение векторов по компонентно
+  #
+  # @param [Vector2d] b Второй вектор
+  #
+  # @return [Vector2d] this
+  #
+  scaleY: (b)->
     @y *= b.y
     @
   
@@ -434,7 +598,21 @@ class Vector2d
   # @return [Boolean]
   #
   isZero: ->
-    @x is 0 and @y is 0
+    @isZeroX() and @isZeroY()
+
+  # Является ли вектор нулевым?
+  #
+  # @return [Boolean]
+  #
+  isZeroX: ->
+    @x is 0
+
+  # Является ли вектор нулевым?
+  #
+  # @return [Boolean]
+  #
+  isZeroY: ->
+    @y is 0
 
   # Равен ли текущий вектор, вектору b?
   #
@@ -443,21 +621,67 @@ class Vector2d
   # @return [Boolean]
   #
   isEqual: (b)->
-    @x is b.x and @y is b.y
+    @isEqualX(b) and @isEqualY(b)
+
+  # Равен ли текущий вектор, вектору b?
+  #
+  # @param [Vector2d] b
+  #
+  # @return [Boolean]
+  #
+  isEqualX: (b)->
+    @x is b.x
+
+  # Равен ли текущий вектор, вектору b?
+  #
+  # @param [Vector2d] b
+  #
+  # @return [Boolean]
+  #
+  isEqualY: (b)->
+    @y is b.y
 
   # Является ли вектор NaN
   #
   # @return [Boolean]
   #
   isNaN: ->
-    isNaN @.x or isNaN @.y
+    @isNaNX() or @isNaNY
+
+  # Является ли вектор NaN
+  #
+  # @return [Boolean]
+  #
+  isNaNX: ->
+    isNaN @.x
+
+  # Является ли вектор NaN
+  #
+  # @return [Boolean]
+  #
+  isNaNY: ->
+    isNaN @.y
 
   # Является ли вектор числом
   #
   # @return [Boolean]
   #
   isFinite: ->
-    isFinite @.x or isFinite @.y
+    @isFiniteX() or @isFiniteY()
+
+  # Является ли вектор числом
+  #
+  # @return [Boolean]
+  #
+  isFiniteX: ->
+    isFinite @.x
+
+  # Является ли вектор числом
+  #
+  # @return [Boolean]
+  #
+  isFiniteY: ->
+    isFinite @.y
 
   isEqualRotate: (b)->
     @rotate.toFixed(2) is b.rotate.toFixed(2)
