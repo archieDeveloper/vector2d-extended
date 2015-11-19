@@ -118,6 +118,22 @@ describe '#static', ->
     ]
     checkMethod 'scale', args
 
+  describe '#scaleX', ->
+    args = [
+      6,7
+      4,3
+      6*4, 0
+    ]
+    checkMethod 'scaleX', args
+
+  describe '#scaleY', ->
+    args = [
+      6,7
+      4,3
+      0, 7*3
+    ]
+    checkMethod 'scaleY', args
+
   describe '#add', ->
     args = [
       6,7
@@ -125,6 +141,22 @@ describe '#static', ->
       10, 10
     ]
     checkMethod 'add', args
+
+  describe '#addX', ->
+    args = [
+      6,7
+      4,3
+      10, 0
+    ]
+    checkMethod 'addX', args
+
+  describe '#addY', ->
+    args = [
+      6,7
+      4,3
+      0, 10
+    ]
+    checkMethod 'addY', args
 
   describe '#subtract', ->
     args = [
@@ -134,6 +166,22 @@ describe '#static', ->
     ]
     checkMethod 'subtract', args
 
+  describe '#subtractX', ->
+    args = [
+      6,7
+      4,3
+      2, 0
+    ]
+    checkMethod 'subtractX', args
+
+  describe '#subtractY', ->
+    args = [
+      6,7
+      4,3
+      0, 4
+    ]
+    checkMethod 'subtractY', args
+
   describe '#multiply', ->
     args = [
       6, 7
@@ -142,6 +190,22 @@ describe '#static', ->
     ]
     checkMethod 'multiply', args
 
+  describe '#multiplyX', ->
+    args = [
+      6, 7
+      5
+      6*5, 7
+    ]
+    checkMethod 'multiplyX', args
+
+  describe '#multiplyY', ->
+    args = [
+      6, 7
+      5
+      6, 7*5
+    ]
+    checkMethod 'multiplyY', args
+
   describe '#divide', ->
     args = [
       6, 7
@@ -149,6 +213,22 @@ describe '#static', ->
       6/5, 7/5
     ]
     checkMethod 'divide', args
+
+  describe '#divideX', ->
+    args = [
+      6, 7
+      5
+      6/5, 7
+    ]
+    checkMethod 'divideX', args
+
+  describe '#divideY', ->
+    args = [
+      6, 7
+      5
+      6, 7/5
+    ]
+    checkMethod 'divideY', args
 
   describe '#normalize', ->
     args = [

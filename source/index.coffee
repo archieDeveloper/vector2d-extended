@@ -2,6 +2,36 @@
 
 class Vector2d
 
+  staticAAA = (args, x, y)->
+    if x?
+      vx = staticMath 'x', 2, args, [Vector2d, Vector2d], x
+    else
+      vx = 0
+    if y?
+      vy = staticMath 'y', 2, args, [Vector2d, Vector2d], y
+    else
+      vy = 0
+    new Vector2d vx, vy
+
+  staticMath = (property, countArguments, args, argumentTypes, callback)->
+    argumentsLength = args.length
+    throw new Error if argumentsLength < countArguments
+    a = checkType args[0], argumentTypes[0], property
+    for i in [1...argumentsLength]
+      b = checkType args[i], argumentTypes[countArguments-1], property
+      a = callback(a, b)
+    a
+
+  checkType = (argument, type, property)->
+    if typeof type is 'string'
+      throw new TypeError if typeof argument isnt type
+      value = argument
+    else
+      throw new TypeError if not (argument instanceof type)
+      value = argument[property]
+    value
+
+
   constructor: (x, y) ->
     if !(@ instanceof Vector2d)
       return new Vector2d x, y
@@ -39,167 +69,90 @@ class Vector2d
     new Vector2d a.x+(b.x-a.x)*l, a.y+(b.y-a.y)*l
 
   @scale: ()->
-    argumentsLength = arguments.length
-    throw new Error if argumentsLength < 2
-    throw new TypeError if not (arguments[0] instanceof Vector2d)
-    vx = arguments[0].x
-    vy = arguments[0].y
-    for i in [1...argumentsLength]
-      throw new TypeError if not (arguments[i] instanceof Vector2d)
-      vx *= arguments[i].x
-      vy *= arguments[i].y
-    new Vector2d vx, vy
+    fn = (a, b)->
+      a * b
+    staticAAA arguments, fn, fn
 
   @scaleX: ()->
-    argumentsLength = arguments.length
-    throw new Error if argumentsLength < 2 
-    throw new TypeError if not (arguments[0] instanceof Vector2d)
-    vx = arguments[0].x
-    for i in [1...argumentsLength]
-      throw new TypeError if not (arguments[i] instanceof Vector2d)
-      vx *= arguments[i].x
-    new Vector2d vx, 0
+    fn = (a, b)->
+      a * b
+    staticAAA arguments, fn
 
   @scaleY: ()->
-    argumentsLength = arguments.length
-    throw new Error if argumentsLength < 2
-    throw new TypeError if not (arguments[0] instanceof Vector2d)
-    vy = arguments[0].y
-    for i in [1...argumentsLength]
-      throw new TypeError if not (arguments[i] instanceof Vector2d)
-      vy *= arguments[i].y
-    new Vector2d 0, vy
+    fn = (a, b)->
+      a * b
+    staticAAA arguments, null, fn
 
   @add: ()->
-    argumentsLength = arguments.length
-    throw new Error if argumentsLength < 2
-    throw new TypeError if not (arguments[0] instanceof Vector2d)
-    vx = arguments[0].x
-    vy = arguments[0].y
-    for i in [1...argumentsLength]
-      throw new TypeError if not (arguments[i] instanceof Vector2d)
-      vx += arguments[i].x
-      vy += arguments[i].y
-    new Vector2d vx, vy
+    fn = (a, b)->
+      a + b
+    staticAAA arguments, fn, fn
 
   @addX: ()->
-    argumentsLength = arguments.length
-    throw new Error if argumentsLength < 2
-    throw new TypeError if not (arguments[0] instanceof Vector2d)
-    vx = arguments[0].x
-    for i in [1...argumentsLength]
-      throw new TypeError if not (arguments[i] instanceof Vector2d)
-      vx += arguments[i].x
-    new Vector2d vx, 0
+    fn = (a, b)->
+      a + b
+    staticAAA arguments, fn
 
   @addY: ()->
-    argumentsLength = arguments.length
-    throw new Error if argumentsLength < 2
-    throw new TypeError if not (arguments[0] instanceof Vector2d)
-    vy = arguments[0].y
-    for i in [1...argumentsLength]
-      throw new TypeError if not (arguments[i] instanceof Vector2d)
-      vy += arguments[i].y
-    new Vector2d 0, vy
+    fn = (a, b)->
+      a + b
+    staticAAA arguments, null, fn
 
   @subtract: ()->
-    argumentsLength = arguments.length
-    throw new Error if argumentsLength < 2
-    throw new TypeError if not (arguments[0] instanceof Vector2d)  
-    vx = arguments[0].x
-    vy = arguments[0].y
-    for i in [1...argumentsLength]
-      throw new TypeError if not (arguments[i] instanceof Vector2d)  
-      vx -= arguments[i].x
-      vy -= arguments[i].y
-    new Vector2d vx, vy
+    fn = (a, b)->
+      a - b
+    staticAAA arguments, fn, fn
 
   @subtractX: ()->
-    argumentsLength = arguments.length
-    throw new Error if argumentsLength < 2
-    throw new TypeError if not (arguments[0] instanceof Vector2d)  
-    vx = arguments[0].x
-    for i in [1...argumentsLength]
-      throw new TypeError if not (arguments[i] instanceof Vector2d)  
-      vx -= arguments[i].x
-    new Vector2d vx, 0
+    fn = (a, b)->
+      a - b
+    staticAAA arguments, fn
 
   @subtractY: ()->
-    argumentsLength = arguments.length
-    throw new Error if argumentsLength < 2
-    throw new TypeError if not (arguments[0] instanceof Vector2d)  
-    vy = arguments[0].x
-    for i in [1...argumentsLength]
-      throw new TypeError if not (arguments[i] instanceof Vector2d)  
-      vy -= arguments[i].y
-    new Vector2d 0, vy
+    fn = (a, b)->
+      a - b
+    staticAAA arguments, null, fn
 
   @multiply: ()->
-    argumentsLength = arguments.length
-    throw new Error if argumentsLength < 2
-    throw new TypeError if not (arguments[0] instanceof Vector2d)  
-    vx = arguments[0].x
-    vy = arguments[0].y
-    for i in [1...argumentsLength]
-      throw new TypeError if typeof arguments[i] isnt "number"
-      vx *= arguments[i]
-      vy *= arguments[i]
+    vx = staticMath 'x', 2, arguments, [Vector2d, 'number'], (a, b)->
+      a * b
+    vy = staticMath 'y', 2, arguments, [Vector2d, 'number'], (a, b)->
+      a * b
     new Vector2d vx, vy
 
   @multiplyX: ()->
-    argumentsLength = arguments.length
-    throw new Error if argumentsLength < 2
-    throw new TypeError if not (arguments[0] instanceof Vector2d)
-    vx = arguments[0].x
-    vy = arguments[0].y
-    for i in [1...argumentsLength]
-      throw new TypeError if typeof arguments[i] isnt "number"
-      vx *= arguments[i]
+    vx = staticMath 'x', 2, arguments, [Vector2d, 'number'], (a, b)->
+      a * b
+    vy = staticMath 'y', 2, arguments, [Vector2d, 'number'], (a, b)->
+      a
     new Vector2d vx, vy
 
   @multiplyY: ()->
-    argumentsLength = arguments.length
-    throw new Error if argumentsLength < 2
-    throw new TypeError if not (arguments[0] instanceof Vector2d)
-    vx = arguments[0].x
-    vy = arguments[0].y
-    for i in [1...argumentsLength]
-      throw new TypeError if typeof arguments[i] isnt "number"
-      vx *= arguments[i]
+    vx = staticMath 'x', 2, arguments, [Vector2d, 'number'], (a, b)->
+      a
+    vy = staticMath 'y', 2, arguments, [Vector2d, 'number'], (a, b)->
+      a * b
     new Vector2d vx, vy
 
   @divide: ()->
-    argumentsLength = arguments.length
-    throw new Error if argumentsLength < 2
-    throw new TypeError if not (arguments[0] instanceof Vector2d)
-    vx = arguments[0].x
-    vy = arguments[0].y
-    for i in [1...argumentsLength]
-      throw new TypeError if typeof arguments[i] isnt "number"
-      vx /= arguments[i]
-      vy /= arguments[i]
+    vx = staticMath 'x', 2, arguments, [Vector2d, 'number'], (a, b)->
+      a / b
+    vy = staticMath 'y', 2, arguments, [Vector2d, 'number'], (a, b)->
+      a / b
     new Vector2d vx, vy
 
   @divideX: ()->
-    argumentsLength = arguments.length
-    throw new Error if argumentsLength < 2
-    throw new TypeError if not (arguments[0] instanceof Vector2d)
-    vx = arguments[0].x
-    vy = arguments[0].y
-    for i in [1...argumentsLength]
-      throw new TypeError if typeof arguments[i] isnt "number"
-      vx /= arguments[i]
+    vx = staticMath 'x', 2, arguments, [Vector2d, 'number'], (a, b)->
+      a / b
+    vy = staticMath 'y', 2, arguments, [Vector2d, 'number'], (a, b)->
+      a
     new Vector2d vx, vy
 
   @divideY: ()->
-    argumentsLength = arguments.length
-    throw new Error if argumentsLength < 2
-    throw new TypeError if not (arguments[0] instanceof Vector2d) 
-    vx = arguments[0].x
-    vy = arguments[0].y
-    for i in [1...argumentsLength]
-      throw new TypeError if typeof arguments[i] isnt "number"
-      vy /= arguments[i]
+    vx = staticMath 'x', 2, arguments, [Vector2d, 'number'], (a, b)->
+      a
+    vy = staticMath 'y', 2, arguments, [Vector2d, 'number'], (a, b)->
+      a / b
     new Vector2d vx, vy
 
   @normalize: (a)->
@@ -241,12 +194,8 @@ class Vector2d
   # Returns Vector2d
 
   add: ()->
-    argumentsLength = arguments.length
-    throw new Error if argumentsLength < 1
-    for i in [0...argumentsLength]
-      throw new TypeError if not (arguments[i] instanceof Vector2d)
-      @x += arguments[i].x
-      @y += arguments[i].y
+    @addX.apply @, arguments
+    @addY.apply @, arguments
     @
 
   addX: ()->
@@ -265,49 +214,41 @@ class Vector2d
       @y += arguments[i].y
     @
 
-  subtract: (b)->
+  subtract: ()->
+    @subtractX.apply @, arguments
+    @subtractY.apply @, arguments
+    @
+
+  subtractX: ()->
     argumentsLength = arguments.length
     throw new Error if argumentsLength < 1
     for i in [0...argumentsLength]
       throw new TypeError if not (arguments[i] instanceof Vector2d)
       @x -= arguments[i].x
-      @y -= arguments[i].y
     @
 
-  subtractX: (b)->
-    argumentsLength = arguments.length
-    throw new Error if argumentsLength < 1
-    for i in [0...argumentsLength]
-      throw new TypeError if not (arguments[i] instanceof Vector2d)
-      @x += arguments[i].x
-    @
-
-  subtractY: (b)->
+  subtractY: ()->
     argumentsLength = arguments.length
     if argumentsLength < 1 then throw new Error
     for i in [0...argumentsLength]
       if not (arguments[i] instanceof Vector2d) then throw new TypeError
-      @y += arguments[i].y
+      @y -= arguments[i].y
     @
 
-  multiply: (scalar)->
+  multiply: ()->
+    @multiplyX.apply @, arguments
+    @multiplyY.apply @, arguments
+    @
+
+  multiplyX: ()->
     argumentsLength = arguments.length
     if argumentsLength < 1 then throw new Error
     for i in [0...argumentsLength]
       if typeof arguments[i] isnt 'number' then throw new TypeError
       @x *= arguments[i]
-      @y *= arguments[i]
     @
 
-  multiplyX: (scalar)->
-    argumentsLength = arguments.length
-    if argumentsLength < 1 then throw new Error
-    for i in [0...argumentsLength]
-      if typeof arguments[i] isnt 'number' then throw new TypeError
-      @x *= arguments[i]
-    @
-
-  multiplyY: (scalar)->
+  multiplyY: ()->
     argumentsLength = arguments.length
     if argumentsLength < 1 then throw new Error
     for i in [0...argumentsLength]
@@ -315,13 +256,9 @@ class Vector2d
       @y *= arguments[i]
     @
 
-  divide: (scalar)->
-    argumentsLength = arguments.length
-    if argumentsLength < 1 then throw new Error
-    for i in [0...argumentsLength]
-      if typeof arguments[i] isnt 'number' then throw new TypeError
-      @x /= arguments[i]
-      @y /= arguments[i]
+  divide: ()->
+    @divideX.apply @, arguments
+    @divideY.apply @, arguments
     @
 
   divideX: (scalar)->
@@ -417,20 +354,25 @@ class Vector2d
     @y = @y+(b.y-@y)*l
     @
 
-  scale: (b)->
-    throw new TypeError if not (b instanceof Vector2d)
-    @scaleX b
-    @scaleY b
+  scale: ()->
+    @scaleX.apply @, arguments
+    @scaleY.apply @, arguments
     @
 
-  scaleX: (b)->
-    throw new TypeError if not (b instanceof Vector2d)
-    @x *= b.x
+  scaleX: ()->
+    argumentsLength = arguments.length
+    if argumentsLength < 1 then throw new Error
+    for i in [0...argumentsLength]
+      throw new TypeError if not (arguments[i] instanceof Vector2d)
+      @x *= arguments[i].x
     @
 
-  scaleY: (b)->
-    throw new TypeError if not (b instanceof Vector2d)
-    @y *= b.y
+  scaleY: ()->
+    argumentsLength = arguments.length
+    if argumentsLength < 1 then throw new Error
+    for i in [0...argumentsLength]
+      throw new TypeError if not (arguments[i] instanceof Vector2d)
+      @y *= arguments[i].y
     @
 
   clampMagnitude: (maxLength)->

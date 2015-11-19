@@ -3,6 +3,53 @@
   var Vector2d;
 
   Vector2d = (function() {
+    var checkType, staticAAA, staticMath;
+
+    staticAAA = function(args, x, y) {
+      var vx, vy;
+      if (x != null) {
+        vx = staticMath('x', 2, args, [Vector2d, Vector2d], x);
+      } else {
+        vx = 0;
+      }
+      if (y != null) {
+        vy = staticMath('y', 2, args, [Vector2d, Vector2d], y);
+      } else {
+        vy = 0;
+      }
+      return new Vector2d(vx, vy);
+    };
+
+    staticMath = function(property, countArguments, args, argumentTypes, callback) {
+      var a, argumentsLength, b, i, j, ref;
+      argumentsLength = args.length;
+      if (argumentsLength < countArguments) {
+        throw new Error;
+      }
+      a = checkType(args[0], argumentTypes[0], property);
+      for (i = j = 1, ref = argumentsLength; 1 <= ref ? j < ref : j > ref; i = 1 <= ref ? ++j : --j) {
+        b = checkType(args[i], argumentTypes[countArguments - 1], property);
+        a = callback(a, b);
+      }
+      return a;
+    };
+
+    checkType = function(argument, type, property) {
+      var value;
+      if (typeof type === 'string') {
+        if (typeof argument !== type) {
+          throw new TypeError;
+        }
+        value = argument;
+      } else {
+        if (!(argument instanceof type)) {
+          throw new TypeError;
+        }
+        value = argument[property];
+      }
+      return value;
+    };
+
     function Vector2d(x, y) {
       if (!(this instanceof Vector2d)) {
         return new Vector2d(x, y);
@@ -61,301 +108,140 @@
     };
 
     Vector2d.scale = function() {
-      var argumentsLength, i, j, ref, vx, vy;
-      argumentsLength = arguments.length;
-      if (argumentsLength < 2) {
-        throw new Error;
-      }
-      if (!(arguments[0] instanceof Vector2d)) {
-        throw new TypeError;
-      }
-      vx = arguments[0].x;
-      vy = arguments[0].y;
-      for (i = j = 1, ref = argumentsLength; 1 <= ref ? j < ref : j > ref; i = 1 <= ref ? ++j : --j) {
-        if (!(arguments[i] instanceof Vector2d)) {
-          throw new TypeError;
-        }
-        vx *= arguments[i].x;
-        vy *= arguments[i].y;
-      }
-      return new Vector2d(vx, vy);
+      var fn;
+      fn = function(a, b) {
+        return a * b;
+      };
+      return staticAAA(arguments, fn, fn);
     };
 
     Vector2d.scaleX = function() {
-      var argumentsLength, i, j, ref, vx;
-      argumentsLength = arguments.length;
-      if (argumentsLength < 2) {
-        throw new Error;
-      }
-      if (!(arguments[0] instanceof Vector2d)) {
-        throw new TypeError;
-      }
-      vx = arguments[0].x;
-      for (i = j = 1, ref = argumentsLength; 1 <= ref ? j < ref : j > ref; i = 1 <= ref ? ++j : --j) {
-        if (!(arguments[i] instanceof Vector2d)) {
-          throw new TypeError;
-        }
-        vx *= arguments[i].x;
-      }
-      return new Vector2d(vx, 0);
+      var fn;
+      fn = function(a, b) {
+        return a * b;
+      };
+      return staticAAA(arguments, fn);
     };
 
     Vector2d.scaleY = function() {
-      var argumentsLength, i, j, ref, vy;
-      argumentsLength = arguments.length;
-      if (argumentsLength < 2) {
-        throw new Error;
-      }
-      if (!(arguments[0] instanceof Vector2d)) {
-        throw new TypeError;
-      }
-      vy = arguments[0].y;
-      for (i = j = 1, ref = argumentsLength; 1 <= ref ? j < ref : j > ref; i = 1 <= ref ? ++j : --j) {
-        if (!(arguments[i] instanceof Vector2d)) {
-          throw new TypeError;
-        }
-        vy *= arguments[i].y;
-      }
-      return new Vector2d(0, vy);
+      var fn;
+      fn = function(a, b) {
+        return a * b;
+      };
+      return staticAAA(arguments, null, fn);
     };
 
     Vector2d.add = function() {
-      var argumentsLength, i, j, ref, vx, vy;
-      argumentsLength = arguments.length;
-      if (argumentsLength < 2) {
-        throw new Error;
-      }
-      if (!(arguments[0] instanceof Vector2d)) {
-        throw new TypeError;
-      }
-      vx = arguments[0].x;
-      vy = arguments[0].y;
-      for (i = j = 1, ref = argumentsLength; 1 <= ref ? j < ref : j > ref; i = 1 <= ref ? ++j : --j) {
-        if (!(arguments[i] instanceof Vector2d)) {
-          throw new TypeError;
-        }
-        vx += arguments[i].x;
-        vy += arguments[i].y;
-      }
-      return new Vector2d(vx, vy);
+      var fn;
+      fn = function(a, b) {
+        return a + b;
+      };
+      return staticAAA(arguments, fn, fn);
     };
 
     Vector2d.addX = function() {
-      var argumentsLength, i, j, ref, vx;
-      argumentsLength = arguments.length;
-      if (argumentsLength < 2) {
-        throw new Error;
-      }
-      if (!(arguments[0] instanceof Vector2d)) {
-        throw new TypeError;
-      }
-      vx = arguments[0].x;
-      for (i = j = 1, ref = argumentsLength; 1 <= ref ? j < ref : j > ref; i = 1 <= ref ? ++j : --j) {
-        if (!(arguments[i] instanceof Vector2d)) {
-          throw new TypeError;
-        }
-        vx += arguments[i].x;
-      }
-      return new Vector2d(vx, 0);
+      var fn;
+      fn = function(a, b) {
+        return a + b;
+      };
+      return staticAAA(arguments, fn);
     };
 
     Vector2d.addY = function() {
-      var argumentsLength, i, j, ref, vy;
-      argumentsLength = arguments.length;
-      if (argumentsLength < 2) {
-        throw new Error;
-      }
-      if (!(arguments[0] instanceof Vector2d)) {
-        throw new TypeError;
-      }
-      vy = arguments[0].y;
-      for (i = j = 1, ref = argumentsLength; 1 <= ref ? j < ref : j > ref; i = 1 <= ref ? ++j : --j) {
-        if (!(arguments[i] instanceof Vector2d)) {
-          throw new TypeError;
-        }
-        vy += arguments[i].y;
-      }
-      return new Vector2d(0, vy);
+      var fn;
+      fn = function(a, b) {
+        return a + b;
+      };
+      return staticAAA(arguments, null, fn);
     };
 
     Vector2d.subtract = function() {
-      var argumentsLength, i, j, ref, vx, vy;
-      argumentsLength = arguments.length;
-      if (argumentsLength < 2) {
-        throw new Error;
-      }
-      if (!(arguments[0] instanceof Vector2d)) {
-        throw new TypeError;
-      }
-      vx = arguments[0].x;
-      vy = arguments[0].y;
-      for (i = j = 1, ref = argumentsLength; 1 <= ref ? j < ref : j > ref; i = 1 <= ref ? ++j : --j) {
-        if (!(arguments[i] instanceof Vector2d)) {
-          throw new TypeError;
-        }
-        vx -= arguments[i].x;
-        vy -= arguments[i].y;
-      }
-      return new Vector2d(vx, vy);
+      var fn;
+      fn = function(a, b) {
+        return a - b;
+      };
+      return staticAAA(arguments, fn, fn);
     };
 
     Vector2d.subtractX = function() {
-      var argumentsLength, i, j, ref, vx;
-      argumentsLength = arguments.length;
-      if (argumentsLength < 2) {
-        throw new Error;
-      }
-      if (!(arguments[0] instanceof Vector2d)) {
-        throw new TypeError;
-      }
-      vx = arguments[0].x;
-      for (i = j = 1, ref = argumentsLength; 1 <= ref ? j < ref : j > ref; i = 1 <= ref ? ++j : --j) {
-        if (!(arguments[i] instanceof Vector2d)) {
-          throw new TypeError;
-        }
-        vx -= arguments[i].x;
-      }
-      return new Vector2d(vx, 0);
+      var fn;
+      fn = function(a, b) {
+        return a - b;
+      };
+      return staticAAA(arguments, fn);
     };
 
     Vector2d.subtractY = function() {
-      var argumentsLength, i, j, ref, vy;
-      argumentsLength = arguments.length;
-      if (argumentsLength < 2) {
-        throw new Error;
-      }
-      if (!(arguments[0] instanceof Vector2d)) {
-        throw new TypeError;
-      }
-      vy = arguments[0].x;
-      for (i = j = 1, ref = argumentsLength; 1 <= ref ? j < ref : j > ref; i = 1 <= ref ? ++j : --j) {
-        if (!(arguments[i] instanceof Vector2d)) {
-          throw new TypeError;
-        }
-        vy -= arguments[i].y;
-      }
-      return new Vector2d(0, vy);
+      var fn;
+      fn = function(a, b) {
+        return a - b;
+      };
+      return staticAAA(arguments, null, fn);
     };
 
     Vector2d.multiply = function() {
-      var argumentsLength, i, j, ref, vx, vy;
-      argumentsLength = arguments.length;
-      if (argumentsLength < 2) {
-        throw new Error;
-      }
-      if (!(arguments[0] instanceof Vector2d)) {
-        throw new TypeError;
-      }
-      vx = arguments[0].x;
-      vy = arguments[0].y;
-      for (i = j = 1, ref = argumentsLength; 1 <= ref ? j < ref : j > ref; i = 1 <= ref ? ++j : --j) {
-        if (typeof arguments[i] !== "number") {
-          throw new TypeError;
-        }
-        vx *= arguments[i];
-        vy *= arguments[i];
-      }
+      var vx, vy;
+      vx = staticMath('x', 2, arguments, [Vector2d, 'number'], function(a, b) {
+        return a * b;
+      });
+      vy = staticMath('y', 2, arguments, [Vector2d, 'number'], function(a, b) {
+        return a * b;
+      });
       return new Vector2d(vx, vy);
     };
 
     Vector2d.multiplyX = function() {
-      var argumentsLength, i, j, ref, vx, vy;
-      argumentsLength = arguments.length;
-      if (argumentsLength < 2) {
-        throw new Error;
-      }
-      if (!(arguments[0] instanceof Vector2d)) {
-        throw new TypeError;
-      }
-      vx = arguments[0].x;
-      vy = arguments[0].y;
-      for (i = j = 1, ref = argumentsLength; 1 <= ref ? j < ref : j > ref; i = 1 <= ref ? ++j : --j) {
-        if (typeof arguments[i] !== "number") {
-          throw new TypeError;
-        }
-        vx *= arguments[i];
-      }
+      var vx, vy;
+      vx = staticMath('x', 2, arguments, [Vector2d, 'number'], function(a, b) {
+        return a * b;
+      });
+      vy = staticMath('y', 2, arguments, [Vector2d, 'number'], function(a, b) {
+        return a;
+      });
       return new Vector2d(vx, vy);
     };
 
     Vector2d.multiplyY = function() {
-      var argumentsLength, i, j, ref, vx, vy;
-      argumentsLength = arguments.length;
-      if (argumentsLength < 2) {
-        throw new Error;
-      }
-      if (!(arguments[0] instanceof Vector2d)) {
-        throw new TypeError;
-      }
-      vx = arguments[0].x;
-      vy = arguments[0].y;
-      for (i = j = 1, ref = argumentsLength; 1 <= ref ? j < ref : j > ref; i = 1 <= ref ? ++j : --j) {
-        if (typeof arguments[i] !== "number") {
-          throw new TypeError;
-        }
-        vx *= arguments[i];
-      }
+      var vx, vy;
+      vx = staticMath('x', 2, arguments, [Vector2d, 'number'], function(a, b) {
+        return a;
+      });
+      vy = staticMath('y', 2, arguments, [Vector2d, 'number'], function(a, b) {
+        return a * b;
+      });
       return new Vector2d(vx, vy);
     };
 
     Vector2d.divide = function() {
-      var argumentsLength, i, j, ref, vx, vy;
-      argumentsLength = arguments.length;
-      if (argumentsLength < 2) {
-        throw new Error;
-      }
-      if (!(arguments[0] instanceof Vector2d)) {
-        throw new TypeError;
-      }
-      vx = arguments[0].x;
-      vy = arguments[0].y;
-      for (i = j = 1, ref = argumentsLength; 1 <= ref ? j < ref : j > ref; i = 1 <= ref ? ++j : --j) {
-        if (typeof arguments[i] !== "number") {
-          throw new TypeError;
-        }
-        vx /= arguments[i];
-        vy /= arguments[i];
-      }
+      var vx, vy;
+      vx = staticMath('x', 2, arguments, [Vector2d, 'number'], function(a, b) {
+        return a / b;
+      });
+      vy = staticMath('y', 2, arguments, [Vector2d, 'number'], function(a, b) {
+        return a / b;
+      });
       return new Vector2d(vx, vy);
     };
 
     Vector2d.divideX = function() {
-      var argumentsLength, i, j, ref, vx, vy;
-      argumentsLength = arguments.length;
-      if (argumentsLength < 2) {
-        throw new Error;
-      }
-      if (!(arguments[0] instanceof Vector2d)) {
-        throw new TypeError;
-      }
-      vx = arguments[0].x;
-      vy = arguments[0].y;
-      for (i = j = 1, ref = argumentsLength; 1 <= ref ? j < ref : j > ref; i = 1 <= ref ? ++j : --j) {
-        if (typeof arguments[i] !== "number") {
-          throw new TypeError;
-        }
-        vx /= arguments[i];
-      }
+      var vx, vy;
+      vx = staticMath('x', 2, arguments, [Vector2d, 'number'], function(a, b) {
+        return a / b;
+      });
+      vy = staticMath('y', 2, arguments, [Vector2d, 'number'], function(a, b) {
+        return a;
+      });
       return new Vector2d(vx, vy);
     };
 
     Vector2d.divideY = function() {
-      var argumentsLength, i, j, ref, vx, vy;
-      argumentsLength = arguments.length;
-      if (argumentsLength < 2) {
-        throw new Error;
-      }
-      if (!(arguments[0] instanceof Vector2d)) {
-        throw new TypeError;
-      }
-      vx = arguments[0].x;
-      vy = arguments[0].y;
-      for (i = j = 1, ref = argumentsLength; 1 <= ref ? j < ref : j > ref; i = 1 <= ref ? ++j : --j) {
-        if (typeof arguments[i] !== "number") {
-          throw new TypeError;
-        }
-        vy /= arguments[i];
-      }
+      var vx, vy;
+      vx = staticMath('x', 2, arguments, [Vector2d, 'number'], function(a, b) {
+        return a;
+      });
+      vy = staticMath('y', 2, arguments, [Vector2d, 'number'], function(a, b) {
+        return a / b;
+      });
       return new Vector2d(vx, vy);
     };
 
@@ -420,18 +306,8 @@
     };
 
     Vector2d.prototype.add = function() {
-      var argumentsLength, i, j, ref;
-      argumentsLength = arguments.length;
-      if (argumentsLength < 1) {
-        throw new Error;
-      }
-      for (i = j = 0, ref = argumentsLength; 0 <= ref ? j < ref : j > ref; i = 0 <= ref ? ++j : --j) {
-        if (!(arguments[i] instanceof Vector2d)) {
-          throw new TypeError;
-        }
-        this.x += arguments[i].x;
-        this.y += arguments[i].y;
-      }
+      this.addX.apply(this, arguments);
+      this.addY.apply(this, arguments);
       return this;
     };
 
@@ -465,7 +341,13 @@
       return this;
     };
 
-    Vector2d.prototype.subtract = function(b) {
+    Vector2d.prototype.subtract = function() {
+      this.subtractX.apply(this, arguments);
+      this.subtractY.apply(this, arguments);
+      return this;
+    };
+
+    Vector2d.prototype.subtractX = function() {
       var argumentsLength, i, j, ref;
       argumentsLength = arguments.length;
       if (argumentsLength < 1) {
@@ -476,58 +358,32 @@
           throw new TypeError;
         }
         this.x -= arguments[i].x;
+      }
+      return this;
+    };
+
+    Vector2d.prototype.subtractY = function() {
+      var argumentsLength, i, j, ref;
+      argumentsLength = arguments.length;
+      if (argumentsLength < 1) {
+        throw new Error;
+      }
+      for (i = j = 0, ref = argumentsLength; 0 <= ref ? j < ref : j > ref; i = 0 <= ref ? ++j : --j) {
+        if (!(arguments[i] instanceof Vector2d)) {
+          throw new TypeError;
+        }
         this.y -= arguments[i].y;
       }
       return this;
     };
 
-    Vector2d.prototype.subtractX = function(b) {
-      var argumentsLength, i, j, ref;
-      argumentsLength = arguments.length;
-      if (argumentsLength < 1) {
-        throw new Error;
-      }
-      for (i = j = 0, ref = argumentsLength; 0 <= ref ? j < ref : j > ref; i = 0 <= ref ? ++j : --j) {
-        if (!(arguments[i] instanceof Vector2d)) {
-          throw new TypeError;
-        }
-        this.x += arguments[i].x;
-      }
+    Vector2d.prototype.multiply = function() {
+      this.multiplyX.apply(this, arguments);
+      this.multiplyY.apply(this, arguments);
       return this;
     };
 
-    Vector2d.prototype.subtractY = function(b) {
-      var argumentsLength, i, j, ref;
-      argumentsLength = arguments.length;
-      if (argumentsLength < 1) {
-        throw new Error;
-      }
-      for (i = j = 0, ref = argumentsLength; 0 <= ref ? j < ref : j > ref; i = 0 <= ref ? ++j : --j) {
-        if (!(arguments[i] instanceof Vector2d)) {
-          throw new TypeError;
-        }
-        this.y += arguments[i].y;
-      }
-      return this;
-    };
-
-    Vector2d.prototype.multiply = function(scalar) {
-      var argumentsLength, i, j, ref;
-      argumentsLength = arguments.length;
-      if (argumentsLength < 1) {
-        throw new Error;
-      }
-      for (i = j = 0, ref = argumentsLength; 0 <= ref ? j < ref : j > ref; i = 0 <= ref ? ++j : --j) {
-        if (typeof arguments[i] !== 'number') {
-          throw new TypeError;
-        }
-        this.x *= arguments[i];
-        this.y *= arguments[i];
-      }
-      return this;
-    };
-
-    Vector2d.prototype.multiplyX = function(scalar) {
+    Vector2d.prototype.multiplyX = function() {
       var argumentsLength, i, j, ref;
       argumentsLength = arguments.length;
       if (argumentsLength < 1) {
@@ -542,7 +398,7 @@
       return this;
     };
 
-    Vector2d.prototype.multiplyY = function(scalar) {
+    Vector2d.prototype.multiplyY = function() {
       var argumentsLength, i, j, ref;
       argumentsLength = arguments.length;
       if (argumentsLength < 1) {
@@ -557,19 +413,9 @@
       return this;
     };
 
-    Vector2d.prototype.divide = function(scalar) {
-      var argumentsLength, i, j, ref;
-      argumentsLength = arguments.length;
-      if (argumentsLength < 1) {
-        throw new Error;
-      }
-      for (i = j = 0, ref = argumentsLength; 0 <= ref ? j < ref : j > ref; i = 0 <= ref ? ++j : --j) {
-        if (typeof arguments[i] !== 'number') {
-          throw new TypeError;
-        }
-        this.x /= arguments[i];
-        this.y /= arguments[i];
-      }
+    Vector2d.prototype.divide = function() {
+      this.divideX.apply(this, arguments);
+      this.divideY.apply(this, arguments);
       return this;
     };
 
@@ -711,28 +557,39 @@
       return this;
     };
 
-    Vector2d.prototype.scale = function(b) {
-      if (!(b instanceof Vector2d)) {
-        throw new TypeError;
-      }
-      this.scaleX(b);
-      this.scaleY(b);
+    Vector2d.prototype.scale = function() {
+      this.scaleX.apply(this, arguments);
+      this.scaleY.apply(this, arguments);
       return this;
     };
 
-    Vector2d.prototype.scaleX = function(b) {
-      if (!(b instanceof Vector2d)) {
-        throw new TypeError;
+    Vector2d.prototype.scaleX = function() {
+      var argumentsLength, i, j, ref;
+      argumentsLength = arguments.length;
+      if (argumentsLength < 1) {
+        throw new Error;
       }
-      this.x *= b.x;
+      for (i = j = 0, ref = argumentsLength; 0 <= ref ? j < ref : j > ref; i = 0 <= ref ? ++j : --j) {
+        if (!(arguments[i] instanceof Vector2d)) {
+          throw new TypeError;
+        }
+        this.x *= arguments[i].x;
+      }
       return this;
     };
 
-    Vector2d.prototype.scaleY = function(b) {
-      if (!(b instanceof Vector2d)) {
-        throw new TypeError;
+    Vector2d.prototype.scaleY = function() {
+      var argumentsLength, i, j, ref;
+      argumentsLength = arguments.length;
+      if (argumentsLength < 1) {
+        throw new Error;
       }
-      this.y *= b.y;
+      for (i = j = 0, ref = argumentsLength; 0 <= ref ? j < ref : j > ref; i = 0 <= ref ? ++j : --j) {
+        if (!(arguments[i] instanceof Vector2d)) {
+          throw new TypeError;
+        }
+        this.y *= arguments[i].y;
+      }
       return this;
     };
 
