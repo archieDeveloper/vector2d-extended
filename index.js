@@ -42,7 +42,7 @@
       }
       b = a.clone();
       if (b.magnitudeSquared > maxLength * maxLength) {
-        b.normalize().multiply(maxLength);
+        b.magnitude = maxLength;
       }
       return b;
     };
@@ -512,34 +512,94 @@
     };
 
     Vector2d.prototype.multiply = function(scalar) {
-      this.multiplyX(scalar);
-      this.multiplyY(scalar);
+      var argumentsLength, i, j, ref;
+      argumentsLength = arguments.length;
+      if (argumentsLength < 1) {
+        throw new Error;
+      }
+      for (i = j = 0, ref = argumentsLength; 0 <= ref ? j < ref : j > ref; i = 0 <= ref ? ++j : --j) {
+        if (typeof arguments[i] !== 'number') {
+          throw new TypeError;
+        }
+        this.x *= arguments[i];
+        this.y *= arguments[i];
+      }
       return this;
     };
 
     Vector2d.prototype.multiplyX = function(scalar) {
-      this.x *= scalar;
+      var argumentsLength, i, j, ref;
+      argumentsLength = arguments.length;
+      if (argumentsLength < 1) {
+        throw new Error;
+      }
+      for (i = j = 0, ref = argumentsLength; 0 <= ref ? j < ref : j > ref; i = 0 <= ref ? ++j : --j) {
+        if (typeof arguments[i] !== 'number') {
+          throw new TypeError;
+        }
+        this.x *= arguments[i];
+      }
       return this;
     };
 
     Vector2d.prototype.multiplyY = function(scalar) {
-      this.y *= scalar;
+      var argumentsLength, i, j, ref;
+      argumentsLength = arguments.length;
+      if (argumentsLength < 1) {
+        throw new Error;
+      }
+      for (i = j = 0, ref = argumentsLength; 0 <= ref ? j < ref : j > ref; i = 0 <= ref ? ++j : --j) {
+        if (typeof arguments[i] !== 'number') {
+          throw new TypeError;
+        }
+        this.y *= arguments[i];
+      }
       return this;
     };
 
     Vector2d.prototype.divide = function(scalar) {
-      this.divideX(scalar);
-      this.divideY(scalar);
+      var argumentsLength, i, j, ref;
+      argumentsLength = arguments.length;
+      if (argumentsLength < 1) {
+        throw new Error;
+      }
+      for (i = j = 0, ref = argumentsLength; 0 <= ref ? j < ref : j > ref; i = 0 <= ref ? ++j : --j) {
+        if (typeof arguments[i] !== 'number') {
+          throw new TypeError;
+        }
+        this.x /= arguments[i];
+        this.y /= arguments[i];
+      }
       return this;
     };
 
     Vector2d.prototype.divideX = function(scalar) {
-      this.x /= scalar;
+      var argumentsLength, i, j, ref;
+      argumentsLength = arguments.length;
+      if (argumentsLength < 1) {
+        throw new Error;
+      }
+      for (i = j = 0, ref = argumentsLength; 0 <= ref ? j < ref : j > ref; i = 0 <= ref ? ++j : --j) {
+        if (typeof arguments[i] !== 'number') {
+          throw new TypeError;
+        }
+        this.x /= arguments[i];
+      }
       return this;
     };
 
     Vector2d.prototype.divideY = function(scalar) {
-      this.y /= scalar;
+      var argumentsLength, i, j, ref;
+      argumentsLength = arguments.length;
+      if (argumentsLength < 1) {
+        throw new Error;
+      }
+      for (i = j = 0, ref = argumentsLength; 0 <= ref ? j < ref : j > ref; i = 0 <= ref ? ++j : --j) {
+        if (typeof arguments[i] !== 'number') {
+          throw new TypeError;
+        }
+        this.y /= arguments[i];
+      }
       return this;
     };
 
@@ -550,6 +610,9 @@
 
     Vector2d.prototype.project = function(b) {
       var c;
+      if (!(b instanceof Vector2d)) {
+        throw new TypeError;
+      }
       c = ((this.x * b.x) + (this.y * b.y)) / ((b.x * b.x) + (b.y * b.y));
       this.x = b.x * c;
       this.y = b.y * c;
@@ -593,17 +656,26 @@
     };
 
     Vector2d.prototype.equate = function(b) {
+      if (!(b instanceof Vector2d)) {
+        throw new TypeError;
+      }
       this.equateX(b);
       this.equateY(b);
       return this;
     };
 
     Vector2d.prototype.equateX = function(b) {
+      if (!(b instanceof Vector2d)) {
+        throw new TypeError;
+      }
       this.x = b.x;
       return this;
     };
 
     Vector2d.prototype.equateY = function(b) {
+      if (!(b instanceof Vector2d)) {
+        throw new TypeError;
+      }
       this.y = b.y;
       return this;
     };
@@ -625,6 +697,9 @@
     };
 
     Vector2d.prototype.lerp = function(b, l) {
+      if (!(b instanceof Vector2d) || typeof b !== 'number') {
+        throw new TypeError;
+      }
       if (l < 0) {
         l = 0;
       }
@@ -637,24 +712,36 @@
     };
 
     Vector2d.prototype.scale = function(b) {
+      if (!(b instanceof Vector2d)) {
+        throw new TypeError;
+      }
       this.scaleX(b);
       this.scaleY(b);
       return this;
     };
 
     Vector2d.prototype.scaleX = function(b) {
+      if (!(b instanceof Vector2d)) {
+        throw new TypeError;
+      }
       this.x *= b.x;
       return this;
     };
 
     Vector2d.prototype.scaleY = function(b) {
+      if (!(b instanceof Vector2d)) {
+        throw new TypeError;
+      }
       this.y *= b.y;
       return this;
     };
 
     Vector2d.prototype.clampMagnitude = function(maxLength) {
+      if (typeof maxLength !== 'number') {
+        throw new TypeError;
+      }
       if (this.magnitudeSquared > maxLength * maxLength) {
-        this.normalize().multiply(maxLength);
+        this.magnitude = maxLength;
       }
       return this;
     };
@@ -665,6 +752,9 @@
       },
       set: function(value) {
         var magnitude;
+        if (typeof value !== 'number') {
+          throw new TypeError;
+        }
         magnitude = this.magnitude;
         this.x = (this.x / magnitude) * value;
         this.y = (this.y / magnitude) * value;
@@ -677,6 +767,9 @@
         return this.x * this.x + this.y * this.y;
       },
       set: function(value) {
+        if (typeof value !== 'number') {
+          throw new TypeError;
+        }
         this.length = Math.sqrt(value);
         return value;
       }
@@ -687,6 +780,9 @@
         return this.magnitude;
       },
       set: function(value) {
+        if (typeof value !== 'number') {
+          throw new TypeError;
+        }
         return this.magnitude = value;
       }
     });
@@ -696,6 +792,9 @@
         return this.magnitudeSquared;
       },
       set: function(value) {
+        if (typeof value !== 'number') {
+          throw new TypeError;
+        }
         return this.magnitudeSquared = value;
       }
     });
@@ -706,6 +805,9 @@
       },
       set: function(dir) {
         var len;
+        if (typeof dir !== 'number') {
+          throw new TypeError;
+        }
         len = this.magnitude;
         this.x = Math.cos(dir * Math.PI / 180) * len;
         this.y = Math.sin(dir * Math.PI / 180) * len;
@@ -714,19 +816,31 @@
     });
 
     Vector2d.prototype.dot = function(b) {
+      if (!(b instanceof Vector2d)) {
+        throw new TypeError;
+      }
       return this.x * b.x + this.y * b.y;
     };
 
     Vector2d.prototype.cross = function(b) {
+      if (!(b instanceof Vector2d)) {
+        throw new TypeError;
+      }
       return this.x * b.y - this.y * b.x;
     };
 
     Vector2d.prototype.distance = function(b) {
+      if (!(b instanceof Vector2d)) {
+        throw new TypeError;
+      }
       return Math.sqrt(distanceSquared(b));
     };
 
     Vector2d.prototype.distanceSquared = function(b) {
       var dx, dy;
+      if (!(b instanceof Vector2d)) {
+        throw new TypeError;
+      }
       dx = this.x - b.x;
       dy = this.y - b.y;
       return dx * dx + dy * dy;
@@ -734,6 +848,9 @@
 
     Vector2d.prototype.angle = function(b) {
       var aMagnitude, bMagnitude, dot;
+      if (!(b instanceof Vector2d)) {
+        throw new TypeError;
+      }
       aMagnitude = this.magnitude;
       bMagnitude = b.magnitude;
       dot = (this.x / aMagnitude) * (b.x / bMagnitude) + (this.y / aMagnitude) * (b.y / bMagnitude);
@@ -759,14 +876,23 @@
     };
 
     Vector2d.prototype.isEqual = function(b) {
+      if (!(b instanceof Vector2d)) {
+        throw new TypeError;
+      }
       return this.isEqualX(b) && this.isEqualY(b);
     };
 
     Vector2d.prototype.isEqualX = function(b) {
+      if (!(b instanceof Vector2d)) {
+        throw new TypeError;
+      }
       return this.x === b.x;
     };
 
     Vector2d.prototype.isEqualY = function(b) {
+      if (!(b instanceof Vector2d)) {
+        throw new TypeError;
+      }
       return this.y === b.y;
     };
 
@@ -795,6 +921,9 @@
     };
 
     Vector2d.prototype.isEqualRotate = function(b) {
+      if (!(b instanceof Vector2d)) {
+        throw new TypeError;
+      }
       return this.rotate.toFixed(2) === b.rotate.toFixed(2);
     };
 
