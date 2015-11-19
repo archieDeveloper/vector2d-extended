@@ -54,72 +54,198 @@
       return new Vector2d(a.x + (b.x - a.x) * l, a.y + (b.y - a.y) * l);
     };
 
-    Vector2d.scale = function(a, b) {
-      return new Vector2d(a.x * b.x, a.y * b.y);
-    };
-
-    Vector2d.scaleX = function(a, b) {
-      return new Vector2d(a.x * b.x, 0);
-    };
-
-    Vector2d.scaleY = function(a, b) {
-      return new Vector2d(0, a.y * b.y);
-    };
-
-    Vector2d.add = function(a, b) {
-      var i, len1, vector, vx, vy;
-      vx = 0;
-      vy = 0;
-      for (i = 0, len1 = arguments.length; i < len1; i++) {
-        vector = arguments[i];
-        vx += vector.x;
-        vy += vector.y;
+    Vector2d.scale = function() {
+      var i, j, ref, vx, vy;
+      if (arguments.length < 2) {
+        throw new Error;
+      }
+      vx = arguments[0].x;
+      vy = arguments[0].y;
+      for (i = j = 1, ref = arguments.length; 1 <= ref ? j < ref : j > ref; i = 1 <= ref ? ++j : --j) {
+        vx *= arguments[i].x;
+        vy *= arguments[i].y;
       }
       return new Vector2d(vx, vy);
     };
 
-    Vector2d.addX = function(a, b) {
-      return new Vector2d(a.x + b.x, 0);
+    Vector2d.scaleX = function() {
+      var i, j, ref, vx;
+      if (arguments.length < 2) {
+        throw new Error;
+      }
+      vx = arguments[0].x;
+      for (i = j = 1, ref = arguments.length; 1 <= ref ? j < ref : j > ref; i = 1 <= ref ? ++j : --j) {
+        vx *= arguments[i].x;
+      }
+      return new Vector2d(vx, 0);
     };
 
-    Vector2d.addY = function(a, b) {
-      return new Vector2d(0, a.y + b.y);
+    Vector2d.scaleY = function() {
+      var i, j, ref, vy;
+      if (arguments.length < 2) {
+        throw new Error;
+      }
+      vy = arguments[0].y;
+      for (i = j = 1, ref = arguments.length; 1 <= ref ? j < ref : j > ref; i = 1 <= ref ? ++j : --j) {
+        vy *= arguments[i].y;
+      }
+      return new Vector2d(0, vy);
     };
 
-    Vector2d.subtract = function(a, b) {
-      return new Vector2d(a.x - b.x, a.y - b.y);
+    Vector2d.add = function() {
+      var i, j, ref, vx, vy;
+      if (arguments.length < 2) {
+        throw new Error;
+      }
+      vx = arguments[0].x;
+      vy = arguments[0].y;
+      for (i = j = 1, ref = arguments.length; 1 <= ref ? j < ref : j > ref; i = 1 <= ref ? ++j : --j) {
+        vx += arguments[i].x;
+        vy += arguments[i].y;
+      }
+      return new Vector2d(vx, vy);
     };
 
-    Vector2d.subtractX = function(a, b) {
-      return new Vector2d(a.x - b.x, 0);
+    Vector2d.addX = function() {
+      var i, j, ref, vx;
+      if (arguments.length < 2) {
+        throw new Error;
+      }
+      vx = arguments[0].x;
+      for (i = j = 1, ref = arguments.length; 1 <= ref ? j < ref : j > ref; i = 1 <= ref ? ++j : --j) {
+        vx += arguments[i].x;
+      }
+      return new Vector2d(vx, 0);
     };
 
-    Vector2d.subtractY = function(a, b) {
-      return new Vector2d(0, a.y - b.y);
+    Vector2d.addY = function() {
+      var i, j, ref, vy;
+      if (arguments.length < 2) {
+        throw new Error;
+      }
+      vy = arguments[0].y;
+      for (i = j = 1, ref = arguments.length; 1 <= ref ? j < ref : j > ref; i = 1 <= ref ? ++j : --j) {
+        vy += arguments[i].y;
+      }
+      return new Vector2d(0, vy);
     };
 
-    Vector2d.multiply = function(a, scalar) {
-      return new Vector2d(a.x * scalar, a.y * scalar);
+    Vector2d.subtract = function() {
+      var i, j, ref, vx, vy;
+      if (arguments.length < 2) {
+        throw new Error;
+      }
+      vx = arguments[0].x;
+      vy = arguments[0].y;
+      for (i = j = 1, ref = arguments.length; 1 <= ref ? j < ref : j > ref; i = 1 <= ref ? ++j : --j) {
+        vx -= arguments[i].x;
+        vy -= arguments[i].y;
+      }
+      return new Vector2d(vx, vy);
     };
 
-    Vector2d.multiplyX = function(a, scalar) {
-      return new Vector2d(a.x * scalar, a.y);
+    Vector2d.subtractX = function() {
+      var i, j, ref, vx;
+      if (arguments.length < 2) {
+        throw new Error;
+      }
+      vx = arguments[0].x;
+      for (i = j = 1, ref = arguments.length; 1 <= ref ? j < ref : j > ref; i = 1 <= ref ? ++j : --j) {
+        vx -= arguments[i].x;
+      }
+      return new Vector2d(vx, 0);
     };
 
-    Vector2d.multiplyY = function(a, scalar) {
-      return new Vector2d(a.x, a.y * scalar);
+    Vector2d.subtractY = function() {
+      var i, j, ref, vy;
+      if (arguments.length < 2) {
+        throw new Error;
+      }
+      vy = arguments[0].x;
+      for (i = j = 1, ref = arguments.length; 1 <= ref ? j < ref : j > ref; i = 1 <= ref ? ++j : --j) {
+        vy -= arguments[i].y;
+      }
+      return new Vector2d(0, vy);
     };
 
-    Vector2d.divide = function(a, scalar) {
-      return new Vector2d(a.x / scalar, a.y / scalar);
+    Vector2d.multiply = function() {
+      var i, j, ref, vx, vy;
+      if (arguments.length < 2) {
+        throw new Error;
+      }
+      vx = arguments[0].x;
+      vy = arguments[0].y;
+      for (i = j = 1, ref = arguments.length; 1 <= ref ? j < ref : j > ref; i = 1 <= ref ? ++j : --j) {
+        vx *= arguments[i];
+        vy *= arguments[i];
+      }
+      return new Vector2d(vx, vy);
     };
 
-    Vector2d.divideX = function(a, scalar) {
-      return new Vector2d(a.x / scalar, a.y);
+    Vector2d.multiplyX = function() {
+      var i, j, ref, vx, vy;
+      if (arguments.length < 2) {
+        throw new Error;
+      }
+      vx = arguments[0].x;
+      vy = arguments[0].y;
+      for (i = j = 1, ref = arguments.length; 1 <= ref ? j < ref : j > ref; i = 1 <= ref ? ++j : --j) {
+        vx *= arguments[i];
+      }
+      return new Vector2d(vx, vy);
     };
 
-    Vector2d.divideY = function(a, scalar) {
-      return new Vector2d(a.x, a.y / scalar);
+    Vector2d.multiplyY = function() {
+      var i, j, ref, vx, vy;
+      if (arguments.length < 2) {
+        throw new Error;
+      }
+      vx = arguments[0].x;
+      vy = arguments[0].y;
+      for (i = j = 1, ref = arguments.length; 1 <= ref ? j < ref : j > ref; i = 1 <= ref ? ++j : --j) {
+        vx *= arguments[i];
+      }
+      return new Vector2d(vx, vy);
+    };
+
+    Vector2d.divide = function() {
+      var i, j, ref, vx, vy;
+      if (arguments.length < 2) {
+        throw new Error;
+      }
+      vx = arguments[0].x;
+      vy = arguments[0].y;
+      for (i = j = 1, ref = arguments.length; 1 <= ref ? j < ref : j > ref; i = 1 <= ref ? ++j : --j) {
+        vx /= arguments[i];
+        vy /= arguments[i];
+      }
+      return new Vector2d(vx, vy);
+    };
+
+    Vector2d.divideX = function() {
+      var i, j, ref, vx, vy;
+      if (arguments.length < 2) {
+        throw new Error;
+      }
+      vx = arguments[0].x;
+      vy = arguments[0].y;
+      for (i = j = 1, ref = arguments.length; 1 <= ref ? j < ref : j > ref; i = 1 <= ref ? ++j : --j) {
+        vx /= arguments[i];
+      }
+      return new Vector2d(vx, vy);
+    };
+
+    Vector2d.divideY = function() {
+      var i, j, ref, vx, vy;
+      if (arguments.length < 2) {
+        throw new Error;
+      }
+      vx = arguments[0].x;
+      vy = arguments[0].y;
+      for (i = j = 1, ref = arguments.length; 1 <= ref ? j < ref : j > ref; i = 1 <= ref ? ++j : --j) {
+        vy /= arguments[i];
+      }
+      return new Vector2d(vx, vy);
     };
 
     Vector2d.normalize = function(a) {

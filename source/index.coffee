@@ -90,16 +90,14 @@ class Vector2d
   #
   # @return [Vector2d] A new vector
   #
-  @scale: (a, b)->
+  @scale: ()->
+    if arguments.length < 2
+      throw new Error
     vx = arguments[0].x
     vy = arguments[0].y
-    first = true
-    for vector in arguments
-      if first is true
-        first = false
-        continue
-      vx *= vector.x
-      vy *= vector.y
+    for i in [1...arguments.length]
+      vx *= arguments[i].x
+      vy *= arguments[i].y
     new Vector2d vx, vy
   
   # Покомпонентное умножение векторов
@@ -109,14 +107,12 @@ class Vector2d
   #
   # @return [Vector2d] A new vector
   #
-  @scaleX: (a, b)->
+  @scaleX: ()->
+    if arguments.length < 2
+      throw new Error
     vx = arguments[0].x
-    first = true
-    for vector in arguments
-      if first is true
-        first = false
-        continue
-      vx *= vector.x
+    for i in [1...arguments.length]
+      vx *= arguments[i].x
     new Vector2d vx, 0
   
   # Покомпонентное умножение векторов
@@ -126,14 +122,12 @@ class Vector2d
   #
   # @return [Vector2d] A new vector
   #
-  @scaleY: (a, b)->
+  @scaleY: ()->
+    if arguments.length < 2
+      throw new Error
     vy = arguments[0].y
-    first = true
-    for vector in arguments
-      if first is true
-        first = false
-        continue
-      vy *= vector.y
+    for i in [1...arguments.length]
+      vy *= arguments[i].y
     new Vector2d 0, vy
 
   # Сложение векторов
@@ -144,15 +138,13 @@ class Vector2d
   # @return [Vector2d] A new vector
   #
   @add: ()->
+    if arguments.length < 2
+      throw new Error
     vx = arguments[0].x
     vy = arguments[0].y
-    first = true
-    for vector in arguments
-      if first is true
-        first = false
-        continue
-      vx += vector.x
-      vy += vector.y
+    for i in [1...arguments.length]
+      vx += arguments[i].x
+      vy += arguments[i].y
     new Vector2d vx, vy
 
   # Сложение векторов
@@ -163,13 +155,11 @@ class Vector2d
   # @return [Vector2d] A new vector
   #
   @addX: ()->
+    if arguments.length < 2
+      throw new Error
     vx = arguments[0].x
-    first = true
-    for vector in arguments
-      if first is true
-        first = false
-        continue
-      vx += vector.x
+    for i in [1...arguments.length]
+      vx += arguments[i].x
     new Vector2d vx, 0
 
   # Сложение векторов
@@ -180,13 +170,11 @@ class Vector2d
   # @return [Vector2d] A new vector
   #
   @addY: ()->
+    if arguments.length < 2
+      throw new Error
     vy = arguments[0].y
-    first = true
-    for vector in arguments
-      if first is true
-        first = false
-        continue
-      vy += vector.y
+    for i in [1...arguments.length]
+      vy += arguments[i].y
     new Vector2d 0, vy
 
   # Вычитание векторов
@@ -197,15 +185,13 @@ class Vector2d
   # @return [Vector2d] A new vector
   #
   @subtract: ()->
+    if arguments.length < 2
+      throw new Error
     vx = arguments[0].x
     vy = arguments[0].y
-    first = true
-    for vector in arguments
-      if first is true
-        first = false
-        continue
-      vx -= vector.x
-      vy -= vector.y
+    for i in [1...arguments.length]
+      vx -= arguments[i].x
+      vy -= arguments[i].y
     new Vector2d vx, vy
 
   # Вычитание векторов
@@ -215,14 +201,12 @@ class Vector2d
   #
   # @return [Vector2d] A new vector
   #
-  @subtractX: (a, b)->
+  @subtractX: ()->
+    if arguments.length < 2
+      throw new Error
     vx = arguments[0].x
-    first = true
-    for vector in arguments
-      if first is true
-        first = false
-        continue
-      vx -= vector.x
+    for i in [1...arguments.length]
+      vx -= arguments[i].x
     new Vector2d vx, 0
 
   # Вычитание векторов
@@ -232,14 +216,12 @@ class Vector2d
   #
   # @return [Vector2d] A new vector
   #
-  @subtractY: (a, b)->
+  @subtractY: ()->
+    if arguments.length < 2
+      throw new Error
     vy = arguments[0].x
-    first = true
-    for vector in arguments
-      if first is true
-        first = false
-        continue
-      vy -= vector.y
+    for i in [1...arguments.length]
+      vy -= arguments[i].y
     new Vector2d 0, vy
 
   # умножение вектора на скаляр
@@ -249,16 +231,14 @@ class Vector2d
   #
   # @return [Vector2d] A new vector
   #
-  @multiply: (a, scalar)->
+  @multiply: ()->
+    if arguments.length < 2
+      throw new Error
     vx = arguments[0].x
     vy = arguments[0].y
-    first = true
-    for scalar in arguments
-      if first is true
-        first = false
-        continue
-      vx *= scalar
-      vy *= scalar
+    for i in [1...arguments.length]
+      vx *= arguments[i]
+      vy *= arguments[i]
     new Vector2d vx, vy
 
   # умножение вектора на скаляр
@@ -268,15 +248,13 @@ class Vector2d
   #
   # @return [Vector2d] A new vector
   #
-  @multiplyX: (a, scalar)->
+  @multiplyX: ()->
+    if arguments.length < 2
+      throw new Error
     vx = arguments[0].x
     vy = arguments[0].y
-    first = true
-    for scalar in arguments
-      if first is true
-        first = false
-        continue
-      vx *= scalar
+    for i in [1...arguments.length]
+      vx *= arguments[i]
     new Vector2d vx, vy
 
   # умножение вектора на скаляр
@@ -286,15 +264,13 @@ class Vector2d
   #
   # @return [Vector2d] A new vector
   #
-  @multiplyY: (a, scalar)->
+  @multiplyY: ()->
+    if arguments.length < 2
+      throw new Error
     vx = arguments[0].x
     vy = arguments[0].y
-    first = true
-    for scalar in arguments
-      if first is true
-        first = false
-        continue
-      vx *= scalar
+    for i in [1...arguments.length]
+      vx *= arguments[i]
     new Vector2d vx, vy
 
   # Деление вектора на скаляр
@@ -304,16 +280,14 @@ class Vector2d
   #
   # @return [Vector2d] A new vector
   #
-  @divide: (a, scalar)->
+  @divide: ()->
+    if arguments.length < 2
+      throw new Error
     vx = arguments[0].x
     vy = arguments[0].y
-    first = true
-    for scalar in arguments
-      if first is true
-        first = false
-        continue
-      vx /= scalar
-      vy /= scalar
+    for i in [1...arguments.length]
+      vx /= arguments[i]
+      vy /= arguments[i]
     new Vector2d vx, vy
 
   # Деление вектора на скаляр
@@ -323,15 +297,13 @@ class Vector2d
   #
   # @return [Vector2d] A new vector
   #
-  @divideX: (a, scalar)->
+  @divideX: ()->
+    if arguments.length < 2
+      throw new Error
     vx = arguments[0].x
     vy = arguments[0].y
-    first = true
-    for scalar in arguments
-      if first is true
-        first = false
-        continue
-      vx /= scalar
+    for i in [1...arguments.length]
+      vx /= arguments[i]
     new Vector2d vx, vy
 
   # Деление вектора на скаляр
@@ -341,15 +313,13 @@ class Vector2d
   #
   # @return [Vector2d] A new vector
   #
-  @divideY: (a, scalar)->
+  @divideY: ()->
+    if arguments.length < 2
+      throw new Error
     vx = arguments[0].x
     vy = arguments[0].y
-    first = true
-    for scalar in arguments
-      if first is true
-        first = false
-        continue
-      vy /= scalar
+    for i in [1...arguments.length]
+      vy /= arguments[i]
     new Vector2d vx, vy
 
   # Нормализация вектора
