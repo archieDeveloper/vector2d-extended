@@ -65,6 +65,7 @@ class Vector2d
   # @return [Vector2d] A new vector
   #
   @clampMagnitude: (a, maxLength)->
+    if not (a instanceof Vector2d) or typeof maxLength isnt 'number' then throw new TypeError
     b = a.clone()
     if b.magnitudeSquared > maxLength * maxLength
       b.normalize().multiply(maxLength)
@@ -79,6 +80,7 @@ class Vector2d
   # @return [Vector2d] A new vector
   #
   @lerp: (a, b, l)->
+    if not (a instanceof Vector2d) or not (b instanceof Vector2d) or typeof l isnt 'number' then throw new TypeError
     if l < 0 then l = 0
     if l > 1 then l = 1
     new Vector2d(a.x+(b.x-a.x)*l, a.y+(b.y-a.y)*l)
@@ -91,11 +93,13 @@ class Vector2d
   # @return [Vector2d] A new vector
   #
   @scale: ()->
-    if arguments.length < 2
-      throw new Error
+    argumentsLength = arguments.length
+    if argumentsLength < 2 then throw new Error
+    if not (arguments[0] instanceof Vector2d) then throw new TypeError
     vx = arguments[0].x
     vy = arguments[0].y
-    for i in [1...arguments.length]
+    for i in [1...argumentsLength]
+      if not (arguments[i] instanceof Vector2d) then throw new TypeError
       vx *= arguments[i].x
       vy *= arguments[i].y
     new Vector2d vx, vy
@@ -108,10 +112,12 @@ class Vector2d
   # @return [Vector2d] A new vector
   #
   @scaleX: ()->
-    if arguments.length < 2
-      throw new Error
+    argumentsLength = arguments.length
+    if argumentsLength < 2 then throw new Error
+    if not (arguments[0] instanceof Vector2d) then throw new TypeError
     vx = arguments[0].x
-    for i in [1...arguments.length]
+    for i in [1...argumentsLength]
+      if not (arguments[i] instanceof Vector2d) then throw new TypeError
       vx *= arguments[i].x
     new Vector2d vx, 0
   
@@ -123,10 +129,12 @@ class Vector2d
   # @return [Vector2d] A new vector
   #
   @scaleY: ()->
-    if arguments.length < 2
-      throw new Error
+    argumentsLength = arguments.length
+    if argumentsLength < 2 then throw new Error
+    if not (arguments[0] instanceof Vector2d) then throw new TypeError
     vy = arguments[0].y
-    for i in [1...arguments.length]
+    for i in [1...argumentsLength]
+      if not (arguments[i] instanceof Vector2d) then throw new TypeError
       vy *= arguments[i].y
     new Vector2d 0, vy
 
@@ -138,11 +146,13 @@ class Vector2d
   # @return [Vector2d] A new vector
   #
   @add: ()->
-    if arguments.length < 2
-      throw new Error
+    argumentsLength = arguments.length
+    if argumentsLength < 2 then throw new Error
+    if not (arguments[0] instanceof Vector2d) then throw new TypeError
     vx = arguments[0].x
     vy = arguments[0].y
-    for i in [1...arguments.length]
+    for i in [1...argumentsLength]
+      if not (arguments[i] instanceof Vector2d) then throw new TypeError
       vx += arguments[i].x
       vy += arguments[i].y
     new Vector2d vx, vy
@@ -155,10 +165,12 @@ class Vector2d
   # @return [Vector2d] A new vector
   #
   @addX: ()->
-    if arguments.length < 2
-      throw new Error
+    argumentsLength = arguments.length
+    if argumentsLength < 2 then throw new Error
+    if not (arguments[0] instanceof Vector2d) then throw new TypeError
     vx = arguments[0].x
-    for i in [1...arguments.length]
+    for i in [1...argumentsLength]
+      if not (arguments[i] instanceof Vector2d) then throw new TypeError
       vx += arguments[i].x
     new Vector2d vx, 0
 
@@ -170,10 +182,12 @@ class Vector2d
   # @return [Vector2d] A new vector
   #
   @addY: ()->
-    if arguments.length < 2
-      throw new Error
+    argumentsLength = arguments.length
+    if argumentsLength < 2 then throw new Error
+    if not (arguments[0] instanceof Vector2d) then throw new TypeError
     vy = arguments[0].y
-    for i in [1...arguments.length]
+    for i in [1...argumentsLength]
+      if not (arguments[i] instanceof Vector2d) then throw new TypeError
       vy += arguments[i].y
     new Vector2d 0, vy
 
@@ -185,11 +199,13 @@ class Vector2d
   # @return [Vector2d] A new vector
   #
   @subtract: ()->
-    if arguments.length < 2
-      throw new Error
+    argumentsLength = arguments.length
+    if argumentsLength < 2 then throw new Error
+    if not (arguments[0] instanceof Vector2d) then throw new TypeError
     vx = arguments[0].x
     vy = arguments[0].y
-    for i in [1...arguments.length]
+    for i in [1...argumentsLength]
+      if not (arguments[i] instanceof Vector2d) then throw new TypeError
       vx -= arguments[i].x
       vy -= arguments[i].y
     new Vector2d vx, vy
@@ -202,10 +218,12 @@ class Vector2d
   # @return [Vector2d] A new vector
   #
   @subtractX: ()->
-    if arguments.length < 2
-      throw new Error
+    argumentsLength = arguments.length
+    if argumentsLength < 2 then throw new Error
+    if not (arguments[0] instanceof Vector2d) then throw new TypeError
     vx = arguments[0].x
-    for i in [1...arguments.length]
+    for i in [1...argumentsLength]
+      if not (arguments[i] instanceof Vector2d) then throw new TypeError
       vx -= arguments[i].x
     new Vector2d vx, 0
 
@@ -217,26 +235,30 @@ class Vector2d
   # @return [Vector2d] A new vector
   #
   @subtractY: ()->
-    if arguments.length < 2
-      throw new Error
+    argumentsLength = arguments.length
+    if argumentsLength < 2 then throw new Error
+    if not (arguments[0] instanceof Vector2d) then throw new TypeError
     vy = arguments[0].x
-    for i in [1...arguments.length]
+    for i in [1...argumentsLength]
+      if not (arguments[i] instanceof Vector2d) then throw new TypeError
       vy -= arguments[i].y
     new Vector2d 0, vy
 
   # умножение вектора на скаляр
   #
   # @param [Vector2d] a Первый вектор
-  # @param [Vector2d] b Второй вектор
+  # @param [Number] b Скаляр
   #
   # @return [Vector2d] A new vector
   #
   @multiply: ()->
-    if arguments.length < 2
-      throw new Error
+    argumentsLength = arguments.length
+    if argumentsLength < 2 then throw new Error
+    if not (arguments[0] instanceof Vector2d) then throw new TypeError
     vx = arguments[0].x
     vy = arguments[0].y
-    for i in [1...arguments.length]
+    for i in [1...argumentsLength]
+      if typeof arguments[i] isnt "number" then throw new TypeError
       vx *= arguments[i]
       vy *= arguments[i]
     new Vector2d vx, vy
@@ -249,11 +271,13 @@ class Vector2d
   # @return [Vector2d] A new vector
   #
   @multiplyX: ()->
-    if arguments.length < 2
-      throw new Error
+    argumentsLength = arguments.length
+    if argumentsLength < 2 then throw new Error
+    if not (arguments[0] instanceof Vector2d) then throw new TypeError
     vx = arguments[0].x
     vy = arguments[0].y
-    for i in [1...arguments.length]
+    for i in [1...argumentsLength]
+      if typeof arguments[i] isnt "number" then throw new TypeError
       vx *= arguments[i]
     new Vector2d vx, vy
 
@@ -265,11 +289,13 @@ class Vector2d
   # @return [Vector2d] A new vector
   #
   @multiplyY: ()->
-    if arguments.length < 2
-      throw new Error
+    argumentsLength = arguments.length
+    if argumentsLength < 2 then throw new Error
+    if not (arguments[0] instanceof Vector2d) then throw new TypeError
     vx = arguments[0].x
     vy = arguments[0].y
-    for i in [1...arguments.length]
+    for i in [1...argumentsLength]
+      if typeof arguments[i] isnt "number" then throw new TypeError
       vx *= arguments[i]
     new Vector2d vx, vy
 
@@ -281,11 +307,13 @@ class Vector2d
   # @return [Vector2d] A new vector
   #
   @divide: ()->
-    if arguments.length < 2
-      throw new Error
+    argumentsLength = arguments.length
+    if argumentsLength < 2 then throw new Error
+    if not (arguments[0] instanceof Vector2d) then throw new TypeError
     vx = arguments[0].x
     vy = arguments[0].y
-    for i in [1...arguments.length]
+    for i in [1...argumentsLength]
+      if typeof arguments[i] isnt "number" then throw new TypeError
       vx /= arguments[i]
       vy /= arguments[i]
     new Vector2d vx, vy
@@ -298,11 +326,13 @@ class Vector2d
   # @return [Vector2d] A new vector
   #
   @divideX: ()->
-    if arguments.length < 2
-      throw new Error
+    argumentsLength = arguments.length
+    if argumentsLength < 2 then throw new Error
+    if not (arguments[0] instanceof Vector2d) then throw new TypeError
     vx = arguments[0].x
     vy = arguments[0].y
-    for i in [1...arguments.length]
+    for i in [1...argumentsLength]
+      if typeof arguments[i] isnt "number" then throw new TypeError
       vx /= arguments[i]
     new Vector2d vx, vy
 
@@ -314,11 +344,13 @@ class Vector2d
   # @return [Vector2d] A new vector
   #
   @divideY: ()->
-    if arguments.length < 2
-      throw new Error
+    argumentsLength = arguments.length
+    if argumentsLength < 2 then throw new Error
+    if not (arguments[0] instanceof Vector2d) then throw new TypeError
     vx = arguments[0].x
     vy = arguments[0].y
-    for i in [1...arguments.length]
+    for i in [1...argumentsLength]
+      if typeof arguments[i] isnt "number" then throw new TypeError
       vy /= arguments[i]
     new Vector2d vx, vy
 
@@ -329,6 +361,7 @@ class Vector2d
   # @return [Vector2d] A new vector
   #
   @normalize: (a)->
+    if not (a instanceof Vector2d) then throw new TypeError
     magnitude = a.magnitude
     new Vector2d a.x/magnitude, a.y/magnitude
 
@@ -340,9 +373,10 @@ class Vector2d
   # @return [Vector2d] A new vector
   #
   @project: (a, b)->
+    if not (a instanceof Vector2d) or not (b instanceof Vector2d) then throw new TypeError
     c = ((a.x * b.x)+(a.y * b.y)) / ((b.x*b.x)+(b.y*b.y))
     new Vector2d b.x*c, b.y*c
-
+                                                                                
   # Округление компонент вектора
   #
   # @param [Vector2d] a Вектор
@@ -350,6 +384,7 @@ class Vector2d
   # @return [Vector2d] A new vector
   #
   @round: (a)->
+    if not (a instanceof Vector2d) then throw new TypeError
     new Vector2d Math.round(a.x), Math.round(a.y)
 
   # Округление компонент вектора
@@ -359,6 +394,7 @@ class Vector2d
   # @return [Vector2d] A new vector
   #
   @roundX: (a)->
+    if not (a instanceof Vector2d) then throw new TypeError
     new Vector2d Math.round(a.x), a.y
 
   # Округление компонент вектора
@@ -368,6 +404,7 @@ class Vector2d
   # @return [Vector2d] A new vector
   #
   @roundY: (a)->
+    if not (a instanceof Vector2d) then throw new TypeError
     new Vector2d a.x, Math.round(a.y)
 
   # Инвертирование вектора
@@ -377,6 +414,7 @@ class Vector2d
   # @return [Vector2d] A new vector
   #
   @invert: (a)->
+    if not (a instanceof Vector2d) then throw new TypeError
     new Vector2d -a.x, -a.y
 
   # Инвертирование вектора
@@ -386,6 +424,7 @@ class Vector2d
   # @return [Vector2d] A new vector
   #
   @invertX: (a)->
+    if not (a instanceof Vector2d) then throw new TypeError
     new Vector2d -a.x, a.y
 
   # Инвертирование вектора
@@ -395,6 +434,7 @@ class Vector2d
   # @return [Vector2d] A new vector
   #
   @invertY: (a)->
+    if not (a instanceof Vector2d) then throw new TypeError
     new Vector2d a.x, -a.y
 
   # Methods
