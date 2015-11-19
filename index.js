@@ -5,15 +5,15 @@
   Vector2d = (function() {
     var checkType, staticAAA, staticMath;
 
-    staticAAA = function(args, x, y) {
+    staticAAA = function(args, types, x, y) {
       var vx, vy;
       if (x != null) {
-        vx = staticMath('x', 2, args, [Vector2d, Vector2d], x);
+        vx = staticMath('x', 2, args, types, x);
       } else {
         vx = 0;
       }
       if (y != null) {
-        vy = staticMath('y', 2, args, [Vector2d, Vector2d], y);
+        vy = staticMath('y', 2, args, types, y);
       } else {
         vy = 0;
       }
@@ -112,7 +112,7 @@
       fn = function(a, b) {
         return a * b;
       };
-      return staticAAA(arguments, fn, fn);
+      return staticAAA(arguments, [Vector2d, Vector2d], fn, fn);
     };
 
     Vector2d.scaleX = function() {
@@ -120,7 +120,7 @@
       fn = function(a, b) {
         return a * b;
       };
-      return staticAAA(arguments, fn);
+      return staticAAA(arguments, [Vector2d, Vector2d], fn);
     };
 
     Vector2d.scaleY = function() {
@@ -128,7 +128,7 @@
       fn = function(a, b) {
         return a * b;
       };
-      return staticAAA(arguments, null, fn);
+      return staticAAA(arguments, [Vector2d, Vector2d], null, fn);
     };
 
     Vector2d.add = function() {
@@ -136,7 +136,7 @@
       fn = function(a, b) {
         return a + b;
       };
-      return staticAAA(arguments, fn, fn);
+      return staticAAA(arguments, [Vector2d, Vector2d], fn, fn);
     };
 
     Vector2d.addX = function() {
@@ -144,7 +144,7 @@
       fn = function(a, b) {
         return a + b;
       };
-      return staticAAA(arguments, fn);
+      return staticAAA(arguments, [Vector2d, Vector2d], fn);
     };
 
     Vector2d.addY = function() {
@@ -152,7 +152,7 @@
       fn = function(a, b) {
         return a + b;
       };
-      return staticAAA(arguments, null, fn);
+      return staticAAA(arguments, [Vector2d, Vector2d], null, fn);
     };
 
     Vector2d.subtract = function() {
@@ -160,7 +160,7 @@
       fn = function(a, b) {
         return a - b;
       };
-      return staticAAA(arguments, fn, fn);
+      return staticAAA(arguments, [Vector2d, Vector2d], fn, fn);
     };
 
     Vector2d.subtractX = function() {
@@ -168,7 +168,7 @@
       fn = function(a, b) {
         return a - b;
       };
-      return staticAAA(arguments, fn);
+      return staticAAA(arguments, [Vector2d, Vector2d], fn);
     };
 
     Vector2d.subtractY = function() {
@@ -176,7 +176,7 @@
       fn = function(a, b) {
         return a - b;
       };
-      return staticAAA(arguments, null, fn);
+      return staticAAA(arguments, [Vector2d, Vector2d], null, fn);
     };
 
     Vector2d.multiply = function() {

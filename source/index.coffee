@@ -2,13 +2,13 @@
 
 class Vector2d
 
-  staticAAA = (args, x, y)->
+  staticAAA = (args, types, x, y)->
     if x?
-      vx = staticMath 'x', 2, args, [Vector2d, Vector2d], x
+      vx = staticMath 'x', 2, args, types, x
     else
       vx = 0
     if y?
-      vy = staticMath 'y', 2, args, [Vector2d, Vector2d], y
+      vy = staticMath 'y', 2, args, types, y
     else
       vy = 0
     new Vector2d vx, vy
@@ -71,47 +71,47 @@ class Vector2d
   @scale: ()->
     fn = (a, b)->
       a * b
-    staticAAA arguments, fn, fn
+    staticAAA arguments, [Vector2d, Vector2d], fn, fn
 
   @scaleX: ()->
     fn = (a, b)->
       a * b
-    staticAAA arguments, fn
+    staticAAA arguments, [Vector2d, Vector2d], fn
 
   @scaleY: ()->
     fn = (a, b)->
       a * b
-    staticAAA arguments, null, fn
+    staticAAA arguments, [Vector2d, Vector2d], null, fn
 
   @add: ()->
     fn = (a, b)->
       a + b
-    staticAAA arguments, fn, fn
+    staticAAA arguments, [Vector2d, Vector2d], fn, fn
 
   @addX: ()->
     fn = (a, b)->
       a + b
-    staticAAA arguments, fn
+    staticAAA arguments, [Vector2d, Vector2d], fn
 
   @addY: ()->
     fn = (a, b)->
       a + b
-    staticAAA arguments, null, fn
+    staticAAA arguments, [Vector2d, Vector2d], null, fn
 
   @subtract: ()->
     fn = (a, b)->
       a - b
-    staticAAA arguments, fn, fn
+    staticAAA arguments, [Vector2d, Vector2d], fn, fn
 
   @subtractX: ()->
     fn = (a, b)->
       a - b
-    staticAAA arguments, fn
+    staticAAA arguments, [Vector2d, Vector2d], fn
 
   @subtractY: ()->
     fn = (a, b)->
       a - b
-    staticAAA arguments, null, fn
+    staticAAA arguments, [Vector2d, Vector2d], null, fn
 
   @multiply: ()->
     vx = staticMath 'x', 2, arguments, [Vector2d, 'number'], (a, b)->
