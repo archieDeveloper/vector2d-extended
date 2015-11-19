@@ -67,7 +67,15 @@
     };
 
     Vector2d.add = function(a, b) {
-      return new Vector2d(a.x + b.x, a.y + b.y);
+      var i, len1, vector, vx, vy;
+      vx = 0;
+      vy = 0;
+      for (i = 0, len1 = arguments.length; i < len1; i++) {
+        vector = arguments[i];
+        vx += vector.x;
+        vy += vector.y;
+      }
+      return new Vector2d(vx, vy);
     };
 
     Vector2d.addX = function(a, b) {

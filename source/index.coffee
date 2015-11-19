@@ -91,7 +91,16 @@ class Vector2d
   # @return [Vector2d] A new vector
   #
   @scale: (a, b)->
-    new Vector2d a.x*b.x, a.y*b.y
+    vx = arguments[0].x
+    vy = arguments[0].y
+    first = true
+    for vector in arguments
+      if first is true
+        first = false
+        continue
+      vx *= vector.x
+      vy *= vector.y
+    new Vector2d vx, vy
   
   # Покомпонентное умножение векторов
   #
@@ -101,7 +110,14 @@ class Vector2d
   # @return [Vector2d] A new vector
   #
   @scaleX: (a, b)->
-    new Vector2d a.x*b.x, 0
+    vx = arguments[0].x
+    first = true
+    for vector in arguments
+      if first is true
+        first = false
+        continue
+      vx *= vector.x
+    new Vector2d vx, 0
   
   # Покомпонентное умножение векторов
   #
@@ -111,7 +127,14 @@ class Vector2d
   # @return [Vector2d] A new vector
   #
   @scaleY: (a, b)->
-    new Vector2d 0, a.y*b.y
+    vy = arguments[0].y
+    first = true
+    for vector in arguments
+      if first is true
+        first = false
+        continue
+      vy *= vector.y
+    new Vector2d 0, vy
 
   # Сложение векторов
   #
@@ -120,8 +143,17 @@ class Vector2d
   #
   # @return [Vector2d] A new vector
   #
-  @add: (a, b)->
-    new Vector2d a.x+b.x, a.y+b.y
+  @add: ()->
+    vx = arguments[0].x
+    vy = arguments[0].y
+    first = true
+    for vector in arguments
+      if first is true
+        first = false
+        continue
+      vx += vector.x
+      vy += vector.y
+    new Vector2d vx, vy
 
   # Сложение векторов
   #
@@ -130,8 +162,15 @@ class Vector2d
   #
   # @return [Vector2d] A new vector
   #
-  @addX: (a, b)->
-    new Vector2d a.x+b.x, 0
+  @addX: ()->
+    vx = arguments[0].x
+    first = true
+    for vector in arguments
+      if first is true
+        first = false
+        continue
+      vx += vector.x
+    new Vector2d vx, 0
 
   # Сложение векторов
   #
@@ -140,8 +179,15 @@ class Vector2d
   #
   # @return [Vector2d] A new vector
   #
-  @addY: (a, b)->
-    new Vector2d 0, a.y+b.y
+  @addY: ()->
+    vy = arguments[0].y
+    first = true
+    for vector in arguments
+      if first is true
+        first = false
+        continue
+      vy += vector.y
+    new Vector2d 0, vy
 
   # Вычитание векторов
   #
@@ -150,8 +196,17 @@ class Vector2d
   #
   # @return [Vector2d] A new vector
   #
-  @subtract: (a, b)->
-    new Vector2d a.x-b.x, a.y-b.y
+  @subtract: ()->
+    vx = arguments[0].x
+    vy = arguments[0].y
+    first = true
+    for vector in arguments
+      if first is true
+        first = false
+        continue
+      vx -= vector.x
+      vy -= vector.y
+    new Vector2d vx, vy
 
   # Вычитание векторов
   #
@@ -161,7 +216,14 @@ class Vector2d
   # @return [Vector2d] A new vector
   #
   @subtractX: (a, b)->
-    new Vector2d a.x-b.x, 0
+    vx = arguments[0].x
+    first = true
+    for vector in arguments
+      if first is true
+        first = false
+        continue
+      vx -= vector.x
+    new Vector2d vx, 0
 
   # Вычитание векторов
   #
@@ -171,7 +233,14 @@ class Vector2d
   # @return [Vector2d] A new vector
   #
   @subtractY: (a, b)->
-    new Vector2d 0, a.y-b.y
+    vy = arguments[0].x
+    first = true
+    for vector in arguments
+      if first is true
+        first = false
+        continue
+      vy -= vector.y
+    new Vector2d 0, vy
 
   # умножение вектора на скаляр
   #
@@ -181,7 +250,16 @@ class Vector2d
   # @return [Vector2d] A new vector
   #
   @multiply: (a, scalar)->
-    new Vector2d a.x*scalar, a.y*scalar
+    vx = arguments[0].x
+    vy = arguments[0].y
+    first = true
+    for scalar in arguments
+      if first is true
+        first = false
+        continue
+      vx *= scalar
+      vy *= scalar
+    new Vector2d vx, vy
 
   # умножение вектора на скаляр
   #
@@ -191,7 +269,15 @@ class Vector2d
   # @return [Vector2d] A new vector
   #
   @multiplyX: (a, scalar)->
-    new Vector2d a.x*scalar, a.y
+    vx = arguments[0].x
+    vy = arguments[0].y
+    first = true
+    for scalar in arguments
+      if first is true
+        first = false
+        continue
+      vx *= scalar
+    new Vector2d vx, vy
 
   # умножение вектора на скаляр
   #
@@ -201,7 +287,15 @@ class Vector2d
   # @return [Vector2d] A new vector
   #
   @multiplyY: (a, scalar)->
-    new Vector2d a.x, a.y*scalar
+    vx = arguments[0].x
+    vy = arguments[0].y
+    first = true
+    for scalar in arguments
+      if first is true
+        first = false
+        continue
+      vx *= scalar
+    new Vector2d vx, vy
 
   # Деление вектора на скаляр
   #
@@ -211,7 +305,16 @@ class Vector2d
   # @return [Vector2d] A new vector
   #
   @divide: (a, scalar)->
-    new Vector2d a.x/scalar, a.y/scalar
+    vx = arguments[0].x
+    vy = arguments[0].y
+    first = true
+    for scalar in arguments
+      if first is true
+        first = false
+        continue
+      vx /= scalar
+      vy /= scalar
+    new Vector2d vx, vy
 
   # Деление вектора на скаляр
   #
@@ -221,7 +324,15 @@ class Vector2d
   # @return [Vector2d] A new vector
   #
   @divideX: (a, scalar)->
-    new Vector2d a.x/scalar, a.y
+    vx = arguments[0].x
+    vy = arguments[0].y
+    first = true
+    for scalar in arguments
+      if first is true
+        first = false
+        continue
+      vx /= scalar
+    new Vector2d vx, vy
 
   # Деление вектора на скаляр
   #
@@ -231,7 +342,15 @@ class Vector2d
   # @return [Vector2d] A new vector
   #
   @divideY: (a, scalar)->
-    new Vector2d a.x, a.y/scalar
+    vx = arguments[0].x
+    vy = arguments[0].y
+    first = true
+    for scalar in arguments
+      if first is true
+        first = false
+        continue
+      vy /= scalar
+    new Vector2d vx, vy
 
   # Нормализация вектора
   #
