@@ -92,6 +92,26 @@ class Vector2d
   #
   @scale: (a, b)->
     new Vector2d a.x*b.x, a.y*b.y
+  
+  # Покомпонентное умножение векторов
+  #
+  # @param [Vector2d] a Первый вектор
+  # @param [Vector2d] b Второй вектор
+  #
+  # @return [Vector2d] A new vector
+  #
+  @scaleX: (a, b)->
+    new Vector2d a.x*b.x, 0
+  
+  # Покомпонентное умножение векторов
+  #
+  # @param [Vector2d] a Первый вектор
+  # @param [Vector2d] b Второй вектор
+  #
+  # @return [Vector2d] A new vector
+  #
+  @scaleY: (a, b)->
+    new Vector2d 0, a.y*b.y
 
   # Сложение векторов
   #
@@ -103,6 +123,26 @@ class Vector2d
   @add: (a, b)->
     new Vector2d a.x+b.x, a.y+b.y
 
+  # Сложение векторов
+  #
+  # @param [Vector2d] a Первый вектор
+  # @param [Vector2d] b Второй вектор
+  #
+  # @return [Vector2d] A new vector
+  #
+  @addX: (a, b)->
+    new Vector2d a.x+b.x, 0
+
+  # Сложение векторов
+  #
+  # @param [Vector2d] a Первый вектор
+  # @param [Vector2d] b Второй вектор
+  #
+  # @return [Vector2d] A new vector
+  #
+  @addY: (a, b)->
+    new Vector2d 0, a.y+b.y
+
   # Вычитание векторов
   #
   # @param [Vector2d] a Первый вектор
@@ -112,6 +152,26 @@ class Vector2d
   #
   @subtract: (a, b)->
     new Vector2d a.x-b.x, a.y-b.y
+
+  # Вычитание векторов
+  #
+  # @param [Vector2d] a Первый вектор
+  # @param [Vector2d] b Второй вектор
+  #
+  # @return [Vector2d] A new vector
+  #
+  @subtractX: (a, b)->
+    new Vector2d a.x-b.x, 0
+
+  # Вычитание векторов
+  #
+  # @param [Vector2d] a Первый вектор
+  # @param [Vector2d] b Второй вектор
+  #
+  # @return [Vector2d] A new vector
+  #
+  @subtractY: (a, b)->
+    new Vector2d 0, a.y-b.y
 
   # умножение вектора на скаляр
   #
@@ -123,6 +183,26 @@ class Vector2d
   @multiply: (a, scalar)->
     new Vector2d a.x*scalar, a.y*scalar
 
+  # умножение вектора на скаляр
+  #
+  # @param [Vector2d] a Первый вектор
+  # @param [Vector2d] b Второй вектор
+  #
+  # @return [Vector2d] A new vector
+  #
+  @multiplyX: (a, scalar)->
+    new Vector2d a.x*scalar, a.y
+
+  # умножение вектора на скаляр
+  #
+  # @param [Vector2d] a Первый вектор
+  # @param [Vector2d] b Второй вектор
+  #
+  # @return [Vector2d] A new vector
+  #
+  @multiplyY: (a, scalar)->
+    new Vector2d a.x, a.y*scalar
+
   # Деление вектора на скаляр
   #
   # @param [Vector2d] a Первый вектор
@@ -132,6 +212,26 @@ class Vector2d
   #
   @divide: (a, scalar)->
     new Vector2d a.x/scalar, a.y/scalar
+
+  # Деление вектора на скаляр
+  #
+  # @param [Vector2d] a Первый вектор
+  # @param [Vector2d] b Второй вектор
+  #
+  # @return [Vector2d] A new vector
+  #
+  @divideX: (a, scalar)->
+    new Vector2d a.x/scalar, a.y
+
+  # Деление вектора на скаляр
+  #
+  # @param [Vector2d] a Первый вектор
+  # @param [Vector2d] b Второй вектор
+  #
+  # @return [Vector2d] A new vector
+  #
+  @divideY: (a, scalar)->
+    new Vector2d a.x, a.y/scalar
 
   # Нормализация вектора
   #
@@ -163,6 +263,24 @@ class Vector2d
   @round: (a)->
     new Vector2d Math.round(a.x), Math.round(a.y)
 
+  # Округление компонент вектора
+  #
+  # @param [Vector2d] a Вектор
+  #
+  # @return [Vector2d] A new vector
+  #
+  @roundX: (a)->
+    new Vector2d Math.round(a.x), a.y
+
+  # Округление компонент вектора
+  #
+  # @param [Vector2d] a Вектор
+  #
+  # @return [Vector2d] A new vector
+  #
+  @roundY: (a)->
+    new Vector2d a.x, Math.round(a.y)
+
   # Инвертирование вектора
   #
   # @param [Vector2d] a Вектор
@@ -171,6 +289,24 @@ class Vector2d
   #
   @invert: (a)->
     new Vector2d -a.x, -a.y
+
+  # Инвертирование вектора
+  #
+  # @param [Vector2d] a Вектор
+  #
+  # @return [Vector2d] A new vector
+  #
+  @invertX: (a)->
+    new Vector2d -a.x, a.y
+
+  # Инвертирование вектора
+  #
+  # @param [Vector2d] a Вектор
+  #
+  # @return [Vector2d] A new vector
+  #
+  @invertY: (a)->
+    new Vector2d a.x, -a.y
 
   # Methods
 
