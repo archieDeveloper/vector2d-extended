@@ -41,28 +41,93 @@
 
 vec1 = Vector2d(10,0);
 vec2 = Vector2d(25,30);
-sumVec1AndVec2 = vec1
-    .clone()
+sumVec1AndVec2
+    .equate(vec1)
     .add(vec2);
 </code></pre><p>Or set the length of the vector:</p><pre><code class="lang-javascript">var vec1, vec2, newLength;
 
 newLength = 30;
 
 vec1 = Vector2d(15, 35);
-vec2 = vec1
-    .clone()
+vec2.equate(vec1)
     .normalize()
     .multiply(newLength);
 </code></pre>
 <h2 id="documentation-api">Documentation API</h2>
+<ul>
+<li><p>Properties</p><ul>
+<li>x</li>
+<li>y</li>
+<li>length</li>
+<li>lengthSquared</li>
+<li>rotate</li>
+</ul>
+</li>
+<li><p>Static Methods</p><ul>
+<li>zero</li>
+<li>one</li>
+<li>up</li>
+<li>down</li>
+<li>right</li>
+<li>left</li>
+<li>clampMagnitude</li>
+<li>lerp</li>
+<li>scale</li>
+<li>add</li>
+<li>subtract</li>
+<li>multiply</li>
+<li>divide</li>
+<li>normalize</li>
+<li>project</li>
+<li>round</li>
+<li>invert</li>
+</ul>
+</li>
+<li><p>Instance Methods</p><ul>
+<li><p>Return Vector2d</p><ul>
+<li>add</li>
+<li>subtract</li>
+<li>multiply</li>
+<li>divide</li>
+<li>normalize</li>
+<li>project</li>
+<li>round</li>
+<li>zero</li>
+<li>clone</li>
+<li>equate</li>
+<li>invert</li>
+<li>lerp</li>
+<li>scale</li>
+<li>clampMagnitude</li>
+</ul>
+</li>
+<li><p>Return Number</p><ul>
+<li>dot</li>
+<li>cross</li>
+<li>distance</li>
+<li>distanceSquared</li>
+<li>angle</li>
+</ul>
+</li>
+<li><p>Return Boolean</p><ul>
+<li>isZero</li>
+<li>isEqual</li>
+<li>isNaN</li>
+<li>isFinite</li>
+<li>isEqualRotate</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 <h3 id="propirties">Propirties</h3>
 <h4 id="x">x</h4><p>Holds the value for the X component.</p><h4 id="y">y</h4><p>Holds the value for the Y component.</p><h3 id="static-methods">Static Methods</h3>
 <h4 id="zero-">zero:</h4><p>Shorthand for writing Vector2d(0, 0).</p><p>@peturn Vector2d A new zero vector</p><h4 id="one-">one:</h4><p>Shorthand for writing Vector2d(1, 1).</p><p>@peturn Vector2d A new unit vector</p><h4 id="up-">up:</h4><p>Shorthand for writing Vector2d(0, -1).</p><p>@peturn Vector2d A new vector</p><h4 id="down-">down:</h4><p>Shorthand for writing Vector2d(0, 1).</p><p>@peturn Vector2d A new vector</p><h4 id="right-">right:</h4><p>Shorthand for writing Vector2d(1, 0).</p><p>@peturn Vector2d A new vector</p><h4 id="left-">left:</h4><p>Shorthand for writing Vector2d(0, -1).</p><p>@peturn Vector2d A new vector</p><h3 id="instance-methods">Instance Methods</h3>
-<h4 id="add-vector-">add: (vector)</h4><p>@params Vector2d vector</p><p>@peturn Vector2d this</p><h4 id="subtract-vector-">subtract: (vector)</h4><p>@params Vector2d vector</p><p>@peturn Vector2d this</p><h4 id="multiply-scalar-">multiply: (scalar)</h4><p>@params Number scalar</p><p>@peturn Vector2d this</p><h4 id="divide-scalar-">divide: (scalar)</h4><p>@params Number scalar</p><p>@peturn Vector2d this</p><h4 id="normalize-">normalize:</h4><p>@peturn Vector2d this</p><h4 id="project-vector-">project: (vector)</h4><p>@params Vector2d vector</p><p>@peturn Vector2d this</p><h4 id="round-">round:</h4><p>@peturn Vector2d this</p><h4 id="zero">zero</h4><p>@peturn Vector2d this</p><h4 id="invert">invert</h4><p>@peturn Vector2d this</p><h4 id="clone">clone</h4><p>@peturn Vector2d A new vector</p><h4 id="magnitude-">magnitude:</h4><p>@peturn Number</p><h4 id="magnitudesquared-">magnitudeSquared:</h4><p>@peturn Number</p><h4 id="length-">length:</h4><p>@peturn Number</p><h4 id="lengthsquared-">lengthSquared:</h4><p>@peturn Number</p><h4 id="rotate-">rotate:</h4><p>@peturn Number</p><h4 id="dot-vector-">dot: (vector)</h4><p>@params Vector2d vector</p><p>@peturn Number</p><h4 id="cross-vector-">cross: (vector)</h4><p>@params Vector2d vector</p><p>@peturn Number</p><h4 id="distance-vector-">distance: (vector)</h4><p>@params Vector2d vector</p><p>@peturn Number</p><h4 id="distancesquared-vector-">distanceSquared: (vector)</h4><p>@params Vector2d vector</p><p>@peturn Number</p><h4 id="iszero">isZero</h4><p>@peturn Boolean</p><h4 id="isequal-vector-">isEqual: (vector)</h4><p>@params Vector2d vector</p><p>@peturn Boolean</p><h4 id="isnan">isNaN</h4><p>@peturn Boolean</p>
+<h4 id="add-vector-">add: (vector)</h4><p>@params Vector2d vector</p><p>@peturn Vector2d this</p><h4 id="subtract-vector-">subtract: (vector)</h4><p>@params Vector2d vector</p><p>@peturn Vector2d this</p><h4 id="multiply-scalar-">multiply: (scalar)</h4><p>@params Number scalar</p><p>@peturn Vector2d this</p><h4 id="divide-scalar-">divide: (scalar)</h4><p>@params Number scalar</p><p>@peturn Vector2d this</p><h4 id="normalize-">normalize:</h4><p>@peturn Vector2d this</p><h4 id="project-vector-">project: (vector)</h4><p>@params Vector2d vector</p><p>@peturn Vector2d this</p><h4 id="round-">round:</h4><p>@peturn Vector2d this</p><h4 id="zero">zero</h4><p>@peturn Vector2d this</p><h4 id="invert">invert</h4><p>@peturn Vector2d this</p><h4 id="clone">clone</h4><p>@peturn Vector2d A new vector</p><h4 id="equate">equate</h4><p>@peturn Vector2d this</p><h4 id="magnitude-">magnitude:</h4><p>@peturn Number</p><h4 id="magnitudesquared-">magnitudeSquared:</h4><p>@peturn Number</p><h4 id="length-">length:</h4><p>@peturn Number</p><h4 id="lengthsquared-">lengthSquared:</h4><p>@peturn Number</p><h4 id="rotate-">rotate:</h4><p>@peturn Number</p><h4 id="dot-vector-">dot: (vector)</h4><p>@params Vector2d vector</p><p>@peturn Number</p><h4 id="cross-vector-">cross: (vector)</h4><p>@params Vector2d vector</p><p>@peturn Number</p><h4 id="distance-vector-">distance: (vector)</h4><p>@params Vector2d vector</p><p>@peturn Number</p><h4 id="distancesquared-vector-">distanceSquared: (vector)</h4><p>@params Vector2d vector</p><p>@peturn Number</p><h4 id="iszero">isZero</h4><p>@peturn Boolean</p><h4 id="isequal-vector-">isEqual: (vector)</h4><p>@params Vector2d vector</p><p>@peturn Boolean</p><h4 id="isnan">isNaN</h4><p>@peturn Boolean</p>
       </div>
     </div>
     <div id='footer'>
-  November 12, 15 16:48:44 by
+  November 19, 15 13:24:25 by
   <a href='https://github.com/coffeedoc/codo' title='CoffeeScript API documentation generator'>
     Codo
   </a>

@@ -819,6 +819,10 @@ class Vector2d
   isFiniteY: ->
     isFinite @.y
 
+  # Повернуты ли векторы в одну сторону?
+  #
+  # @return [Boolean]
+  #
   isEqualRotate: (b)->
     @rotate.toFixed(2) is b.rotate.toFixed(2)
 
