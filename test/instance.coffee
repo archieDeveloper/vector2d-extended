@@ -4,7 +4,7 @@ assert = chai.assert
 
 Vector2d = require '../source/index'
 
-describe '#static', ->
+describe '#instance', ->
 
   create = (v1, v2)->
     it 'Создание вектора', ->
@@ -20,119 +20,57 @@ describe '#static', ->
     it 'Объекты не изменяются', ->
       assert.deepEqual o1, o2
 
+  returnMyself = (v1, v2) ->
+    it 'Возвращает сам себя', ->
+      assert.strictEqual v1, v2, 'Не является тем же самым объектом'
+
   checkMethod = (methodName, args)->
-    if args.length == 2
-      v1 = Vector2d[methodName]()
-      v2 = Vector2d args[0], args[1]
-      create v1, v2
-    else if args.length == 4
+    if args.length == 4
       a = Vector2d args[0], args[1]
-      aClone = a.clone()
-      v1 = Vector2d[methodName] a
+      v1 = a[methodName]()
       v2 = Vector2d args[2], args[3]
       create v1, v2
-      notChange a, aClone
+      returnMyself a, v1
     else if args.length == 5
       a = Vector2d args[0], args[1]
       b = args[2]
-      aClone = a.clone()
-      v1 = Vector2d[methodName] a, b
+      v1 = a[methodName] b
       v2 = Vector2d args[3], args[4]
       create v1, v2
-      notChange a, aClone
+      returnMyself a, v1
     else if args.length == 6
       a = Vector2d args[0], args[1]
       b = Vector2d args[2], args[3]
-      aClone = a.clone()
       bClone = b.clone()
-      v1 = Vector2d[methodName] a, b
+      v1 = a[methodName] b
       v2 = Vector2d args[4], args[5]
       create v1, v2
-      notChange a, aClone
       notChange b, bClone
-
-  describe '#zero', ->
-    args = [0, 0]
-    checkMethod 'zero', args
-
-  describe '#one', ->
-    args = [1, 1]
-    checkMethod 'one', args
-
-  describe '#up', ->
-    args = [0, -1]
-    checkMethod 'up', args
-
-  describe '#down', ->
-    args = [0, 1]
-    checkMethod 'down', args
-
-  describe '#right', ->
-    args = [1, 0]
-    checkMethod 'right', args
-
-  describe '#left', ->
-    args = [-1, 0]
-    checkMethod 'left', args
-
-  describe '#clampMagnitude', ->
-    args = [
-      100, 101
-      10
-      7.035801295960805, 7.106159308920414
-    ]
-    checkMethod 'clampMagnitude', args
-    args = [
-      1, 1
-      10
-      1, 1
-    ]
-    checkMethod 'clampMagnitude', args
-
-  describe '#lerp', ->
-    params = [
-      [0, 1]
-      [1, 2]
-      [0.5, 1.5]
-      [-1, 1]
-      [2, 2]
-    ]
-    itLerp = (param)->
-      a = Vector2d 1, 1
-      b = Vector2d 2, 2
-      aClone = a.clone()
-      bClone = b.clone()
-      v1 = Vector2d.lerp a, b, param[0]
-      v2 = Vector2d param[1], param[1]
-      create v1, v2
-      notChange a, aClone
-      notChange b, bClone
-    for ind, param of params
-      itLerp param
-
-  describe '#scale', ->
-    args = [
-      6,7
-      4,3
-      6*4, 7*3
-    ]
-    checkMethod 'scale', args
+      returnMyself a, v1
 
   describe '#add', ->
     args = [
-      6,7
-      4,3
-      10, 10
+      1, 1
+      2, 2
+      3, 3
     ]
     checkMethod 'add', args
 
   describe '#subtract', ->
     args = [
-      6,7
-      4,3
+      6, 7
+      4, 3
       2, 4
     ]
     checkMethod 'subtract', args
+
+  describe '#scale', ->
+    args = [
+      6, 7
+      4, 3
+      6*4, 7*3
+    ]
+    checkMethod 'scale', args
 
   describe '#multiply', ->
     args = [
@@ -152,29 +90,44 @@ describe '#static', ->
 
   describe '#normalize', ->
     args = [
-      11, 46
-      0.23257321322170788, 0.9725788916544148
+      6, 7
+      0.6507913734559685, 0.7592566023652966
     ]
     checkMethod 'normalize', args
 
   describe '#project', ->
     args = [
-      11,46
-      32,34
-      28.124770642201835, 29.88256880733945
+      6, 7
+      4, 3
+      7.2, 5.4
     ]
     checkMethod 'project', args
 
   describe '#round', ->
     args = [
-      1.234, 1.234
+      1.231, 1.236
       1, 1
     ]
     checkMethod 'round', args
 
+  describe '#zero', ->
+    args = [
+      45, -456
+      0, 0
+    ]
+    checkMethod 'zero', args
+
+  describe '#equate', ->
+    args = [
+      6, 7
+      4, 3
+      4, 3
+    ]
+    checkMethod 'equate', args
+
   describe '#invert', ->
     args = [
-      1, 1
-      -1, -1
+      6, 7
+      -6, -7
     ]
     checkMethod 'invert', args

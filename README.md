@@ -13,257 +13,137 @@ npm install vector2d-extended
 Addition of two vectors:
 
 ```javascript
-var vec1, vec2, sumVec1AndVec2;
+// init application
+var vec1, vec2, vec3;
 
 vec1 = Vector2d(10,0);
 vec2 = Vector2d(25,30);
-sumVec1AndVec2 = vec1
-    .clone()
-    .add(vec2);
+vec3 = Vector2d.add(vec1, vec2);
+
+// render loop
+vec3.equate(vec1).add(vec2);
+
 ```
 
 Or set the length of the vector:
 
 ```javascript
-var vec1, vec2, newLength;
+var vec, newLength;
 
 newLength = 30;
+vec = Vector2d(15, 35);
 
-vec1 = Vector2d(15, 35);
-vec2 = vec1
-    .clone()
-    .normalize()
-    .multiply(newLength);
+// The usual way
+vec.normalize().multiply(newLength);
+
+// Or the way of the gods
+vec.length = newLength;
 ```
+
+Help the project - test, find bugs, supplementing the documentation, create new features :)
 
 ## Documentation API
 
 
 * Properties
 
-  * x
-  * y
-  * length
-  * lengthSquared
-  * rotate
+  * .x:Number
+  * .y:Number
+  * .length:Number
+  * .lengthSquared:Number
+  * .rotate:Number
 
 * Static Methods
 
-  * zero
-  * one
-  * up
-  * down
-  * right
-  * left
-  * clampMagnitude
-  * lerp
-  * scale
-  * add
-  * subtract
-  * multiply
-  * divide
-  * normalize
-  * project
-  * round
-  * invert
+  * .zero():Vector2d
+  * .one():Vector2d
+  * .up():Vector2d
+  * .down():Vector2d
+  * .right():Vector2d
+  * .left():Vector2d
+  * .clampMagnitude(vector:Vector2d, maxLength:Number):Vector2d
+  * .lerp(vector1:Vector2d, vector2:Vector2d, l:Number):Vector2d
+  * .scale(vector1:Vector2d, vecotr2:Vector2d):Vector2d
+  * .scaleX(vector1:Vector2d, vecotr2:Vector2d):Vector2d
+  * .scaleY(vector1:Vector2d, vecotr2:Vector2d):Vector2d
+  * .add(vector1:Vector2d, vecotr2:Vector2d):Vector2d
+  * .addX(vector1:Vector2d, vecotr2:Vector2d):Vector2d
+  * .addY(vector1:Vector2d, vecotr2:Vector2d):Vector2d
+  * .subtract(vector1:Vector2d, vecotr2:Vector2d):Vector2d
+  * .subtractX(vector1:Vector2d, vecotr2:Vector2d):Vector2d
+  * .subtractY(vector1:Vector2d, vecotr2:Vector2d):Vector2d
+  * .multiply(vector:Vector2d, scalar:Number):Vector2d
+  * .multiplyX(vector:Vector2d, scalar:Number):Vector2d
+  * .multiplyY(vector:Vector2d, scalar:Number):Vector2d
+  * .divide(vector:Vector2d, scalar:Number):Vector2d
+  * .divideX(vector:Vector2d, scalar:Number):Vector2d
+  * .divideY(vector:Vector2d, scalar:Number):Vector2d
+  * .normalize():Vector2d
+  * .project(vector1:Vector2d, vector2:Vector2d):Vector2d
+  * .round():Vector2d
+  * .roundX():Vector2d
+  * .roundY():Vector2d
+  * .invert():Vector2d
+  * .invertX():Vector2d
+  * .invertY():Vector2d
 
 * Instance Methods
 
   * Return Vector2d
 
-    * add
-    * subtract
-    * multiply
-    * divide
-    * normalize
-    * project
-    * round
-    * zero
-    * clone
-    * equate
-    * invert
-    * lerp
-    * scale
-    * clampMagnitude
+    * .add(vector:Vector2d):Vector2d
+    * .addX(vector:Vector2d):Vector2d
+    * .addY(vector:Vector2d):Vector2d
+    * .subtract(vector:Vector2d):Vector2d
+    * .subtractX(vector:Vector2d):Vector2d
+    * .subtractY(vector:Vector2d):Vector2d
+    * .multiply(scalar:Number):Vector2d
+    * .multiplyX(scalar:Number):Vector2d
+    * .multiplyY(scalar:Number):Vector2d
+    * .divide(scalar:Number):Vector2d
+    * .divideX(scalar:Number):Vector2d
+    * .divideY(scalar:Number):Vector2d
+    * .normalize():Vector2d
+    * .project(vector:Vector2d):Vector2d
+    * .round():Vector2d
+    * .roundX():Vector2d
+    * .roundY():Vector2d
+    * .zero():Vector2d
+    * .zeroX():Vector2d
+    * .zeroY():Vector2d
+    * .clone():Vector2d
+    * .equate(vector:Vector2d):Vector2d
+    * .equateX(vector:Vector2d):Vector2d
+    * .equateY(vector:Vector2d):Vector2d
+    * .invert():Vector2d
+    * .invertX():Vector2d
+    * .invertY():Vector2d
+    * .lerp(vector:Vecotor2d, l:Number):Vector2d
+    * .scale(vector:Vector2d):Vector2d
+    * .scaleX(vector:Vector2d):Vector2d
+    * .scaleY(vector:Vector2d):Vector2d
+    * .clampMagnitude(maxLength:Number):Vector2d
 
   * Return Number
 
-    * dot
-    * cross
-    * distance
-    * distanceSquared
-    * angle
+    * .dot(vector:Vector2d):Number
+    * .cross(vector:Vector2d):Number
+    * .distance(vector:Vector2d):Number
+    * .distanceSquared(vector:Vector2d):Number
+    * .angle(vector:Vector2d):Number
 
   * Return Boolean
 
-    * isZero
-    * isEqual
-    * isNaN
-    * isFinite
-    * isEqualRotate
-
-### Propirties
-
-#### x
-
-Holds the value for the X component.
-
-#### y
-
-Holds the value for the Y component.
-
-### Static Methods
-
-#### zero:
-
-Shorthand for writing Vector2d(0, 0).
-
-@peturn Vector2d A new zero vector
-
-#### one:
-
-Shorthand for writing Vector2d(1, 1).
-
-@peturn Vector2d A new unit vector
-
-#### up:
-
-Shorthand for writing Vector2d(0, -1).
-
-@peturn Vector2d A new vector
-
-#### down:
-
-Shorthand for writing Vector2d(0, 1).
-
-@peturn Vector2d A new vector
-
-#### right:
-
-Shorthand for writing Vector2d(1, 0).
-
-@peturn Vector2d A new vector
-
-#### left:
-
-Shorthand for writing Vector2d(0, -1).
-
-@peturn Vector2d A new vector
-
-### Instance Methods
-
-
-#### add: (vector)
-
-@params Vector2d vector
-
-@peturn Vector2d this
-
-#### subtract: (vector)
-
-@params Vector2d vector
-
-@peturn Vector2d this
-
-#### multiply: (scalar)
-
-@params Number scalar
-
-@peturn Vector2d this
-
-#### divide: (scalar)
-
-@params Number scalar
-
-@peturn Vector2d this
-
-#### normalize:
-
-@peturn Vector2d this
-
-#### project: (vector)
-
-@params Vector2d vector
-
-@peturn Vector2d this
-
-#### round:
-
-@peturn Vector2d this
-
-#### zero
-
-@peturn Vector2d this
-
-#### invert
-
-@peturn Vector2d this
-
-#### clone
-
-@peturn Vector2d A new vector
-
-#### equate
-
-@peturn Vector2d this
-
-
-#### magnitude:
-
-@peturn Number
-
-#### magnitudeSquared:
-
-@peturn Number
-
-#### length:
-
-@peturn Number
-
-#### lengthSquared:
-
-@peturn Number
-
-#### rotate:
-
-@peturn Number
-
-#### dot: (vector)
-
-@params Vector2d vector
-
-@peturn Number
-
-#### cross: (vector)
-
-@params Vector2d vector
-
-@peturn Number
-
-#### distance: (vector)
-
-@params Vector2d vector
-
-@peturn Number
-
-#### distanceSquared: (vector)
-
-@params Vector2d vector
-
-@peturn Number
-
-
-#### isZero
-
-@peturn Boolean
-
-#### isEqual: (vector)
-
-@params Vector2d vector
-
-@peturn Boolean
-
-#### isNaN
-
-@peturn Boolean
-
+    * .isZero():Boolean
+    * .isZeroX():Boolean
+    * .isZeroY():Boolean
+    * .isEqual(vector:Vector2d):Boolean
+    * .isEqualX(vector:Vector2d):Boolean
+    * .isEqualY(vector:Vector2d):Boolean
+    * .isNaN():Boolean
+    * .isNaNX():Boolean
+    * .isNaNY():Boolean
+    * .isFinite():Boolean
+    * .isFiniteX():Boolean
+    * .isFiniteY():Boolean
+    * .isEqualRotate(vector:Vector2d):Boolean

@@ -58,20 +58,60 @@
       return new Vector2d(a.x * b.x, a.y * b.y);
     };
 
+    Vector2d.scaleX = function(a, b) {
+      return new Vector2d(a.x * b.x, 0);
+    };
+
+    Vector2d.scaleY = function(a, b) {
+      return new Vector2d(0, a.y * b.y);
+    };
+
     Vector2d.add = function(a, b) {
       return new Vector2d(a.x + b.x, a.y + b.y);
+    };
+
+    Vector2d.addX = function(a, b) {
+      return new Vector2d(a.x + b.x, 0);
+    };
+
+    Vector2d.addY = function(a, b) {
+      return new Vector2d(0, a.y + b.y);
     };
 
     Vector2d.subtract = function(a, b) {
       return new Vector2d(a.x - b.x, a.y - b.y);
     };
 
+    Vector2d.subtractX = function(a, b) {
+      return new Vector2d(a.x - b.x, 0);
+    };
+
+    Vector2d.subtractY = function(a, b) {
+      return new Vector2d(0, a.y - b.y);
+    };
+
     Vector2d.multiply = function(a, scalar) {
       return new Vector2d(a.x * scalar, a.y * scalar);
     };
 
+    Vector2d.multiplyX = function(a, scalar) {
+      return new Vector2d(a.x * scalar, a.y);
+    };
+
+    Vector2d.multiplyY = function(a, scalar) {
+      return new Vector2d(a.x, a.y * scalar);
+    };
+
     Vector2d.divide = function(a, scalar) {
       return new Vector2d(a.x / scalar, a.y / scalar);
+    };
+
+    Vector2d.divideX = function(a, scalar) {
+      return new Vector2d(a.x / scalar, a.y);
+    };
+
+    Vector2d.divideY = function(a, scalar) {
+      return new Vector2d(a.x, a.y / scalar);
     };
 
     Vector2d.normalize = function(a) {
@@ -90,30 +130,86 @@
       return new Vector2d(Math.round(a.x), Math.round(a.y));
     };
 
+    Vector2d.roundX = function(a) {
+      return new Vector2d(Math.round(a.x), a.y);
+    };
+
+    Vector2d.roundY = function(a) {
+      return new Vector2d(a.x, Math.round(a.y));
+    };
+
     Vector2d.invert = function(a) {
       return new Vector2d(-a.x, -a.y);
     };
 
+    Vector2d.invertX = function(a) {
+      return new Vector2d(-a.x, a.y);
+    };
+
+    Vector2d.invertY = function(a) {
+      return new Vector2d(a.x, -a.y);
+    };
+
     Vector2d.prototype.add = function(b) {
+      this.addX(b);
+      this.addY(b);
+      return this;
+    };
+
+    Vector2d.prototype.addX = function(b) {
       this.x += b.x;
+      return this;
+    };
+
+    Vector2d.prototype.addY = function(b) {
       this.y += b.y;
       return this;
     };
 
     Vector2d.prototype.subtract = function(b) {
+      this.subtractX(b);
+      this.subtractY(b);
+      return this;
+    };
+
+    Vector2d.prototype.subtractX = function(b) {
       this.x -= b.x;
+      return this;
+    };
+
+    Vector2d.prototype.subtractY = function(b) {
       this.y -= b.y;
       return this;
     };
 
     Vector2d.prototype.multiply = function(scalar) {
+      this.multiplyX(scalar);
+      this.multiplyY(scalar);
+      return this;
+    };
+
+    Vector2d.prototype.multiplyX = function(scalar) {
       this.x *= scalar;
+      return this;
+    };
+
+    Vector2d.prototype.multiplyY = function(scalar) {
       this.y *= scalar;
       return this;
     };
 
     Vector2d.prototype.divide = function(scalar) {
+      this.divideX(scalar);
+      this.divideY(scalar);
+      return this;
+    };
+
+    Vector2d.prototype.divideX = function(scalar) {
       this.x /= scalar;
+      return this;
+    };
+
+    Vector2d.prototype.divideY = function(scalar) {
       this.y /= scalar;
       return this;
     };
@@ -132,13 +228,34 @@
     };
 
     Vector2d.prototype.round = function() {
+      this.roundX();
+      this.roundY();
+      return this;
+    };
+
+    Vector2d.prototype.roundX = function() {
       this.x = Math.round(this.x);
+      return this;
+    };
+
+    Vector2d.prototype.roundY = function() {
       this.y = Math.round(this.y);
       return this;
     };
 
     Vector2d.prototype.zero = function() {
-      this.x = this.y = 0;
+      this.zeroX();
+      this.zeroY();
+      return this;
+    };
+
+    Vector2d.prototype.zeroX = function() {
+      this.x = 0;
+      return this;
+    };
+
+    Vector2d.prototype.zeroY = function() {
+      this.y = 0;
       return this;
     };
 
@@ -147,13 +264,33 @@
     };
 
     Vector2d.prototype.equate = function(b) {
+      this.equateX(b);
+      this.equateY(b);
+      return this;
+    };
+
+    Vector2d.prototype.equateX = function(b) {
       this.x = b.x;
+      return this;
+    };
+
+    Vector2d.prototype.equateY = function(b) {
       this.y = b.y;
       return this;
     };
 
     Vector2d.prototype.invert = function() {
+      this.invertX();
+      this.invertY();
+      return this;
+    };
+
+    Vector2d.prototype.invertX = function() {
       this.x = -this.x;
+      return this;
+    };
+
+    Vector2d.prototype.invertY = function() {
       this.y = -this.y;
       return this;
     };
@@ -171,7 +308,17 @@
     };
 
     Vector2d.prototype.scale = function(b) {
+      this.scaleX(b);
+      this.scaleY(b);
+      return this;
+    };
+
+    Vector2d.prototype.scaleX = function(b) {
       this.x *= b.x;
+      return this;
+    };
+
+    Vector2d.prototype.scaleY = function(b) {
       this.y *= b.y;
       return this;
     };
@@ -271,19 +418,51 @@
     };
 
     Vector2d.prototype.isZero = function() {
-      return this.x === 0 && this.y === 0;
+      return this.isZeroX() && this.isZeroY();
+    };
+
+    Vector2d.prototype.isZeroX = function() {
+      return this.x === 0;
+    };
+
+    Vector2d.prototype.isZeroY = function() {
+      return this.y === 0;
     };
 
     Vector2d.prototype.isEqual = function(b) {
-      return this.x === b.x && this.y === b.y;
+      return this.isEqualX(b) && this.isEqualY(b);
+    };
+
+    Vector2d.prototype.isEqualX = function(b) {
+      return this.x === b.x;
+    };
+
+    Vector2d.prototype.isEqualY = function(b) {
+      return this.y === b.y;
     };
 
     Vector2d.prototype.isNaN = function() {
-      return isNaN(this.x || isNaN(this.y));
+      return this.isNaNX() || this.isNaNY;
+    };
+
+    Vector2d.prototype.isNaNX = function() {
+      return isNaN(this.x);
+    };
+
+    Vector2d.prototype.isNaNY = function() {
+      return isNaN(this.y);
     };
 
     Vector2d.prototype.isFinite = function() {
-      return isFinite(this.x || isFinite(this.y));
+      return this.isFiniteX() || this.isFiniteY();
+    };
+
+    Vector2d.prototype.isFiniteX = function() {
+      return isFinite(this.x);
+    };
+
+    Vector2d.prototype.isFiniteY = function() {
+      return isFinite(this.y);
     };
 
     Vector2d.prototype.isEqualRotate = function(b) {
