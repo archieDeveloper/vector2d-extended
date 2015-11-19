@@ -419,35 +419,95 @@
       return new Vector2d(a.x, -a.y);
     };
 
-    Vector2d.prototype.add = function(b) {
-      this.addX(b);
-      this.addY(b);
+    Vector2d.prototype.add = function() {
+      var argumentsLength, i, j, ref;
+      argumentsLength = arguments.length;
+      if (argumentsLength < 1) {
+        throw new Error;
+      }
+      for (i = j = 0, ref = argumentsLength; 0 <= ref ? j < ref : j > ref; i = 0 <= ref ? ++j : --j) {
+        if (!(arguments[i] instanceof Vector2d)) {
+          throw new TypeError;
+        }
+        this.x += arguments[i].x;
+        this.y += arguments[i].y;
+      }
       return this;
     };
 
-    Vector2d.prototype.addX = function(b) {
-      this.x += b.x;
+    Vector2d.prototype.addX = function() {
+      var argumentsLength, i, j, ref;
+      argumentsLength = arguments.length;
+      if (argumentsLength < 1) {
+        throw new Error;
+      }
+      for (i = j = 0, ref = argumentsLength; 0 <= ref ? j < ref : j > ref; i = 0 <= ref ? ++j : --j) {
+        if (!(arguments[i] instanceof Vector2d)) {
+          throw new TypeError;
+        }
+        this.x += arguments[i].x;
+      }
       return this;
     };
 
-    Vector2d.prototype.addY = function(b) {
-      this.y += b.y;
+    Vector2d.prototype.addY = function() {
+      var argumentsLength, i, j, ref;
+      argumentsLength = arguments.length;
+      if (argumentsLength < 1) {
+        throw new Error;
+      }
+      for (i = j = 0, ref = argumentsLength; 0 <= ref ? j < ref : j > ref; i = 0 <= ref ? ++j : --j) {
+        if (!(arguments[i] instanceof Vector2d)) {
+          throw new TypeError;
+        }
+        this.y += arguments[i].y;
+      }
       return this;
     };
 
     Vector2d.prototype.subtract = function(b) {
-      this.subtractX(b);
-      this.subtractY(b);
+      var argumentsLength, i, j, ref;
+      argumentsLength = arguments.length;
+      if (argumentsLength < 1) {
+        throw new Error;
+      }
+      for (i = j = 0, ref = argumentsLength; 0 <= ref ? j < ref : j > ref; i = 0 <= ref ? ++j : --j) {
+        if (!(arguments[i] instanceof Vector2d)) {
+          throw new TypeError;
+        }
+        this.x -= arguments[i].x;
+        this.y -= arguments[i].y;
+      }
       return this;
     };
 
     Vector2d.prototype.subtractX = function(b) {
-      this.x -= b.x;
+      var argumentsLength, i, j, ref;
+      argumentsLength = arguments.length;
+      if (argumentsLength < 1) {
+        throw new Error;
+      }
+      for (i = j = 0, ref = argumentsLength; 0 <= ref ? j < ref : j > ref; i = 0 <= ref ? ++j : --j) {
+        if (!(arguments[i] instanceof Vector2d)) {
+          throw new TypeError;
+        }
+        this.x += arguments[i].x;
+      }
       return this;
     };
 
     Vector2d.prototype.subtractY = function(b) {
-      this.y -= b.y;
+      var argumentsLength, i, j, ref;
+      argumentsLength = arguments.length;
+      if (argumentsLength < 1) {
+        throw new Error;
+      }
+      for (i = j = 0, ref = argumentsLength; 0 <= ref ? j < ref : j > ref; i = 0 <= ref ? ++j : --j) {
+        if (!(arguments[i] instanceof Vector2d)) {
+          throw new TypeError;
+        }
+        this.y += arguments[i].y;
+      }
       return this;
     };
 

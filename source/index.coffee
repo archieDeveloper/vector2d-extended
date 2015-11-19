@@ -447,9 +447,13 @@ class Vector2d
   #
   # @return [Vector2d] this
   #
-  add: (b)->
-    @addX b
-    @addY b
+  add: ()->
+    argumentsLength = arguments.length
+    if argumentsLength < 1 then throw new Error
+    for i in [0...argumentsLength]
+      if not (arguments[i] instanceof Vector2d) then throw new TypeError
+      @x += arguments[i].x
+      @y += arguments[i].y
     @
 
   # Прибавить к текущему вектору вектор b
@@ -458,8 +462,12 @@ class Vector2d
   #
   # @return [Vector2d] this
   #
-  addX: (b)->
-    @x += b.x
+  addX: ()->
+    argumentsLength = arguments.length
+    if argumentsLength < 1 then throw new Error
+    for i in [0...argumentsLength]
+      if not (arguments[i] instanceof Vector2d) then throw new TypeError
+      @x += arguments[i].x
     @
 
   # Прибавить к текущему вектору вектор b
@@ -468,8 +476,12 @@ class Vector2d
   #
   # @return [Vector2d] this
   #
-  addY: (b)->
-    @y += b.y
+  addY: ()->
+    argumentsLength = arguments.length
+    if argumentsLength < 1 then throw new Error
+    for i in [0...argumentsLength]
+      if not (arguments[i] instanceof Vector2d) then throw new TypeError
+      @y += arguments[i].y
     @
 
   # Вычесть из текущего вектора вектор b
@@ -479,8 +491,12 @@ class Vector2d
   # @return [Vector2d] this
   #
   subtract: (b)->
-    @subtractX b
-    @subtractY b
+    argumentsLength = arguments.length
+    if argumentsLength < 1 then throw new Error
+    for i in [0...argumentsLength]
+      if not (arguments[i] instanceof Vector2d) then throw new TypeError
+      @x -= arguments[i].x
+      @y -= arguments[i].y
     @
 
   # Вычесть из текущего вектора вектор b
@@ -490,7 +506,11 @@ class Vector2d
   # @return [Vector2d] this
   #
   subtractX: (b)->
-    @x -= b.x
+    argumentsLength = arguments.length
+    if argumentsLength < 1 then throw new Error
+    for i in [0...argumentsLength]
+      if not (arguments[i] instanceof Vector2d) then throw new TypeError
+      @x += arguments[i].x
     @
 
   # Вычесть из текущего вектора вектор b
@@ -500,7 +520,11 @@ class Vector2d
   # @return [Vector2d] this
   #
   subtractY: (b)->
-    @y -= b.y
+    argumentsLength = arguments.length
+    if argumentsLength < 1 then throw new Error
+    for i in [0...argumentsLength]
+      if not (arguments[i] instanceof Vector2d) then throw new TypeError
+      @y += arguments[i].y
     @
 
   # Умножить вектор на скаляр
