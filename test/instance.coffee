@@ -56,6 +56,22 @@ describe '#instance', ->
     ]
     checkMethod 'add', args
 
+  describe '#addX', ->
+    args = [
+      1, 1
+      2, 2
+      3, 1
+    ]
+    checkMethod 'addX', args
+
+  describe '#addY', ->
+    args = [
+      1, 1
+      2, 2
+      1, 3
+    ]
+    checkMethod 'addY', args
+
   describe '#subtract', ->
     args = [
       6, 7
