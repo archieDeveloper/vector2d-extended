@@ -67,7 +67,7 @@ car = (function() {
 
   vVisual = Vector2d.right();
 
-  vU = Vector2d.right();
+  vU = Vector2d.up();
   Engineforce = 0;
   vV = Vector2d.zero();
   Cdrag = 0.4257;
