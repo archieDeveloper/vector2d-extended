@@ -446,6 +446,26 @@ class Vector2d
     throw new TypeError if not (b instanceof Vector2d)
     @rotate.toFixed(2) is b.rotate.toFixed(2)
 
+  isEqualInvertRotate: (b)->
+    throw new TypeError if not (b instanceof Vector2d)
+    179.9 < Math.abs(@rotate.toFixed(2) - b.rotate.toFixed()) < 180.1
+
+  isCollinear: (b)->
+    throw new TypeError if not (b instanceof Vector2d)
+    if @isZeroX() or @isZeroY() or b.isZeroX() or b.isZeroY()
+      if @isZeroX() and not @isZeroY() then an = @y else an = @x
+      if b.isZeroX() and not b.isZeroY() then bn = b.y else bn = b.x
+      n = bn/an
+      nax = @x * n
+      nay = @y * n
+      b.x is nax and b.y is nay
+    else
+      @x/b.x is @y/b.y
+
+  isOrthogonal: (b)->
+    throw new TypeError if not (b instanceof Vector2d)
+    @dot b is 0
+
 if module? and module.exports?
   module.exports = Vector2d
 else

@@ -83,6 +83,10 @@ car = (function() {
   vADT = Vector2d.ZERO
   vVDT = Vector2d.ZERO
 
+  var a = Vector2d(0, 16);
+  var b = a.clone().invert();
+  console.log(a.isCollinear(b));
+
   var posWheel1 = Vector2d.ZERO;
   var rotateWheel = Vector2d.RIGHT;
   var rW = Vector2d.ZERO;
