@@ -85,7 +85,7 @@ car = (function() {
 
   var a = Vector2d(5, 0);
   var b = Vector2d(0, 5);
-  console.log(a.areaTriangle(b));
+  console.log(Vector2d.add({x: 0, y: 0},{x: 0, y: 0}));
 
   var posWheel1 = Vector2d.ZERO;
   var rotateWheel = Vector2d.RIGHT;

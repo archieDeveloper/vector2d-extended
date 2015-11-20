@@ -1,1 +1,701 @@
-(function(){"use strict";var t;t=function(){function t(r,n){return this instanceof t?(this.x=r||0,void(this.y=n||0)):new t(r,n)}var r,n,e,i,o,u;return e={add:function(t,r){return t+r},subtract:function(t,r){return t-r},multiply:function(t,r){return t*r},divide:function(t,r){return t/r},self:function(t){return t}},u=function(r,n,e,i){var u,s;return u=null!=e?o("x",2,r,n,e):0,s=null!=i?o("y",2,r,n,i):0,new t(u,s)},o=function(t,n,e,i,o){var u,s,p,a,h,y;if(s=e.length,n>s)throw new Error;for(u=r(e[0],i[0],t),a=h=1,y=s;y>=1?y>h:h>y;a=y>=1?++h:--h)p=r(e[a],i[n-1],t),u=o(u,p);return u},i=function(t,r,e,i,o){return null!=i&&(this.x=n.apply(this,["x",r,t,e,i])),null!=o&&(this.y=n.apply(this,["y",r,t,e,o])),this},n=function(t,n,e,i,o){var u,s,p,a,h,y;if(s=e.length,n>s)throw new Error;for(u=this[t],a=h=0,y=s;y>=0?y>h:h>y;a=y>=0?++h:--h)p=r(e[a],i[n-1],t),u=o(u,p);return u},r=function(t,r,n){var e;if("string"==typeof r){if(typeof t!==r)throw new TypeError;e=t}else{if(!(t instanceof r))throw new TypeError;e=t[n]}return e},Object.defineProperty(t,"ZERO",{get:function(){return new t},set:function(){throw new Error}}),Object.defineProperty(t,"ONE",{get:function(){return new t(1,1)},set:function(){throw new Error}}),Object.defineProperty(t,"UP",{get:function(){return new t(0,-1)},set:function(){throw new Error}}),Object.defineProperty(t,"DOWN",{get:function(){return new t(0,1)},set:function(){throw new Error}}),Object.defineProperty(t,"RIGHT",{get:function(){return new t(1,0)},set:function(){throw new Error}}),Object.defineProperty(t,"LEFT",{get:function(){return new t(-1,0)},set:function(){throw new Error}}),t.clampMagnitude=function(r,n){var e;if(!(r instanceof t)||"number"!=typeof n)throw new TypeError;return e=r.clone(),e.magnitudeSquared>n*n&&(e.magnitude=n),e},t.lerp=function(r,n,e){if(!(r instanceof t&&n instanceof t&&"number"==typeof e))throw new TypeError;return 0>e&&(e=0),e>1&&(e=1),new t(r.x+(n.x-r.x)*e,r.y+(n.y-r.y)*e)},t.scale=function(){return u(arguments,[t,t],e.multiply,e.multiply)},t.scaleX=function(){return u(arguments,[t,t],e.multiply)},t.scaleY=function(){return u(arguments,[t,t],null,e.multiply)},t.add=function(){return u(arguments,[t,t],e.add,e.add)},t.addX=function(){return u(arguments,[t,t],e.add)},t.addY=function(){return u(arguments,[t,t],null,e.add)},t.subtract=function(){return u(arguments,[t,t],e.subtract,e.subtract)},t.subtractX=function(){return u(arguments,[t,t],e.subtract)},t.subtractY=function(){return u(arguments,[t,t],null,e.subtract)},t.multiply=function(){return u(arguments,[t,"number"],e.multiply,e.multiply)},t.multiplyX=function(){return u(arguments,[t,"number"],e.multiply,e.self)},t.multiplyY=function(){return u(arguments,[t,"number"],e.self,e.multiply)},t.divide=function(){return u(arguments,[t,"number"],e.divide,e.divide)},t.divideX=function(){return u(arguments,[t,"number"],e.divide,e.self)},t.divideY=function(){return u(arguments,[t,"number"],e.self,e.divide)},t.normalize=function(r){var n;if(!(r instanceof t))throw new TypeError;return n=r.magnitude,new t(r.x/n,r.y/n)},t.project=function(r,n){var e;if(!(r instanceof t&&n instanceof t))throw new TypeError;return e=(r.x*n.x+r.y*n.y)/(n.x*n.x+n.y*n.y),new t(n.x*e,n.y*e)},t.round=function(r){if(!(r instanceof t))throw new TypeError;return new t(Math.round(r.x),Math.round(r.y))},t.roundX=function(r){if(!(r instanceof t))throw new TypeError;return new t(Math.round(r.x),r.y)},t.roundY=function(r){if(!(r instanceof t))throw new TypeError;return new t(r.x,Math.round(r.y))},t.invert=function(r){if(!(r instanceof t))throw new TypeError;return new t(-r.x,-r.y)},t.invertX=function(r){if(!(r instanceof t))throw new TypeError;return new t(-r.x,r.y)},t.invertY=function(r){if(!(r instanceof t))throw new TypeError;return new t(r.x,-r.y)},t.prototype.add=function(){return this.addX.apply(this,arguments),this.addY.apply(this,arguments),this},t.prototype.addX=function(){return i.apply(this,[arguments,1,[t],e.add,null])},t.prototype.addY=function(){return i.apply(this,[arguments,1,[t],null,e.add])},t.prototype.subtract=function(){return this.subtractX.apply(this,arguments),this.subtractY.apply(this,arguments),this},t.prototype.subtractX=function(){return i.apply(this,[arguments,1,[t],e.subtract,null])},t.prototype.subtractY=function(){return i.apply(this,[arguments,1,[t],null,e.subtract])},t.prototype.multiply=function(){return this.multiplyX.apply(this,arguments),this.multiplyY.apply(this,arguments),this},t.prototype.multiplyX=function(){return i.apply(this,[arguments,1,["number"],e.multiply,null])},t.prototype.multiplyY=function(){return i.apply(this,[arguments,1,["number"],null,e.multiply])},t.prototype.divide=function(){return this.divideX.apply(this,arguments),this.divideY.apply(this,arguments),this},t.prototype.divideX=function(t){return i.apply(this,[arguments,1,["number"],e.divide,null])},t.prototype.divideY=function(t){return i.apply(this,[arguments,1,["number"],null,e.divide])},t.prototype.normalize=function(){return this.length=1,this},t.prototype.project=function(r){var n;if(!(r instanceof t))throw new TypeError;return n=(this.x*r.x+this.y*r.y)/(r.x*r.x+r.y*r.y),this.x=r.x*n,this.y=r.y*n,this},t.prototype.round=function(){return this.roundX(),this.roundY(),this},t.prototype.roundX=function(){return this.x=Math.round(this.x),this},t.prototype.roundY=function(){return this.y=Math.round(this.y),this},t.prototype.zero=function(){return this.zeroX(),this.zeroY(),this},t.prototype.zeroX=function(){return this.x=0,this},t.prototype.zeroY=function(){return this.y=0,this},t.prototype.clone=function(){return new t(this.x,this.y)},t.prototype.equate=function(r){if(!(r instanceof t))throw new TypeError;return this.equateX(r),this.equateY(r),this},t.prototype.equateX=function(r){if(!(r instanceof t))throw new TypeError;return this.x=r.x,this},t.prototype.equateY=function(r){if(!(r instanceof t))throw new TypeError;return this.y=r.y,this},t.prototype.invert=function(){return this.invertX(),this.invertY(),this},t.prototype.invertX=function(){return this.x=-this.x,this},t.prototype.invertY=function(){return this.y=-this.y,this},t.prototype.lerp=function(r,n){if(!(r instanceof t)||"number"!=typeof r)throw new TypeError;return 0>n&&(n=0),n>1&&(n=1),this.x=this.x+(r.x-this.x)*n,this.y=this.y+(r.y-this.y)*n,this},t.prototype.scale=function(){return this.scaleX.apply(this,arguments),this.scaleY.apply(this,arguments),this},t.prototype.scaleX=function(){return i.apply(this,[arguments,1,[t],e.multiply,null])},t.prototype.scaleY=function(){return i.apply(this,[arguments,1,[t],null,e.multiply])},t.prototype.clampMagnitude=function(t){if("number"!=typeof t)throw new TypeError;return this.magnitudeSquared>t*t&&(this.magnitude=t),this},Object.defineProperty(t.prototype,"magnitude",{get:function(){return Math.sqrt(this.magnitudeSquared)},set:function(t){var r;if("number"!=typeof t)throw new TypeError;return r=this.magnitude,this.x=this.x/r*t,this.y=this.y/r*t,t}}),Object.defineProperty(t.prototype,"magnitudeSquared",{get:function(){return this.x*this.x+this.y*this.y},set:function(t){if("number"!=typeof t)throw new TypeError;return this.length=Math.sqrt(t),t}}),Object.defineProperty(t.prototype,"length",{get:function(){return this.magnitude},set:function(t){if("number"!=typeof t)throw new TypeError;return this.magnitude=t}}),Object.defineProperty(t.prototype,"lengthSquared",{get:function(){return this.magnitudeSquared},set:function(t){if("number"!=typeof t)throw new TypeError;return this.magnitudeSquared=t}}),Object.defineProperty(t.prototype,"rotate",{get:function(){return 180*Math.atan2(this.y,this.x)/Math.PI},set:function(t){var r;if("number"!=typeof t)throw new TypeError;return r=this.magnitude,this.x=Math.cos(t*Math.PI/180)*r,this.y=Math.sin(t*Math.PI/180)*r,t}}),t.prototype.dot=function(r){if(!(r instanceof t))throw new TypeError;return this.x*r.x+this.y*r.y},t.prototype.cross=function(r){if(!(r instanceof t))throw new TypeError;return this.x*r.y-this.y*r.x},t.prototype.distance=function(r){if(!(r instanceof t))throw new TypeError;return Math.sqrt(distanceSquared(r))},t.prototype.distanceSquared=function(r){var n,e;if(!(r instanceof t))throw new TypeError;return n=this.x-r.x,e=this.y-r.y,n*n+e*e},t.prototype.angle=function(r){var n,e,i;if(!(r instanceof t))throw new TypeError;return n=this.magnitude,e=r.magnitude,i=this.x/n*(r.x/e)+this.y/n*(r.y/e),-1>i&&(i=-1),i>1&&(i=1),57.29578*Math.acos(i)},t.prototype.areaTriangle=function(r){if(!(r instanceof t))throw new TypeError;return this.areaParallelogram(r)/2},t.prototype.areaParallelogram=function(r){if(!(r instanceof t))throw new TypeError;return Math.abs(this.cross(r))},t.prototype.isZero=function(){return this.isZeroX()&&this.isZeroY()},t.prototype.isZeroX=function(){return 0===this.x},t.prototype.isZeroY=function(){return 0===this.y},t.prototype.isEqual=function(r){if(!(r instanceof t))throw new TypeError;return this.isEqualX(r)&&this.isEqualY(r)},t.prototype.isEqualX=function(r){if(!(r instanceof t))throw new TypeError;return this.x===r.x},t.prototype.isEqualY=function(r){if(!(r instanceof t))throw new TypeError;return this.y===r.y},t.prototype.isNaN=function(){return this.isNaNX()||this.isNaNY},t.prototype.isNaNX=function(){return isNaN(this.x)},t.prototype.isNaNY=function(){return isNaN(this.y)},t.prototype.isFinite=function(){return this.isFiniteX()||this.isFiniteY()},t.prototype.isFiniteX=function(){return isFinite(this.x)},t.prototype.isFiniteY=function(){return isFinite(this.y)},t.prototype.isEqualRotate=function(r){if(!(r instanceof t))throw new TypeError;return this.rotate.toFixed(2)===r.rotate.toFixed(2)},t.prototype.isEqualInvertRotate=function(r){var n;if(!(r instanceof t))throw new TypeError;return 179.9<(n=Math.abs(this.rotate.toFixed(2)-r.rotate.toFixed()))&&180.1>n},t.prototype.isCollinear=function(r){var n,e,i,o,u;if(!(r instanceof t))throw new TypeError;return this.isZeroX()||this.isZeroY()||r.isZeroX()||r.isZeroY()?(n=this.isZeroX()&&!this.isZeroY()?this.y:this.x,e=r.isZeroX()&&!r.isZeroY()?r.y:r.x,i=e/n,o=this.x*i,u=this.y*i,r.x===o&&r.y===u):this.x/r.x===this.y/r.y},t.prototype.isOrthogonal=function(r){if(!(r instanceof t))throw new TypeError;return this.dot(0===r)},t}(),"undefined"!=typeof module&&null!==module&&null!=module.exports?module.exports=t:window.Vector2d=t}).call(this);
+
+(function() {
+  var MathVector2d;
+
+  MathVector2d = (function() {
+    function MathVector2d() {}
+
+    MathVector2d.prototype.functions = {
+      add: function(a, b) {
+        return a + b;
+      },
+      subtract: function(a, b) {
+        return a - b;
+      },
+      multiply: function(a, b) {
+        return a * b;
+      },
+      divide: function(a, b) {
+        return a / b;
+      },
+      self: function(a) {
+        return a;
+      }
+    };
+
+    MathVector2d.prototype.staticVector = function(args, types, x, y) {
+      var vx, vy;
+      if (x != null) {
+        vx = this.staticComponent('x', 2, args, types, x);
+      } else {
+        vx = 0;
+      }
+      if (y != null) {
+        vy = this.staticComponent('y', 2, args, types, y);
+      } else {
+        vy = 0;
+      }
+      return new Vector2d(vx, vy);
+    };
+
+    MathVector2d.prototype.staticComponent = function(property, countArguments, args, argumentTypes, callback) {
+      var a, argumentsLength, b, i, j, ref;
+      argumentsLength = args.length;
+      if (argumentsLength < countArguments) {
+        throw new Error;
+      }
+      a = this.checkType(args[0], argumentTypes[0], property);
+      for (i = j = 1, ref = argumentsLength; 1 <= ref ? j < ref : j > ref; i = 1 <= ref ? ++j : --j) {
+        b = this.checkType(args[i], argumentTypes[countArguments - 1], property);
+        a = callback(a, b);
+      }
+      return a;
+    };
+
+    MathVector2d.prototype.vector = function(args, argsCount, types, x, y) {
+      if (x != null) {
+        this.x = this.component.apply(this, ['x', argsCount, args, types, x]);
+      }
+      if (y != null) {
+        this.y = this.component.apply(this, ['y', argsCount, args, types, y]);
+      }
+      return this;
+    };
+
+    MathVector2d.prototype.component = function(property, countArguments, args, argumentTypes, callback) {
+      var a, argumentsLength, b, i, j, ref;
+      argumentsLength = args.length;
+      if (argumentsLength < countArguments) {
+        throw new Error;
+      }
+      a = this[property];
+      for (i = j = 0, ref = argumentsLength; 0 <= ref ? j < ref : j > ref; i = 0 <= ref ? ++j : --j) {
+        b = this.checkType(args[i], argumentTypes[countArguments - 1], property);
+        a = callback(a, b);
+      }
+      return a;
+    };
+
+    MathVector2d.prototype.checkType = function(argument, type, property) {
+      var value;
+      if (typeof type === 'string') {
+        if (typeof argument !== type) {
+          throw new TypeError;
+        }
+        value = argument;
+      } else {
+        if (!(argument instanceof type)) {
+          throw new TypeError;
+        }
+        value = argument[property];
+      }
+      return value;
+    };
+
+    MathVector2d.prototype.checkTypes = function(args, types) {
+      var argsLength, i, j, ref, results;
+      argsLength = args.length;
+      results = [];
+      for (i = j = 0, ref = argsLength; 0 <= ref ? j < ref : j > ref; i = 0 <= ref ? ++j : --j) {
+        if (typeof types[i] === 'string') {
+          if (typeof args[i] !== types[i]) {
+            throw new TypeError;
+          } else {
+            results.push(void 0);
+          }
+        } else {
+          if (!(args[i] instanceof types[i])) {
+            throw new TypeError;
+          } else {
+            results.push(void 0);
+          }
+        }
+      }
+      return results;
+    };
+
+    return MathVector2d;
+
+  })();
+
+  window.math = new MathVector2d;
+
+}).call(this);
+
+(function() {
+  'use strict';
+  var Vector2d;
+
+  Vector2d = (function() {
+    function Vector2d(x, y) {
+      if (!(this instanceof Vector2d)) {
+        return new Vector2d(x, y);
+      }
+      this.x = x || 0;
+      this.y = y || 0;
+    }
+
+    Object.defineProperty(Vector2d, 'ZERO', {
+      get: function() {
+        return new Vector2d;
+      },
+      set: function() {
+        throw new Error;
+      }
+    });
+
+    Object.defineProperty(Vector2d, 'ONE', {
+      get: function() {
+        return new Vector2d(1, 1);
+      },
+      set: function() {
+        throw new Error;
+      }
+    });
+
+    Object.defineProperty(Vector2d, 'UP', {
+      get: function() {
+        return new Vector2d(0, -1);
+      },
+      set: function() {
+        throw new Error;
+      }
+    });
+
+    Object.defineProperty(Vector2d, 'DOWN', {
+      get: function() {
+        return new Vector2d(0, 1);
+      },
+      set: function() {
+        throw new Error;
+      }
+    });
+
+    Object.defineProperty(Vector2d, 'RIGHT', {
+      get: function() {
+        return new Vector2d(1, 0);
+      },
+      set: function() {
+        throw new Error;
+      }
+    });
+
+    Object.defineProperty(Vector2d, 'LEFT', {
+      get: function() {
+        return new Vector2d(-1, 0);
+      },
+      set: function() {
+        throw new Error;
+      }
+    });
+
+    Vector2d.clampMagnitude = function(a, maxLength) {
+      var b;
+      math.math.checkTypes([a, maxLength], [Vector2d, 'number']);
+      b = a.clone();
+      if (b.magnitudeSquared > maxLength * maxLength) {
+        b.magnitude = maxLength;
+      }
+      return b;
+    };
+
+    Vector2d.lerp = function(a, b, l) {
+      math.math.checkTypes([a, b, l], [Vector2d, Vector2d, 'number']);
+      if (l < 0) {
+        l = 0;
+      }
+      if (l > 1) {
+        l = 1;
+      }
+      return new Vector2d(a.x + (b.x - a.x) * l, a.y + (b.y - a.y) * l);
+    };
+
+    Vector2d.scale = function() {
+      return math.staticVector(arguments, [Vector2d, Vector2d], math.functions.multiply, math.functions.multiply);
+    };
+
+    Vector2d.scaleX = function() {
+      return math.staticVector(arguments, [Vector2d, Vector2d], math.functions.multiply);
+    };
+
+    Vector2d.scaleY = function() {
+      return math.staticVector(arguments, [Vector2d, Vector2d], null, math.functions.multiply);
+    };
+
+    Vector2d.add = function() {
+      return math.staticVector(arguments, [Vector2d, Vector2d], math.functions.add, math.functions.add);
+    };
+
+    Vector2d.addX = function() {
+      return math.staticVector(arguments, [Vector2d, Vector2d], math.functions.add);
+    };
+
+    Vector2d.addY = function() {
+      return math.staticVector(arguments, [Vector2d, Vector2d], null, math.functions.add);
+    };
+
+    Vector2d.subtract = function() {
+      return math.staticVector(arguments, [Vector2d, Vector2d], math.functions.subtract, math.functions.subtract);
+    };
+
+    Vector2d.subtractX = function() {
+      return math.staticVector(arguments, [Vector2d, Vector2d], math.functions.subtract);
+    };
+
+    Vector2d.subtractY = function() {
+      return math.staticVector(arguments, [Vector2d, Vector2d], null, math.functions.subtract);
+    };
+
+    Vector2d.multiply = function() {
+      return math.staticVector(arguments, [Vector2d, 'number'], math.functions.multiply, math.functions.multiply);
+    };
+
+    Vector2d.multiplyX = function() {
+      return math.staticVector(arguments, [Vector2d, 'number'], math.functions.multiply, math.functions.self);
+    };
+
+    Vector2d.multiplyY = function() {
+      return math.staticVector(arguments, [Vector2d, 'number'], math.functions.self, math.functions.multiply);
+    };
+
+    Vector2d.divide = function() {
+      return math.staticVector(arguments, [Vector2d, 'number'], math.functions.divide, math.functions.divide);
+    };
+
+    Vector2d.divideX = function() {
+      return math.staticVector(arguments, [Vector2d, 'number'], math.functions.divide, math.functions.self);
+    };
+
+    Vector2d.divideY = function() {
+      return math.staticVector(arguments, [Vector2d, 'number'], math.functions.self, math.functions.divide);
+    };
+
+    Vector2d.normalize = function(a) {
+      var magnitude;
+      math.checkTypes([a], [Vector2d]);
+      magnitude = a.magnitude;
+      return new Vector2d(a.x / magnitude, a.y / magnitude);
+    };
+
+    Vector2d.project = function(a, b) {
+      var c;
+      math.checkTypes([a, b], [Vector2d, Vector2d]);
+      c = ((a.x * b.x) + (a.y * b.y)) / ((b.x * b.x) + (b.y * b.y));
+      return new Vector2d(b.x * c, b.y * c);
+    };
+
+    Vector2d.round = function(a) {
+      math.checkTypes([a], [Vector2d]);
+      return new Vector2d(Math.round(a.x), Math.round(a.y));
+    };
+
+    Vector2d.roundX = function(a) {
+      math.checkTypes([a], [Vector2d]);
+      return new Vector2d(Math.round(a.x), a.y);
+    };
+
+    Vector2d.roundY = function(a) {
+      math.checkTypes([a], [Vector2d]);
+      return new Vector2d(a.x, Math.round(a.y));
+    };
+
+    Vector2d.invert = function(a) {
+      math.checkTypes([a], [Vector2d]);
+      return new Vector2d(-a.x, -a.y);
+    };
+
+    Vector2d.invertX = function(a) {
+      math.checkTypes([a], [Vector2d]);
+      return new Vector2d(-a.x, a.y);
+    };
+
+    Vector2d.invertY = function(a) {
+      math.checkTypes([a], [Vector2d]);
+      return new Vector2d(a.x, -a.y);
+    };
+
+    Vector2d.prototype.add = function() {
+      this.addX.apply(this, arguments);
+      this.addY.apply(this, arguments);
+      return this;
+    };
+
+    Vector2d.prototype.addX = function() {
+      return math.vector.apply(this, [arguments, 1, [Vector2d], math.functions.add, null]);
+    };
+
+    Vector2d.prototype.addY = function() {
+      return math.vector.apply(this, [arguments, 1, [Vector2d], null, math.functions.add]);
+    };
+
+    Vector2d.prototype.subtract = function() {
+      this.subtractX.apply(this, arguments);
+      this.subtractY.apply(this, arguments);
+      return this;
+    };
+
+    Vector2d.prototype.subtractX = function() {
+      return math.vector.apply(this, [arguments, 1, [Vector2d], math.functions.subtract, null]);
+    };
+
+    Vector2d.prototype.subtractY = function() {
+      return math.vector.apply(this, [arguments, 1, [Vector2d], null, math.functions.subtract]);
+    };
+
+    Vector2d.prototype.multiply = function() {
+      this.multiplyX.apply(this, arguments);
+      this.multiplyY.apply(this, arguments);
+      return this;
+    };
+
+    Vector2d.prototype.multiplyX = function() {
+      return math.vector.apply(this, [arguments, 1, ['number'], math.functions.multiply, null]);
+    };
+
+    Vector2d.prototype.multiplyY = function() {
+      return math.vector.apply(this, [arguments, 1, ['number'], null, math.functions.multiply]);
+    };
+
+    Vector2d.prototype.divide = function() {
+      this.divideX.apply(this, arguments);
+      this.divideY.apply(this, arguments);
+      return this;
+    };
+
+    Vector2d.prototype.divideX = function(scalar) {
+      return math.vector.apply(this, [arguments, 1, ['number'], math.functions.divide, null]);
+    };
+
+    Vector2d.prototype.divideY = function(scalar) {
+      return math.vector.apply(this, [arguments, 1, ['number'], null, math.functions.divide]);
+    };
+
+    Vector2d.prototype.normalize = function() {
+      this.length = 1;
+      return this;
+    };
+
+    Vector2d.prototype.project = function(b) {
+      var c;
+      math.checkTypes([b], [Vector2d]);
+      c = ((this.x * b.x) + (this.y * b.y)) / ((b.x * b.x) + (b.y * b.y));
+      this.x = b.x * c;
+      this.y = b.y * c;
+      return this;
+    };
+
+    Vector2d.prototype.round = function() {
+      this.roundX();
+      this.roundY();
+      return this;
+    };
+
+    Vector2d.prototype.roundX = function() {
+      this.x = Math.round(this.x);
+      return this;
+    };
+
+    Vector2d.prototype.roundY = function() {
+      this.y = Math.round(this.y);
+      return this;
+    };
+
+    Vector2d.prototype.zero = function() {
+      this.zeroX();
+      this.zeroY();
+      return this;
+    };
+
+    Vector2d.prototype.zeroX = function() {
+      this.x = 0;
+      return this;
+    };
+
+    Vector2d.prototype.zeroY = function() {
+      this.y = 0;
+      return this;
+    };
+
+    Vector2d.prototype.clone = function() {
+      return new Vector2d(this.x, this.y);
+    };
+
+    Vector2d.prototype.equate = function(b) {
+      math.checkTypes([b], [Vector2d]);
+      this.equateX(b);
+      this.equateY(b);
+      return this;
+    };
+
+    Vector2d.prototype.equateX = function(b) {
+      math.checkTypes([b], [Vector2d]);
+      this.x = b.x;
+      return this;
+    };
+
+    Vector2d.prototype.equateY = function(b) {
+      math.checkTypes([b], [Vector2d]);
+      this.y = b.y;
+      return this;
+    };
+
+    Vector2d.prototype.invert = function() {
+      this.invertX();
+      this.invertY();
+      return this;
+    };
+
+    Vector2d.prototype.invertX = function() {
+      this.x = -this.x;
+      return this;
+    };
+
+    Vector2d.prototype.invertY = function() {
+      this.y = -this.y;
+      return this;
+    };
+
+    Vector2d.prototype.lerp = function(b, l) {
+      math.checkTypes([b, l], [Vector2d, 'number']);
+      if (l < 0) {
+        l = 0;
+      }
+      if (l > 1) {
+        l = 1;
+      }
+      this.x = this.x + (b.x - this.x) * l;
+      this.y = this.y + (b.y - this.y) * l;
+      return this;
+    };
+
+    Vector2d.prototype.scale = function() {
+      this.scaleX.apply(this, arguments);
+      this.scaleY.apply(this, arguments);
+      return this;
+    };
+
+    Vector2d.prototype.scaleX = function() {
+      return math.vector.apply(this, [arguments, 1, [Vector2d], math.functions.multiply, null]);
+    };
+
+    Vector2d.prototype.scaleY = function() {
+      return math.vector.apply(this, [arguments, 1, [Vector2d], null, math.functions.multiply]);
+    };
+
+    Vector2d.prototype.clampMagnitude = function(maxLength) {
+      math.checkTypes([maxLength], ['number']);
+      if (this.magnitudeSquared > maxLength * maxLength) {
+        this.magnitude = maxLength;
+      }
+      return this;
+    };
+
+    Object.defineProperty(Vector2d.prototype, 'magnitude', {
+      get: function() {
+        return Math.sqrt(this.magnitudeSquared);
+      },
+      set: function(value) {
+        var magnitude;
+        math.checkTypes([value], ['number']);
+        magnitude = this.magnitude;
+        this.x = (this.x / magnitude) * value;
+        this.y = (this.y / magnitude) * value;
+        return value;
+      }
+    });
+
+    Object.defineProperty(Vector2d.prototype, 'magnitudeSquared', {
+      get: function() {
+        return this.x * this.x + this.y * this.y;
+      },
+      set: function(value) {
+        math.checkTypes([value], ['number']);
+        this.length = Math.sqrt(value);
+        return value;
+      }
+    });
+
+    Object.defineProperty(Vector2d.prototype, 'length', {
+      get: function() {
+        return this.magnitude;
+      },
+      set: function(value) {
+        math.checkTypes([value], ['number']);
+        return this.magnitude = value;
+      }
+    });
+
+    Object.defineProperty(Vector2d.prototype, 'lengthSquared', {
+      get: function() {
+        return this.magnitudeSquared;
+      },
+      set: function(value) {
+        math.checkTypes([value], ['number']);
+        return this.magnitudeSquared = value;
+      }
+    });
+
+    Object.defineProperty(Vector2d.prototype, 'rotate', {
+      get: function() {
+        return Math.atan2(this.y, this.x) * 180 / Math.PI;
+      },
+      set: function(dir) {
+        var len;
+        math.checkTypes([value], ['number']);
+        len = this.magnitude;
+        this.x = Math.cos(dir * Math.PI / 180) * len;
+        this.y = Math.sin(dir * Math.PI / 180) * len;
+        return dir;
+      }
+    });
+
+    Vector2d.prototype.dot = function(b) {
+      math.checkTypes([b], [Vector2d]);
+      return this.x * b.x + this.y * b.y;
+    };
+
+    Vector2d.prototype.cross = function(b) {
+      math.checkTypes([b], [Vector2d]);
+      return this.x * b.y - this.y * b.x;
+    };
+
+    Vector2d.prototype.distance = function(b) {
+      math.checkTypes([b], [Vector2d]);
+      return Math.sqrt(distanceSquared(b));
+    };
+
+    Vector2d.prototype.distanceSquared = function(b) {
+      var dx, dy;
+      math.checkTypes([b], [Vector2d]);
+      dx = this.x - b.x;
+      dy = this.y - b.y;
+      return dx * dx + dy * dy;
+    };
+
+    Vector2d.prototype.angle = function(b) {
+      var aMagnitude, bMagnitude, dot;
+      math.checkTypes([b], [Vector2d]);
+      aMagnitude = this.magnitude;
+      bMagnitude = b.magnitude;
+      dot = (this.x / aMagnitude) * (b.x / bMagnitude) + (this.y / aMagnitude) * (b.y / bMagnitude);
+      if (dot < -1) {
+        dot = -1;
+      }
+      if (dot > 1) {
+        dot = 1;
+      }
+      return Math.acos(dot) * 57.29578;
+    };
+
+    Vector2d.prototype.areaTriangle = function(b) {
+      math.checkTypes([b], [Vector2d]);
+      return this.areaParallelogram(b) / 2;
+    };
+
+    Vector2d.prototype.areaParallelogram = function(b) {
+      math.checkTypes([b], [Vector2d]);
+      return Math.abs(this.cross(b));
+    };
+
+    Vector2d.prototype.isZero = function() {
+      return this.isZeroX() && this.isZeroY();
+    };
+
+    Vector2d.prototype.isZeroX = function() {
+      return this.x === 0;
+    };
+
+    Vector2d.prototype.isZeroY = function() {
+      return this.y === 0;
+    };
+
+    Vector2d.prototype.isEqual = function(b) {
+      math.checkTypes([b], [Vector2d]);
+      return this.isEqualX(b) && this.isEqualY(b);
+    };
+
+    Vector2d.prototype.isEqualX = function(b) {
+      math.checkTypes([b], [Vector2d]);
+      return this.x === b.x;
+    };
+
+    Vector2d.prototype.isEqualY = function(b) {
+      math.checkTypes([b], [Vector2d]);
+      return this.y === b.y;
+    };
+
+    Vector2d.prototype.isNaN = function() {
+      return this.isNaNX() || this.isNaNY;
+    };
+
+    Vector2d.prototype.isNaNX = function() {
+      return isNaN(this.x);
+    };
+
+    Vector2d.prototype.isNaNY = function() {
+      return isNaN(this.y);
+    };
+
+    Vector2d.prototype.isFinite = function() {
+      return this.isFiniteX() || this.isFiniteY();
+    };
+
+    Vector2d.prototype.isFiniteX = function() {
+      return isFinite(this.x);
+    };
+
+    Vector2d.prototype.isFiniteY = function() {
+      return isFinite(this.y);
+    };
+
+    Vector2d.prototype.isEqualRotate = function(b) {
+      math.checkTypes([b], [Vector2d]);
+      return this.rotate.toFixed(2) === b.rotate.toFixed(2);
+    };
+
+    Vector2d.prototype.isEqualInvertRotate = function(b) {
+      var ref;
+      math.checkTypes([b], [Vector2d]);
+      return (179.9 < (ref = Math.abs(this.rotate.toFixed(2) - b.rotate.toFixed())) && ref < 180.1);
+    };
+
+    Vector2d.prototype.isCollinear = function(b) {
+      var an, bn, n, nax, nay;
+      math.checkTypes([b], [Vector2d]);
+      if (this.isZeroX() || this.isZeroY() || b.isZeroX() || b.isZeroY()) {
+        if (this.isZeroX() && !this.isZeroY()) {
+          an = this.y;
+        } else {
+          an = this.x;
+        }
+        if (b.isZeroX() && !b.isZeroY()) {
+          bn = b.y;
+        } else {
+          bn = b.x;
+        }
+        n = bn / an;
+        nax = this.x * n;
+        nay = this.y * n;
+        return b.x === nax && b.y === nay;
+      } else {
+        return this.x / b.x === this.y / b.y;
+      }
+    };
+
+    Vector2d.prototype.isOrthogonal = function(b) {
+      math.checkTypes([b], [Vector2d]);
+      return this.dot(b === 0);
+    };
+
+    return Vector2d;
+
+  })();
+
+  if ((typeof module !== "undefined" && module !== null) && (module.exports != null)) {
+    module.exports = Vector2d;
+  } else {
+    window.Vector2d = Vector2d;
+  }
+
+}).call(this);
+

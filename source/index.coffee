@@ -2,55 +2,6 @@
 
 class Vector2d
 
-  mathFunctions = 
-    add: (a, b)->
-      a + b
-    subtract: (a, b)->
-      a - b
-    multiply: (a, b)->
-      a * b
-    divide: (a, b)->
-      a / b
-    self: (a)->
-      a
-
-  staticMathVector = (args, types, x, y)->
-    if x? then vx = staticMathComponent 'x', 2, args, types, x else vx = 0
-    if y? then vy = staticMathComponent 'y', 2, args, types, y else vy = 0
-    new Vector2d vx, vy
-
-  staticMathComponent = (property, countArguments, args, argumentTypes, callback)->
-    argumentsLength = args.length
-    throw new Error if argumentsLength < countArguments
-    a = checkType args[0], argumentTypes[0], property
-    for i in [1...argumentsLength]
-      b = checkType args[i], argumentTypes[countArguments-1], property
-      a = callback(a, b)
-    a
-
-  mathVector = (args, argsCount, types, x, y)->
-    @x = mathComponent.apply @, ['x', argsCount, args, types, x] if x?
-    @y = mathComponent.apply @, ['y', argsCount, args, types, y] if y?
-    @
-
-  mathComponent = (property, countArguments, args, argumentTypes, callback)->
-    argumentsLength = args.length
-    throw new Error if argumentsLength < countArguments
-    a = @[property]
-    for i in [0...argumentsLength]
-      b = checkType args[i], argumentTypes[countArguments-1], property
-      a = callback(a, b)
-    a
-
-  checkType = (argument, type, property)->
-    if typeof type is 'string'
-      throw new TypeError if typeof argument isnt type
-      value = argument
-    else
-      throw new TypeError if not (argument instanceof type)
-      value = argument[property]
-    value
-
   constructor: (x, y) ->
     if !(@ instanceof Vector2d)
       return new Vector2d x, y
@@ -94,94 +45,166 @@ class Vector2d
       throw new Error
 
   @clampMagnitude: (a, maxLength)->
-    throw new TypeError if not (a instanceof Vector2d) or typeof maxLength isnt 'number'
+    math.math.checkTypes [a, maxLength], [Vector2d, 'number']
     b = do a.clone
     b.magnitude = maxLength if b.magnitudeSquared > maxLength * maxLength
     b
 
   @lerp: (a, b, l)->
-    throw new TypeError if not (a instanceof Vector2d) or not (b instanceof Vector2d) or typeof l isnt 'number'
+    math.math.checkTypes [a, b, l], [Vector2d, Vector2d, 'number']
     l = 0 if l < 0
     l = 1 if l > 1
     new Vector2d a.x+(b.x-a.x)*l, a.y+(b.y-a.y)*l
 
   @scale: ()->
-    staticMathVector arguments, [Vector2d, Vector2d], mathFunctions.multiply, mathFunctions.multiply
+    math.staticVector(
+      arguments,
+      [Vector2d, Vector2d],
+      math.functions.multiply,
+      math.functions.multiply
+    )
 
   @scaleX: ()->
-    staticMathVector arguments, [Vector2d, Vector2d], mathFunctions.multiply
+    math.staticVector(
+      arguments,
+      [Vector2d, Vector2d],
+      math.functions.multiply
+    )
 
   @scaleY: ()->
-    staticMathVector arguments, [Vector2d, Vector2d], null, mathFunctions.multiply
+    math.staticVector(
+      arguments,
+      [Vector2d, Vector2d], 
+      null, 
+      math.functions.multiply
+    )
 
   @add: ()->
-    staticMathVector arguments, [Vector2d, Vector2d], mathFunctions.add, mathFunctions.add
+    math.staticVector(
+      arguments,
+      [Vector2d, Vector2d],
+      math.functions.add,
+      math.functions.add
+    )
 
   @addX: ()->
-    staticMathVector arguments, [Vector2d, Vector2d], mathFunctions.add
+    math.staticVector(
+      arguments,
+      [Vector2d, Vector2d],
+      math.functions.add
+    )
 
   @addY: ()->
-    staticMathVector arguments, [Vector2d, Vector2d], null, mathFunctions.add
+    math.staticVector(
+      arguments,
+      [Vector2d, Vector2d],
+      null,
+      math.functions.add
+    )
 
   @subtract: ()->
-    staticMathVector arguments, [Vector2d, Vector2d], mathFunctions.subtract, mathFunctions.subtract
+    math.staticVector(
+      arguments,
+      [Vector2d, Vector2d],
+      math.functions.subtract,
+      math.functions.subtract
+    )
 
   @subtractX: ()->
-    staticMathVector arguments, [Vector2d, Vector2d], mathFunctions.subtract
+    math.staticVector(
+      arguments,
+      [Vector2d, Vector2d],
+      math.functions.subtract
+    )
 
   @subtractY: ()->
-    staticMathVector arguments, [Vector2d, Vector2d], null, mathFunctions.subtract
+    math.staticVector(
+      arguments,
+      [Vector2d, Vector2d],
+      null,
+      math.functions.subtract
+    )
 
   @multiply: ()->
-    staticMathVector arguments, [Vector2d, 'number'], mathFunctions.multiply, mathFunctions.multiply
+    math.staticVector(
+      arguments,
+      [Vector2d, 'number'],
+      math.functions.multiply,
+      math.functions.multiply
+    )
 
   @multiplyX: ()->
-    staticMathVector arguments, [Vector2d, 'number'], mathFunctions.multiply, mathFunctions.self
+    math.staticVector(
+      arguments,
+      [Vector2d, 'number'],
+      math.functions.multiply,
+      math.functions.self
+    )
 
   @multiplyY: ()->
-    staticMathVector arguments, [Vector2d, 'number'], mathFunctions.self, mathFunctions.multiply
+    math.staticVector(
+      arguments,
+      [Vector2d, 'number'],
+      math.functions.self,
+      math.functions.multiply
+    )
 
   @divide: ()->
-    staticMathVector arguments, [Vector2d, 'number'], mathFunctions.divide, mathFunctions.divide
+    math.staticVector(
+      arguments,
+      [Vector2d, 'number'],
+      math.functions.divide,
+      math.functions.divide
+    )
 
   @divideX: ()->
-    staticMathVector arguments, [Vector2d, 'number'], mathFunctions.divide, mathFunctions.self
+    math.staticVector(
+      arguments,
+      [Vector2d, 'number'],
+      math.functions.divide,
+      math.functions.self
+    )
 
   @divideY: ()->
-    staticMathVector arguments, [Vector2d, 'number'], mathFunctions.self, mathFunctions.divide
+    math.staticVector(
+      arguments,
+      [Vector2d, 'number'],
+      math.functions.self,
+      math.functions.divide
+    )
 
   @normalize: (a)->
-    throw new TypeError if not (a instanceof Vector2d)
+    math.checkTypes [a], [Vector2d]
     magnitude = a.magnitude
     new Vector2d a.x/magnitude, a.y/magnitude
 
   @project: (a, b)->
-    throw new TypeError if not (a instanceof Vector2d) or not (b instanceof Vector2d)
+    math.checkTypes [a, b], [Vector2d, Vector2d]
     c = ((a.x * b.x)+(a.y * b.y)) / ((b.x*b.x)+(b.y*b.y))
     new Vector2d b.x*c, b.y*c
                                                                                 
   @round: (a)->
-    throw new TypeError if not (a instanceof Vector2d)
+    math.checkTypes [a], [Vector2d]
     new Vector2d Math.round(a.x), Math.round(a.y)
 
   @roundX: (a)->
-    throw new TypeError if not (a instanceof Vector2d)
+    math.checkTypes [a], [Vector2d]
     new Vector2d Math.round(a.x), a.y
 
   @roundY: (a)->
-    throw new TypeError if not (a instanceof Vector2d)
+    math.checkTypes [a], [Vector2d]
     new Vector2d a.x, Math.round(a.y)
 
   @invert: (a)->
-    throw new TypeError if not (a instanceof Vector2d)
+    math.checkTypes [a], [Vector2d]
     new Vector2d -a.x, -a.y
 
   @invertX: (a)->
-    throw new TypeError if not (a instanceof Vector2d)
+    math.checkTypes [a], [Vector2d]
     new Vector2d -a.x, a.y
 
   @invertY: (a)->
-    throw new TypeError if not (a instanceof Vector2d)
+    math.checkTypes [a], [Vector2d]
     new Vector2d a.x, -a.y
 
   # Methods
@@ -194,10 +217,10 @@ class Vector2d
     @
 
   addX: ()->
-    mathVector.apply @, [arguments, 1, [Vector2d], mathFunctions.add, null]
+    math.vector.apply @, [arguments, 1, [Vector2d], math.functions.add, null]
 
   addY: ()->
-    mathVector.apply @, [arguments, 1, [Vector2d], null, mathFunctions.add]
+    math.vector.apply @, [arguments, 1, [Vector2d], null, math.functions.add]
 
   subtract: ()->
     @subtractX.apply @, arguments
@@ -205,10 +228,10 @@ class Vector2d
     @
 
   subtractX: ()->
-    mathVector.apply @, [arguments, 1, [Vector2d], mathFunctions.subtract, null]
+    math.vector.apply @, [arguments, 1, [Vector2d], math.functions.subtract, null]
 
   subtractY: ()->
-    mathVector.apply @, [arguments, 1, [Vector2d], null, mathFunctions.subtract]
+    math.vector.apply @, [arguments, 1, [Vector2d], null, math.functions.subtract]
 
   multiply: ()->
     @multiplyX.apply @, arguments
@@ -216,10 +239,10 @@ class Vector2d
     @
 
   multiplyX: ()->
-    mathVector.apply @, [arguments, 1, ['number'], mathFunctions.multiply, null]
+    math.vector.apply @, [arguments, 1, ['number'], math.functions.multiply, null]
 
   multiplyY: ()->
-    mathVector.apply @, [arguments, 1, ['number'], null, mathFunctions.multiply]
+    math.vector.apply @, [arguments, 1, ['number'], null, math.functions.multiply]
 
   divide: ()->
     @divideX.apply @, arguments
@@ -227,17 +250,17 @@ class Vector2d
     @
 
   divideX: (scalar)->
-    mathVector.apply @, [arguments, 1, ['number'], mathFunctions.divide, null]
+    math.vector.apply @, [arguments, 1, ['number'], math.functions.divide, null]
 
   divideY: (scalar)->
-    mathVector.apply @, [arguments, 1, ['number'], null, mathFunctions.divide]
+    math.vector.apply @, [arguments, 1, ['number'], null, math.functions.divide]
 
   normalize: ->
     @length = 1
     @
 
   project: (b)->
-    throw new TypeError if not (b instanceof Vector2d)
+    math.checkTypes [b], [Vector2d]
     c = ((@x * b.x)+(@y * b.y)) / ((b.x*b.x)+(b.y*b.y))
     @x = b.x * c
     @y = b.y * c
@@ -273,18 +296,18 @@ class Vector2d
     new Vector2d @x, @y
 
   equate: (b)->
-    throw new TypeError if not (b instanceof Vector2d)
+    math.checkTypes [b], [Vector2d]
     @equateX b
     @equateY b
     @
 
   equateX: (b)->
-    throw new TypeError if not (b instanceof Vector2d)
+    math.checkTypes [b], [Vector2d]
     @x = b.x
     @
 
   equateY: (b)->
-    throw new TypeError if not (b instanceof Vector2d)
+    math.checkTypes [b], [Vector2d]
     @y = b.y
     @
 
@@ -302,7 +325,7 @@ class Vector2d
     @
 
   lerp: (b, l)->
-    throw new TypeError if not (b instanceof Vector2d) or typeof b isnt 'number'
+    math.checkTypes [b, l], [Vector2d, 'number']
     l = 0 if l < 0
     l = 1 if l > 1
     @x = @x+(b.x-@x)*l
@@ -315,13 +338,13 @@ class Vector2d
     @
 
   scaleX: ()->
-    mathVector.apply @, [arguments, 1, [Vector2d], mathFunctions.multiply, null]
+    math.vector.apply @, [arguments, 1, [Vector2d], math.functions.multiply, null]
 
   scaleY: ()->
-    mathVector.apply @, [arguments, 1, [Vector2d], null, mathFunctions.multiply]
+    math.vector.apply @, [arguments, 1, [Vector2d], null, math.functions.multiply]
 
   clampMagnitude: (maxLength)->
-    throw new TypeError if typeof maxLength isnt 'number'
+    math.checkTypes [maxLength], ['number']
     @magnitude = maxLength if @magnitudeSquared > maxLength * maxLength
     @
 
@@ -331,7 +354,7 @@ class Vector2d
     get: ->
       Math.sqrt @magnitudeSquared
     set: (value)->
-      throw new TypeError if typeof value isnt 'number'
+      math.checkTypes [value], ['number']
       magnitude = @magnitude
       @x = (@x / magnitude) * value
       @y = (@y / magnitude) * value
@@ -342,7 +365,7 @@ class Vector2d
     get: ->
       @x*@x+@y*@y
     set: (value)->
-      throw new TypeError if typeof value isnt 'number'
+      math.checkTypes [value], ['number']
       @length = Math.sqrt value
       value
   }
@@ -351,7 +374,7 @@ class Vector2d
     get: ->
       @magnitude
     set: (value)->
-      throw new TypeError if typeof value isnt 'number'
+      math.checkTypes [value], ['number']
       @magnitude = value
   }
 
@@ -359,7 +382,7 @@ class Vector2d
     get: ->
       @magnitudeSquared
     set: (value)->
-      throw new TypeError if typeof value isnt 'number'
+      math.checkTypes [value], ['number']
       @magnitudeSquared = value
   }
 
@@ -367,7 +390,7 @@ class Vector2d
     get: ->
       Math.atan2(@y, @x) * 180 / Math.PI
     set: (dir)->
-      throw new TypeError if typeof dir isnt 'number'
+      math.checkTypes [value], ['number']
       len = @magnitude
       @x = Math.cos(dir*Math.PI/180)*len
       @y = Math.sin(dir*Math.PI/180)*len
@@ -375,25 +398,25 @@ class Vector2d
   }
 
   dot: (b)->
-    throw new TypeError if not (b instanceof Vector2d)
+    math.checkTypes [b], [Vector2d]
     @x * b.x + @y * b.y
 
   cross: (b)->
-    throw new TypeError if not (b instanceof Vector2d)
+    math.checkTypes [b], [Vector2d]
     @x * b.y - @y * b.x
 
   distance: (b)->
-    throw new TypeError if not (b instanceof Vector2d)
+    math.checkTypes [b], [Vector2d]
     Math.sqrt distanceSquared b
 
   distanceSquared: (b)->
-    throw new TypeError if not (b instanceof Vector2d)
+    math.checkTypes [b], [Vector2d]
     dx = @x - b.x
     dy = @y - b.y
     dx * dx + dy * dy
 
   angle: (b)->
-    throw new TypeError if not (b instanceof Vector2d)
+    math.checkTypes [b], [Vector2d]
     aMagnitude = @magnitude
     bMagnitude = b.magnitude
     dot = (@x/aMagnitude) * (b.x/bMagnitude) + (@y/aMagnitude) * (b.y/bMagnitude)
@@ -402,11 +425,11 @@ class Vector2d
     Math.acos(dot) * 57.29578
 
   areaTriangle: (b)->
-    throw new TypeError if not (b instanceof Vector2d)
+    math.checkTypes [b], [Vector2d]
     @areaParallelogram(b)/2
 
   areaParallelogram: (b)->
-    throw new TypeError if not (b instanceof Vector2d)
+    math.checkTypes [b], [Vector2d]
     Math.abs @cross(b)
 
   # Returns boolean
@@ -421,15 +444,15 @@ class Vector2d
     @y is 0
 
   isEqual: (b)->
-    throw new TypeError if not (b instanceof Vector2d)
+    math.checkTypes [b], [Vector2d]
     @isEqualX(b) and @isEqualY(b)
 
   isEqualX: (b)->
-    throw new TypeError if not (b instanceof Vector2d)
+    math.checkTypes [b], [Vector2d]
     @x is b.x
 
   isEqualY: (b)->
-    throw new TypeError if not (b instanceof Vector2d)
+    math.checkTypes [b], [Vector2d]
     @y is b.y
 
   isNaN: ->
@@ -451,15 +474,15 @@ class Vector2d
     isFinite @.y
 
   isEqualRotate: (b)->
-    throw new TypeError if not (b instanceof Vector2d)
+    math.checkTypes [b], [Vector2d]
     @rotate.toFixed(2) is b.rotate.toFixed(2)
 
   isEqualInvertRotate: (b)->
-    throw new TypeError if not (b instanceof Vector2d)
+    math.checkTypes [b], [Vector2d]
     179.9 < Math.abs(@rotate.toFixed(2) - b.rotate.toFixed()) < 180.1
 
   isCollinear: (b)->
-    throw new TypeError if not (b instanceof Vector2d)
+    math.checkTypes [b], [Vector2d]
     if @isZeroX() or @isZeroY() or b.isZeroX() or b.isZeroY()
       if @isZeroX() and not @isZeroY() then an = @y else an = @x
       if b.isZeroX() and not b.isZeroY() then bn = b.y else bn = b.x
@@ -471,7 +494,7 @@ class Vector2d
       @x/b.x is @y/b.y
 
   isOrthogonal: (b)->
-    throw new TypeError if not (b instanceof Vector2d)
+    math.checkTypes [b], [Vector2d]
     @dot b is 0
 
 if module? and module.exports?
