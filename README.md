@@ -53,7 +53,7 @@ Help the project - test, find bugs, supplementing the documentation, create new 
   * .lengthSquared:**Number**
   * .rotate:**Number**
 
-* Static properties
+* Constants
 
   * .ZERO:**Vector2d**
   * .ONE:**Vector2d**
