@@ -401,6 +401,14 @@ class Vector2d
     dot = 1 if dot > 1
     Math.acos(dot) * 57.29578
 
+  areaTriangle: (b)->
+    throw new TypeError if not (b instanceof Vector2d)
+    @areaParallelogram(b)/2
+
+  areaParallelogram: (b)->
+    throw new TypeError if not (b instanceof Vector2d)
+    Math.abs @cross(b)
+
   # Returns boolean
 
   isZero: ->
