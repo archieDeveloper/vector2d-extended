@@ -57,23 +57,41 @@ class Vector2d
     @x = x || 0
     @y = y || 0
 
-  @zero: ->
-    new Vector2d
+  Object.defineProperty @, 'ZERO',
+    get: ->
+      new Vector2d
+    set: ()->
+      throw new Error
 
-  @one: ->
-    new Vector2d 1, 1
+  Object.defineProperty @, 'ONE',
+    get: ->
+      new Vector2d 1, 1
+    set: ()->
+      throw new Error
 
-  @up: ->
-    new Vector2d 0, -1
+  Object.defineProperty @, 'UP',
+    get: ->
+      new Vector2d 0, -1
+    set: ()->
+      throw new Error
 
-  @down: ->
-    new Vector2d 0, 1
+  Object.defineProperty @, 'DOWN',
+    get: ->
+      new Vector2d 0, 1
+    set: ()->
+      throw new Error
 
-  @right: ->
-    new Vector2d 1, 0
+  Object.defineProperty @, 'RIGHT',
+    get: ->
+      new Vector2d 1, 0
+    set: ()->
+      throw new Error
 
-  @left: ->
-    new Vector2d -1, 0
+  Object.defineProperty @, 'LEFT',
+    get: ->
+      new Vector2d -1, 0
+    set: ()->
+      throw new Error
 
   @clampMagnitude: (a, maxLength)->
     throw new TypeError if not (a instanceof Vector2d) or typeof maxLength isnt 'number'

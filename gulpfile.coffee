@@ -11,7 +11,7 @@ gulp.task 'coffee', ->
     .pipe coffee bare: false
     .on 'error', console.log
     .pipe concat 'index.js'
-    # .pipe uglify()
+    .pipe uglify()
     .pipe gulp.dest './'
 
 gulp.task 'watch', ->

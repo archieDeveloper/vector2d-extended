@@ -53,14 +53,17 @@ Help the project - test, find bugs, supplementing the documentation, create new 
   * .lengthSquared:**Number**
   * .rotate:**Number**
 
+* Static properties
+
+  * .ZERO:**Vector2d**
+  * .ONE:**Vector2d**
+  * .UP:**Vector2d**
+  * .DOWN:**Vector2d**
+  * .RIGHT:**Vector2d**
+  * .LEFT:**Vector2d**
+
 * Static Methods
 
-  * .zero():**Vector2d**
-  * .one():**Vector2d**
-  * .up():**Vector2d**
-  * .down():**Vector2d**
-  * .right():**Vector2d**
-  * .left():**Vector2d**
   * .clampMagnitude(vector:**Vector2d**, maxLength:**Number**):**Vector2d**
   * .lerp(vector1:**Vector2d**, vector2:**Vector2d**, l:**Number**):**Vector2d**
   * .scale(vector1:**Vector2d**, vecotr2:**Vector2d**):**Vector2d**

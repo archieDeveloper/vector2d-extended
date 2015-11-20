@@ -51,30 +51,6 @@ describe '#static', ->
       notChange a, aClone
       notChange b, bClone
 
-  describe '#zero', ->
-    args = [0, 0]
-    checkMethod 'zero', args
-
-  describe '#one', ->
-    args = [1, 1]
-    checkMethod 'one', args
-
-  describe '#up', ->
-    args = [0, -1]
-    checkMethod 'up', args
-
-  describe '#down', ->
-    args = [0, 1]
-    checkMethod 'down', args
-
-  describe '#right', ->
-    args = [1, 0]
-    checkMethod 'right', args
-
-  describe '#left', ->
-    args = [-1, 0]
-    checkMethod 'left', args
-
   describe '#clampMagnitude', ->
     args = [
       100, 101
