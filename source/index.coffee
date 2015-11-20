@@ -255,18 +255,18 @@ class Vector2d
     new Vector2d @x, @y
 
   equate: (b)->
-    if not (b instanceof Vector2d) then throw new TypeError
+    throw new TypeError if not (b instanceof Vector2d)
     @equateX b
     @equateY b
     @
 
   equateX: (b)->
-    if not (b instanceof Vector2d) then throw new TypeError
+    throw new TypeError if not (b instanceof Vector2d)
     @x = b.x
     @
 
   equateY: (b)->
-    if not (b instanceof Vector2d) then throw new TypeError
+    throw new TypeError if not (b instanceof Vector2d)
     @y = b.y
     @
 
