@@ -3,7 +3,25 @@
   var Vector2d;
 
   Vector2d = (function() {
-    var checkType, mathComponent, mathVector, staticMathComponent, staticMathVector;
+    var checkType, mathComponent, mathFunctions, mathVector, staticMathComponent, staticMathVector;
+
+    mathFunctions = {
+      add: function(a, b) {
+        return a + b;
+      },
+      subtract: function(a, b) {
+        return a - b;
+      },
+      multiply: function(a, b) {
+        return a * b;
+      },
+      divide: function(a, b) {
+        return a / b;
+      },
+      self: function(a) {
+        return a;
+      }
+    };
 
     staticMathVector = function(args, types, x, y) {
       var vx, vy;
@@ -34,22 +52,6 @@
       return a;
     };
 
-    checkType = function(argument, type, property) {
-      var value;
-      if (typeof type === 'string') {
-        if (typeof argument !== type) {
-          throw new TypeError;
-        }
-        value = argument;
-      } else {
-        if (!(argument instanceof type)) {
-          throw new TypeError;
-        }
-        value = argument[property];
-      }
-      return value;
-    };
-
     mathVector = function(args, argsCount, types, x, y) {
       if (x != null) {
         this.x = mathComponent.apply(this, ['x', argsCount, args, types, x]);
@@ -72,6 +74,22 @@
         a = callback(a, b);
       }
       return a;
+    };
+
+    checkType = function(argument, type, property) {
+      var value;
+      if (typeof type === 'string') {
+        if (typeof argument !== type) {
+          throw new TypeError;
+        }
+        value = argument;
+      } else {
+        if (!(argument instanceof type)) {
+          throw new TypeError;
+        }
+        value = argument[property];
+      }
+      return value;
     };
 
     function Vector2d(x, y) {
@@ -132,135 +150,63 @@
     };
 
     Vector2d.scale = function() {
-      var fn;
-      fn = function(a, b) {
-        return a * b;
-      };
-      return staticMathVector(arguments, [Vector2d, Vector2d], fn, fn);
+      return staticMathVector(arguments, [Vector2d, Vector2d], mathFunctions.multiply, mathFunctions.multiply);
     };
 
     Vector2d.scaleX = function() {
-      var fn;
-      fn = function(a, b) {
-        return a * b;
-      };
-      return staticMathVector(arguments, [Vector2d, Vector2d], fn);
+      return staticMathVector(arguments, [Vector2d, Vector2d], mathFunctions.multiply);
     };
 
     Vector2d.scaleY = function() {
-      var fn;
-      fn = function(a, b) {
-        return a * b;
-      };
-      return staticMathVector(arguments, [Vector2d, Vector2d], null, fn);
+      return staticMathVector(arguments, [Vector2d, Vector2d], null, mathFunctions.multiply);
     };
 
     Vector2d.add = function() {
-      var fn;
-      fn = function(a, b) {
-        return a + b;
-      };
-      return staticMathVector(arguments, [Vector2d, Vector2d], fn, fn);
+      return staticMathVector(arguments, [Vector2d, Vector2d], mathFunctions.add, mathFunctions.add);
     };
 
     Vector2d.addX = function() {
-      var fn;
-      fn = function(a, b) {
-        return a + b;
-      };
-      return staticMathVector(arguments, [Vector2d, Vector2d], fn);
+      return staticMathVector(arguments, [Vector2d, Vector2d], mathFunctions.add);
     };
 
     Vector2d.addY = function() {
-      var fn;
-      fn = function(a, b) {
-        return a + b;
-      };
-      return staticMathVector(arguments, [Vector2d, Vector2d], null, fn);
+      return staticMathVector(arguments, [Vector2d, Vector2d], null, mathFunctions.add);
     };
 
     Vector2d.subtract = function() {
-      var fn;
-      fn = function(a, b) {
-        return a - b;
-      };
-      return staticMathVector(arguments, [Vector2d, Vector2d], fn, fn);
+      return staticMathVector(arguments, [Vector2d, Vector2d], mathFunctions.subtract, mathFunctions.subtract);
     };
 
     Vector2d.subtractX = function() {
-      var fn;
-      fn = function(a, b) {
-        return a - b;
-      };
-      return staticMathVector(arguments, [Vector2d, Vector2d], fn);
+      return staticMathVector(arguments, [Vector2d, Vector2d], mathFunctions.subtract);
     };
 
     Vector2d.subtractY = function() {
-      var fn;
-      fn = function(a, b) {
-        return a - b;
-      };
-      return staticMathVector(arguments, [Vector2d, Vector2d], null, fn);
+      return staticMathVector(arguments, [Vector2d, Vector2d], null, mathFunctions.subtract);
     };
 
     Vector2d.multiply = function() {
-      var fn;
-      fn = function(a, b) {
-        return a * b;
-      };
-      return staticMathVector(arguments, [Vector2d, 'number'], fn, fn);
+      return staticMathVector(arguments, [Vector2d, 'number'], mathFunctions.multiply, mathFunctions.multiply);
     };
 
     Vector2d.multiplyX = function() {
-      var fn, fn2;
-      fn = function(a, b) {
-        return a * b;
-      };
-      fn2 = function(a) {
-        return a;
-      };
-      return staticMathVector(arguments, [Vector2d, 'number'], fn, fn2);
+      return staticMathVector(arguments, [Vector2d, 'number'], mathFunctions.multiply, mathFunctions.self);
     };
 
     Vector2d.multiplyY = function() {
-      var fn, fn2;
-      fn = function(a, b) {
-        return a * b;
-      };
-      fn2 = function(a) {
-        return a;
-      };
-      return staticMathVector(arguments, [Vector2d, 'number'], fn2, fn);
+      return staticMathVector(arguments, [Vector2d, 'number'], mathFunctions.self, mathFunctions.multiply);
     };
 
     Vector2d.divide = function() {
-      var fn;
-      fn = function(a, b) {
-        return a / b;
-      };
-      return staticMathVector(arguments, [Vector2d, 'number'], fn, fn);
+      return staticMathVector(arguments, [Vector2d, 'number'], mathFunctions.divide, mathFunctions.divide);
     };
 
     Vector2d.divideX = function() {
-      var fn, fn2;
-      fn = function(a, b) {
-        return a / b;
-      };
-      fn2 = function(a) {
-        return a;
-      };
-      return staticMathVector(arguments, [Vector2d, 'number'], fn, fn2);
+      return staticMathVector(arguments, [Vector2d, 'number'], mathFunctions.divide, mathFunctions.self);
     };
 
     Vector2d.divideY = function() {
-      var fn, fn2;
-      fn = function(a, b) {
-        return a / b;
-      };
-      fn2 = function(a) {
-        return a;
-      };
-      return staticMathVector(arguments, [Vector2d, 'number'], fn2, fn);
+      return staticMathVector(arguments, [Vector2d, 'number'], mathFunctions.self, mathFunctions.divide);
     };
 
     Vector2d.normalize = function(a) {
@@ -330,19 +276,11 @@
     };
 
     Vector2d.prototype.addX = function() {
-      var fn;
-      fn = function(a, b) {
-        return a + b;
-      };
-      return mathVector.apply(this, [arguments, 1, [Vector2d], fn, null]);
+      return mathVector.apply(this, [arguments, 1, [Vector2d], mathFunctions.add, null]);
     };
 
     Vector2d.prototype.addY = function() {
-      var fn;
-      fn = function(a, b) {
-        return a + b;
-      };
-      return mathVector.apply(this, [arguments, 1, [Vector2d], null, fn]);
+      return mathVector.apply(this, [arguments, 1, [Vector2d], null, mathFunctions.add]);
     };
 
     Vector2d.prototype.subtract = function() {
@@ -352,19 +290,11 @@
     };
 
     Vector2d.prototype.subtractX = function() {
-      var fn;
-      fn = function(a, b) {
-        return a - b;
-      };
-      return mathVector.apply(this, [arguments, 1, [Vector2d], fn, null]);
+      return mathVector.apply(this, [arguments, 1, [Vector2d], mathFunctions.subtract, null]);
     };
 
     Vector2d.prototype.subtractY = function() {
-      var fn;
-      fn = function(a, b) {
-        return a - b;
-      };
-      return mathVector.apply(this, [arguments, 1, [Vector2d], null, fn]);
+      return mathVector.apply(this, [arguments, 1, [Vector2d], null, mathFunctions.subtract]);
     };
 
     Vector2d.prototype.multiply = function() {
@@ -374,19 +304,11 @@
     };
 
     Vector2d.prototype.multiplyX = function() {
-      var fn;
-      fn = function(a, b) {
-        return a * b;
-      };
-      return mathVector.apply(this, [arguments, 1, ['number'], fn, null]);
+      return mathVector.apply(this, [arguments, 1, ['number'], mathFunctions.multiply, null]);
     };
 
     Vector2d.prototype.multiplyY = function() {
-      var fn;
-      fn = function(a, b) {
-        return a * b;
-      };
-      return mathVector.apply(this, [arguments, 1, ['number'], null, fn]);
+      return mathVector.apply(this, [arguments, 1, ['number'], null, mathFunctions.multiply]);
     };
 
     Vector2d.prototype.divide = function() {
@@ -396,19 +318,11 @@
     };
 
     Vector2d.prototype.divideX = function(scalar) {
-      var fn;
-      fn = function(a, b) {
-        return a / b;
-      };
-      return mathVector.apply(this, [arguments, 1, ['number'], fn, null]);
+      return mathVector.apply(this, [arguments, 1, ['number'], mathFunctions.divide, null]);
     };
 
     Vector2d.prototype.divideY = function(scalar) {
-      var fn;
-      fn = function(a, b) {
-        return a / b;
-      };
-      return mathVector.apply(this, [arguments, 1, ['number'], null, fn]);
+      return mathVector.apply(this, [arguments, 1, ['number'], null, mathFunctions.divide]);
     };
 
     Vector2d.prototype.normalize = function() {
@@ -526,19 +440,11 @@
     };
 
     Vector2d.prototype.scaleX = function() {
-      var fn;
-      fn = function(a, b) {
-        return a * b;
-      };
-      return mathVector.apply(this, [arguments, 1, [Vector2d], fn, null]);
+      return mathVector.apply(this, [arguments, 1, [Vector2d], mathFunctions.multiply, null]);
     };
 
     Vector2d.prototype.scaleY = function() {
-      var fn;
-      fn = function(a, b) {
-        return a * b;
-      };
-      return mathVector.apply(this, [arguments, 1, [Vector2d], null, fn]);
+      return mathVector.apply(this, [arguments, 1, [Vector2d], null, mathFunctions.multiply]);
     };
 
     Vector2d.prototype.clampMagnitude = function(maxLength) {

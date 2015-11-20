@@ -2,6 +2,18 @@
 
 class Vector2d
 
+  mathFunctions = 
+    add: (a, b)->
+      a + b
+    subtract: (a, b)->
+      a - b
+    multiply: (a, b)->
+      a * b
+    divide: (a, b)->
+      a / b
+    self: (a)->
+      a
+
   staticMathVector = (args, types, x, y)->
     if x? then vx = staticMathComponent 'x', 2, args, types, x else vx = 0
     if y? then vy = staticMathComponent 'y', 2, args, types, y else vy = 0
@@ -16,15 +28,6 @@ class Vector2d
       a = callback(a, b)
     a
 
-  checkType = (argument, type, property)->
-    if typeof type is 'string'
-      throw new TypeError if typeof argument isnt type
-      value = argument
-    else
-      throw new TypeError if not (argument instanceof type)
-      value = argument[property]
-    value
-
   mathVector = (args, argsCount, types, x, y)->
     @x = mathComponent.apply @, ['x', argsCount, args, types, x] if x?
     @y = mathComponent.apply @, ['y', argsCount, args, types, y] if y?
@@ -38,6 +41,15 @@ class Vector2d
       b = checkType args[i], argumentTypes[countArguments-1], property
       a = callback(a, b)
     a
+
+  checkType = (argument, type, property)->
+    if typeof type is 'string'
+      throw new TypeError if typeof argument isnt type
+      value = argument
+    else
+      throw new TypeError if not (argument instanceof type)
+      value = argument[property]
+    value
 
   constructor: (x, y) ->
     if !(@ instanceof Vector2d)
@@ -76,87 +88,49 @@ class Vector2d
     new Vector2d a.x+(b.x-a.x)*l, a.y+(b.y-a.y)*l
 
   @scale: ()->
-    fn = (a, b)->
-      a * b
-    staticMathVector arguments, [Vector2d, Vector2d], fn, fn
+    staticMathVector arguments, [Vector2d, Vector2d], mathFunctions.multiply, mathFunctions.multiply
 
   @scaleX: ()->
-    fn = (a, b)->
-      a * b
-    staticMathVector arguments, [Vector2d, Vector2d], fn
+    staticMathVector arguments, [Vector2d, Vector2d], mathFunctions.multiply
 
   @scaleY: ()->
-    fn = (a, b)->
-      a * b
-    staticMathVector arguments, [Vector2d, Vector2d], null, fn
+    staticMathVector arguments, [Vector2d, Vector2d], null, mathFunctions.multiply
 
   @add: ()->
-    fn = (a, b)->
-      a + b
-    staticMathVector arguments, [Vector2d, Vector2d], fn, fn
+    staticMathVector arguments, [Vector2d, Vector2d], mathFunctions.add, mathFunctions.add
 
   @addX: ()->
-    fn = (a, b)->
-      a + b
-    staticMathVector arguments, [Vector2d, Vector2d], fn
+    staticMathVector arguments, [Vector2d, Vector2d], mathFunctions.add
 
   @addY: ()->
-    fn = (a, b)->
-      a + b
-    staticMathVector arguments, [Vector2d, Vector2d], null, fn
+    staticMathVector arguments, [Vector2d, Vector2d], null, mathFunctions.add
 
   @subtract: ()->
-    fn = (a, b)->
-      a - b
-    staticMathVector arguments, [Vector2d, Vector2d], fn, fn
+    staticMathVector arguments, [Vector2d, Vector2d], mathFunctions.subtract, mathFunctions.subtract
 
   @subtractX: ()->
-    fn = (a, b)->
-      a - b
-    staticMathVector arguments, [Vector2d, Vector2d], fn
+    staticMathVector arguments, [Vector2d, Vector2d], mathFunctions.subtract
 
   @subtractY: ()->
-    fn = (a, b)->
-      a - b
-    staticMathVector arguments, [Vector2d, Vector2d], null, fn
+    staticMathVector arguments, [Vector2d, Vector2d], null, mathFunctions.subtract
 
   @multiply: ()->
-    fn = (a, b)->
-      a * b
-    staticMathVector arguments, [Vector2d, 'number'], fn, fn
+    staticMathVector arguments, [Vector2d, 'number'], mathFunctions.multiply, mathFunctions.multiply
 
   @multiplyX: ()->
-    fn = (a, b)->
-      a * b
-    fn2 = (a)->
-      a
-    staticMathVector arguments, [Vector2d, 'number'], fn, fn2
+    staticMathVector arguments, [Vector2d, 'number'], mathFunctions.multiply, mathFunctions.self
 
   @multiplyY: ()->
-    fn = (a, b)->
-      a * b
-    fn2 = (a)->
-      a
-    staticMathVector arguments, [Vector2d, 'number'], fn2, fn
+    staticMathVector arguments, [Vector2d, 'number'], mathFunctions.self, mathFunctions.multiply
 
   @divide: ()->
-    fn = (a, b)->
-      a / b
-    staticMathVector arguments, [Vector2d, 'number'], fn, fn
+    staticMathVector arguments, [Vector2d, 'number'], mathFunctions.divide, mathFunctions.divide
 
   @divideX: ()->
-    fn = (a, b)->
-      a / b
-    fn2 = (a)->
-      a
-    staticMathVector arguments, [Vector2d, 'number'], fn, fn2
+    staticMathVector arguments, [Vector2d, 'number'], mathFunctions.divide, mathFunctions.self
 
   @divideY: ()->
-    fn = (a, b)->
-      a / b
-    fn2 = (a)->
-      a
-    staticMathVector arguments, [Vector2d, 'number'], fn2, fn
+    staticMathVector arguments, [Vector2d, 'number'], mathFunctions.self, mathFunctions.divide
 
   @normalize: (a)->
     throw new TypeError if not (a instanceof Vector2d)
@@ -202,14 +176,10 @@ class Vector2d
     @
 
   addX: ()->
-    fn = (a, b)->
-      a + b
-    mathVector.apply @, [arguments, 1, [Vector2d], fn, null]
+    mathVector.apply @, [arguments, 1, [Vector2d], mathFunctions.add, null]
 
   addY: ()->
-    fn = (a, b)->
-      a + b
-    mathVector.apply @, [arguments, 1, [Vector2d], null, fn]
+    mathVector.apply @, [arguments, 1, [Vector2d], null, mathFunctions.add]
 
   subtract: ()->
     @subtractX.apply @, arguments
@@ -217,14 +187,10 @@ class Vector2d
     @
 
   subtractX: ()->
-    fn = (a, b)->
-      a - b
-    mathVector.apply @, [arguments, 1, [Vector2d], fn, null]
+    mathVector.apply @, [arguments, 1, [Vector2d], mathFunctions.subtract, null]
 
   subtractY: ()->
-    fn = (a, b)->
-      a - b
-    mathVector.apply @, [arguments, 1, [Vector2d], null, fn]
+    mathVector.apply @, [arguments, 1, [Vector2d], null, mathFunctions.subtract]
 
   multiply: ()->
     @multiplyX.apply @, arguments
@@ -232,14 +198,10 @@ class Vector2d
     @
 
   multiplyX: ()->
-    fn = (a, b)->
-      a * b
-    mathVector.apply @, [arguments, 1, ['number'], fn, null]
+    mathVector.apply @, [arguments, 1, ['number'], mathFunctions.multiply, null]
 
   multiplyY: ()->
-    fn = (a, b)->
-      a * b
-    mathVector.apply @, [arguments, 1, ['number'], null, fn]
+    mathVector.apply @, [arguments, 1, ['number'], null, mathFunctions.multiply]
 
   divide: ()->
     @divideX.apply @, arguments
@@ -247,21 +209,17 @@ class Vector2d
     @
 
   divideX: (scalar)->
-    fn = (a, b)->
-      a / b
-    mathVector.apply @, [arguments, 1, ['number'], fn, null]
+    mathVector.apply @, [arguments, 1, ['number'], mathFunctions.divide, null]
 
   divideY: (scalar)->
-    fn = (a, b)->
-      a / b
-    mathVector.apply @, [arguments, 1, ['number'], null, fn]
+    mathVector.apply @, [arguments, 1, ['number'], null, mathFunctions.divide]
 
   normalize: ->
     @length = 1
     @
 
   project: (b)->
-    if not (b instanceof Vector2d) then throw new TypeError
+    throw new TypeError if not (b instanceof Vector2d)
     c = ((@x * b.x)+(@y * b.y)) / ((b.x*b.x)+(b.y*b.y))
     @x = b.x * c
     @y = b.y * c
@@ -339,14 +297,10 @@ class Vector2d
     @
 
   scaleX: ()->
-    fn = (a, b)->
-      a * b
-    mathVector.apply @, [arguments, 1, [Vector2d], fn, null]
+    mathVector.apply @, [arguments, 1, [Vector2d], mathFunctions.multiply, null]
 
   scaleY: ()->
-    fn = (a, b)->
-      a * b
-    mathVector.apply @, [arguments, 1, [Vector2d], null, fn]
+    mathVector.apply @, [arguments, 1, [Vector2d], null, mathFunctions.multiply]
 
   clampMagnitude: (maxLength)->
     throw new TypeError if typeof maxLength isnt 'number'
