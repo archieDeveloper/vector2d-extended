@@ -1,6 +1,6 @@
 'use strict'
 
-math = sys = require 'mathVector2d'
+math = require 'mathVector2d'
 constError = ->
     throw new Error
 
