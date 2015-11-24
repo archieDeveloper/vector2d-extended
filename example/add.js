@@ -76,12 +76,16 @@ car = (function() {
   vV = Vector2d.ZERO;
   vP = Vector2d.ZERO;
   vFtraction = Vector2d.ZERO;
-  vFdrag = Vector2d.ZERO;
-  vFrr = Vector2d.ZERO;
-  vFlong = Vector2d.ZERO;
-  vA = Vector2d.ZERO;
-  vADT = Vector2d.ZERO;
-  vVDT = Vector2d.ZERO;
+  vFdrag = Vector2d.ZERO
+  vFrr = Vector2d.ZERO
+  vFlong = Vector2d.ZERO
+  vA = Vector2d.ZERO
+  vADT = Vector2d.ZERO
+  vVDT = Vector2d.ZERO
+
+  var a = Vector2d(5, 0);
+  var b = Vector2d(0, 5);
+  console.log(Vector2d.add(a, b));
 
   var posWheel1 = Vector2d.ZERO;
   var rotateWheel = Vector2d.RIGHT;

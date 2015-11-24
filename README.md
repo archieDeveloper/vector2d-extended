@@ -96,27 +96,27 @@ Help the project - test, find bugs, supplementing the documentation, create new 
 
   * Return Vector2d
 
-    * .add(vector:**Vector2d**):**Vector2d**
-    * .addX(vector:**Vector2d**):**Vector2d**
-    * .addY(vector:**Vector2d**):**Vector2d**
-    * .subtract(vector:**Vector2d**):**Vector2d**
-    * .subtractX(vector:**Vector2d**):**Vector2d**
-    * .subtractY(vector:**Vector2d**):**Vector2d**
-    * .scale(vector:**Vector2d**):**Vector2d**
-    * .scaleX(vector:**Vector2d**):**Vector2d**
-    * .scaleY(vector:**Vector2d**):**Vector2d**
+    * .add(vector:**Vector2d** [, ...vectorN:**Vector**]):**Vector2d**
+    * .addX(vector:**Vector2d** [, ...vectorN:**Vector**]):**Vector2d**
+    * .addY(vector:**Vector2d** [, ...vectorN:**Vector**]):**Vector2d**
+    * .subtract(vector:**Vector2d** [, ...vectorN:**Vector**]):**Vector2d**
+    * .subtractX(vector:**Vector2d** [, ...vectorN:**Vector**]):**Vector2d**
+    * .subtractY(vector:**Vector2d** [, ...vectorN:**Vector**]):**Vector2d**
+    * .scale(vector:**Vector2d** [, ...vectorN:**Vector**]):**Vector2d**
+    * .scaleX(vector:**Vector2d** [, ...vectorN:**Vector**]):**Vector2d**
+    * .scaleY(vector:**Vector2d** [, ...vectorN:**Vector**]):**Vector2d**
     * .project(vector:**Vector2d**):**Vector2d**
     * .equate(vector:**Vector2d**):**Vector2d**
     * .equateX(vector:**Vector2d**):**Vector2d**
     * .equateY(vector:**Vector2d**):**Vector2d**
     * .lerp(vector:**Vecotor2d**, l:**Number**):**Vector2d**
     * .clampMagnitude(maxLength:**Number**):**Vector2d**
-    * .multiply(scalar:**Number**):**Vector2d**
-    * .multiplyX(scalar:**Number**):**Vector2d**
-    * .multiplyY(scalar:**Number**):**Vector2d**
-    * .divide(scalar:**Number**):**Vector2d**
-    * .divideX(scalar:**Number**):**Vector2d**
-    * .divideY(scalar:**Number**):**Vector2d**
+    * .multiply(scalar:**Number** [, ...scalarN:**Number**]):**Vector2d**
+    * .multiplyX(scalar:**Number** [, ...scalarN:**Number**]):**Vector2d**
+    * .multiplyY(scalar:**Number** [, ...scalarN:**Number**]):**Vector2d**
+    * .divide(scalar:**Number** [, ...scalarN:**Number**]):**Vector2d**
+    * .divideX(scalar:**Number** [, ...scalarN:**Number**]):**Vector2d**
+    * .divideY(scalar:**Number** [, ...scalarN:**Number**]):**Vector2d**
     * .normalize():**Vector2d**
     * .round():**Vector2d**
     * .roundX():**Vector2d**

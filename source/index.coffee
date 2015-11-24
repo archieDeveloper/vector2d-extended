@@ -44,6 +44,8 @@ class Vector2d
     b.magnitude = maxLength if b.magnitudeSquared > maxLength * maxLength
     b
 
+  @clampLength: Vector2d::clampMagnitude
+
   @lerp: (a, b, l)->
     math.checkTypes [a, b, l], [Vector2d, Vector2d, 'number']
     l = 0 if l < 0
@@ -53,7 +55,7 @@ class Vector2d
   @scale: ()->
     math.staticVector(
       arguments,
-      [Vector2d, Vector2d],
+      [Vector2d],
       math.functions.multiply,
       math.functions.multiply
     )
@@ -61,14 +63,14 @@ class Vector2d
   @scaleX: ()->
     math.staticVector(
       arguments,
-      [Vector2d, Vector2d],
+      [Vector2d],
       math.functions.multiply
     )
 
   @scaleY: ()->
     math.staticVector(
       arguments,
-      [Vector2d, Vector2d],
+      [Vector2d],
       null,
       math.functions.multiply
     )
@@ -76,7 +78,7 @@ class Vector2d
   @add: ()->
     math.staticVector(
       arguments,
-      [Vector2d, Vector2d],
+      [Vector2d],
       math.functions.add,
       math.functions.add
     )
@@ -84,14 +86,14 @@ class Vector2d
   @addX: ()->
     math.staticVector(
       arguments,
-      [Vector2d, Vector2d],
+      [Vector2d],
       math.functions.add
     )
 
   @addY: ()->
     math.staticVector(
       arguments,
-      [Vector2d, Vector2d],
+      [Vector2d],
       null,
       math.functions.add
     )
@@ -99,7 +101,7 @@ class Vector2d
   @subtract: ()->
     math.staticVector(
       arguments,
-      [Vector2d, Vector2d],
+      [Vector2d],
       math.functions.subtract,
       math.functions.subtract
     )
@@ -107,14 +109,14 @@ class Vector2d
   @subtractX: ()->
     math.staticVector(
       arguments,
-      [Vector2d, Vector2d],
+      [Vector2d],
       math.functions.subtract
     )
 
   @subtractY: ()->
     math.staticVector(
       arguments,
-      [Vector2d, Vector2d],
+      [Vector2d],
       null,
       math.functions.subtract
     )
@@ -122,7 +124,7 @@ class Vector2d
   @multiply: ()->
     math.staticVector(
       arguments,
-      [Vector2d, 'number'],
+      ['number'],
       math.functions.multiply,
       math.functions.multiply
     )
@@ -130,7 +132,7 @@ class Vector2d
   @multiplyX: ()->
     math.staticVector(
       arguments,
-      [Vector2d, 'number'],
+      ['number'],
       math.functions.multiply,
       math.functions.self
     )
@@ -138,7 +140,7 @@ class Vector2d
   @multiplyY: ()->
     math.staticVector(
       arguments,
-      [Vector2d, 'number'],
+      ['number'],
       math.functions.self,
       math.functions.multiply
     )
@@ -146,7 +148,7 @@ class Vector2d
   @divide: ()->
     math.staticVector(
       arguments,
-      [Vector2d, 'number'],
+      ['number'],
       math.functions.divide,
       math.functions.divide
     )
@@ -154,7 +156,7 @@ class Vector2d
   @divideX: ()->
     math.staticVector(
       arguments,
-      [Vector2d, 'number'],
+      ['number'],
       math.functions.divide,
       math.functions.self
     )
@@ -162,7 +164,7 @@ class Vector2d
   @divideY: ()->
     math.staticVector(
       arguments,
-      [Vector2d, 'number'],
+      ['number'],
       math.functions.self,
       math.functions.divide
     )
@@ -211,10 +213,16 @@ class Vector2d
     @
 
   addX: ()->
-    math.vector @, arguments, 1, [Vector2d], math.functions.add, null
+    math.vector
+      v: @,
+      args: arguments,
+      x: math.functions.add
 
   addY: ()->
-    math.vector @, arguments, 1, [Vector2d], null, math.functions.add
+    math.vector
+      v: @,
+      args: arguments,
+      y: math.functions.add
 
   subtract: ()->
     @subtractX.apply @, arguments
@@ -222,10 +230,16 @@ class Vector2d
     @
 
   subtractX: ()->
-    math.vector @, arguments, 1, [Vector2d], math.functions.subtract, null
+    math.vector
+      v: @,
+      args: arguments,
+      x: math.functions.subtract
 
   subtractY: ()->
-    math.vector @, arguments, 1, [Vector2d], null, math.functions.subtract
+    math.vector
+      v: @,
+      args: arguments,
+      y: math.functions.subtract
 
   multiply: ()->
     @multiplyX.apply @, arguments
@@ -233,21 +247,37 @@ class Vector2d
     @
 
   multiplyX: ()->
-    math.vector @, arguments, 1, ['number'], math.functions.multiply, null
+    math.vector
+      v: @,
+      args: arguments,
+      types: ['number'],
+      x: math.functions.multiply
 
   multiplyY: ()->
-    math.vector @, arguments, 1, ['number'], null, math.functions.multiply
+    math.vector
+      v: @,
+      args: arguments,
+      types: ['number'],
+      y: math.functions.multiply
 
   divide: ()->
     @divideX.apply @, arguments
     @divideY.apply @, arguments
     @
 
-  divideX: (scalar)->
-    math.vector @, arguments, 1, ['number'], math.functions.divide, null
+  divideX: ()->
+    math.vector
+      v: @,
+      args: arguments,
+      types: ['number'],
+      x: math.functions.divide
 
-  divideY: (scalar)->
-    math.vector @, arguments, 1, ['number'], null, math.functions.divide
+  divideY: ()->
+    math.vector
+      v: @,
+      args: arguments,
+      types: ['number'],
+      y: math.functions.divide
 
   normalize: ->
     @length = 1
@@ -332,15 +362,23 @@ class Vector2d
     @
 
   scaleX: ()->
-    math.vector @, arguments, 1, [Vector2d], math.functions.multiply, null
+    math.vector
+      v: @,
+      args: arguments,
+      x: math.functions.multiply
 
   scaleY: ()->
-    math.vector @, arguments, 1, [Vector2d], null, math.functions.multiply
+    math.vector
+      v: @,
+      args: arguments,
+      y: math.functions.multiply
 
   clampMagnitude: (maxLength)->
     math.checkTypes [maxLength], ['number']
     @magnitude = maxLength if @magnitudeSquared > maxLength * maxLength
     @
+
+  clampLength: @clampMagnitude
 
   # Returns number
 

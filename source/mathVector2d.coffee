@@ -23,13 +23,14 @@ class MathVector2d
   staticComponent: (property, countArguments, args, argumentTypes, callback)->
     argumentsLength = args.length
     throw new Error if argumentsLength < countArguments
-    a = @checkType args[0], argumentTypes[0], property
+    a = @checkType args[0], Vector2d, property
     for i in [1...argumentsLength]
-      b = @checkType args[i], argumentTypes[countArguments-1], property
+      b = @checkType args[i], argumentTypes[countArguments-2], property
       a = callback(a, b)
     a
 
-  vector: (v, args, argsCount, types, x, y)->
+  vector: (options)->
+    {v, args, argsCount = 1, types = [Vector2d], x = null, y = null} = options
     v.x = @component v, 'x', argsCount, args, types, x if x?
     v.y = @component v, 'y', argsCount, args, types, y if y?
     v
