@@ -1,5 +1,9 @@
 'use strict'
 
+math = sys = require 'mathVector2d'
+constError = ->
+    throw new Error
+
 class Vector2d
 
   constructor: (x, y) ->
@@ -8,50 +12,40 @@ class Vector2d
     @x = x || 0
     @y = y || 0
 
-  Object.defineProperty @, 'ZERO',
-    get: ->
-      new Vector2d
-    set: ()->
-      throw new Error
-
-  Object.defineProperty @, 'ONE',
-    get: ->
-      new Vector2d 1, 1
-    set: ()->
-      throw new Error
-
-  Object.defineProperty @, 'UP',
-    get: ->
-      new Vector2d 0, -1
-    set: ()->
-      throw new Error
-
-  Object.defineProperty @, 'DOWN',
-    get: ->
-      new Vector2d 0, 1
-    set: ()->
-      throw new Error
-
-  Object.defineProperty @, 'RIGHT',
-    get: ->
-      new Vector2d 1, 0
-    set: ()->
-      throw new Error
-
-  Object.defineProperty @, 'LEFT',
-    get: ->
-      new Vector2d -1, 0
-    set: ()->
-      throw new Error
+  Object.defineProperties @,
+    ZERO:
+      get: ->
+        new Vector2d
+      set: constError
+    ONE:
+      get: ->
+        new Vector2d 1, 1
+      set: constError
+    UP:
+      get: ->
+        new Vector2d 0, -1
+      set: constError
+    DOWN:
+      get: ->
+        new Vector2d 0, 1
+      set: constError
+    RIGHT:
+      get: ->
+        new Vector2d 1, 0
+      set: constError
+    LEFT:
+      get: ->
+        new Vector2d -1, 0
+      set: constError
 
   @clampMagnitude: (a, maxLength)->
-    math.math.checkTypes [a, maxLength], [Vector2d, 'number']
+    math.checkTypes [a, maxLength], [Vector2d, 'number']
     b = do a.clone
     b.magnitude = maxLength if b.magnitudeSquared > maxLength * maxLength
     b
 
   @lerp: (a, b, l)->
-    math.math.checkTypes [a, b, l], [Vector2d, Vector2d, 'number']
+    math.checkTypes [a, b, l], [Vector2d, Vector2d, 'number']
     l = 0 if l < 0
     l = 1 if l > 1
     new Vector2d a.x+(b.x-a.x)*l, a.y+(b.y-a.y)*l
@@ -74,8 +68,8 @@ class Vector2d
   @scaleY: ()->
     math.staticVector(
       arguments,
-      [Vector2d, Vector2d], 
-      null, 
+      [Vector2d, Vector2d],
+      null,
       math.functions.multiply
     )
 
@@ -217,10 +211,10 @@ class Vector2d
     @
 
   addX: ()->
-    math.vector.apply @, [arguments, 1, [Vector2d], math.functions.add, null]
+    math.vector @, arguments, 1, [Vector2d], math.functions.add, null
 
   addY: ()->
-    math.vector.apply @, [arguments, 1, [Vector2d], null, math.functions.add]
+    math.vector @, arguments, 1, [Vector2d], null, math.functions.add
 
   subtract: ()->
     @subtractX.apply @, arguments
@@ -228,10 +222,10 @@ class Vector2d
     @
 
   subtractX: ()->
-    math.vector.apply @, [arguments, 1, [Vector2d], math.functions.subtract, null]
+    math.vector @, arguments, 1, [Vector2d], math.functions.subtract, null
 
   subtractY: ()->
-    math.vector.apply @, [arguments, 1, [Vector2d], null, math.functions.subtract]
+    math.vector @, arguments, 1, [Vector2d], null, math.functions.subtract
 
   multiply: ()->
     @multiplyX.apply @, arguments
@@ -239,10 +233,10 @@ class Vector2d
     @
 
   multiplyX: ()->
-    math.vector.apply @, [arguments, 1, ['number'], math.functions.multiply, null]
+    math.vector @, arguments, 1, ['number'], math.functions.multiply, null
 
   multiplyY: ()->
-    math.vector.apply @, [arguments, 1, ['number'], null, math.functions.multiply]
+    math.vector @, arguments, 1, ['number'], null, math.functions.multiply
 
   divide: ()->
     @divideX.apply @, arguments
@@ -250,10 +244,10 @@ class Vector2d
     @
 
   divideX: (scalar)->
-    math.vector.apply @, [arguments, 1, ['number'], math.functions.divide, null]
+    math.vector @, arguments, 1, ['number'], math.functions.divide, null
 
   divideY: (scalar)->
-    math.vector.apply @, [arguments, 1, ['number'], null, math.functions.divide]
+    math.vector @, arguments, 1, ['number'], null, math.functions.divide
 
   normalize: ->
     @length = 1
@@ -338,10 +332,10 @@ class Vector2d
     @
 
   scaleX: ()->
-    math.vector.apply @, [arguments, 1, [Vector2d], math.functions.multiply, null]
+    math.vector @, arguments, 1, [Vector2d], math.functions.multiply, null
 
   scaleY: ()->
-    math.vector.apply @, [arguments, 1, [Vector2d], null, math.functions.multiply]
+    math.vector @, arguments, 1, [Vector2d], null, math.functions.multiply
 
   clampMagnitude: (maxLength)->
     math.checkTypes [maxLength], ['number']
@@ -350,52 +344,44 @@ class Vector2d
 
   # Returns number
 
-  Object.defineProperty Vector2d::, 'magnitude', {
-    get: ->
-      Math.sqrt @magnitudeSquared
-    set: (value)->
-      math.checkTypes [value], ['number']
-      magnitude = @magnitude
-      @x = (@x / magnitude) * value
-      @y = (@y / magnitude) * value
-      value
-  }
-
-  Object.defineProperty Vector2d::, 'magnitudeSquared', {
-    get: ->
-      @x*@x+@y*@y
-    set: (value)->
-      math.checkTypes [value], ['number']
-      @length = Math.sqrt value
-      value
-  }
-
-  Object.defineProperty Vector2d::, 'length', {
-    get: ->
-      @magnitude
-    set: (value)->
-      math.checkTypes [value], ['number']
-      @magnitude = value
-  }
-
-  Object.defineProperty Vector2d::, 'lengthSquared', {
-    get: ->
-      @magnitudeSquared
-    set: (value)->
-      math.checkTypes [value], ['number']
-      @magnitudeSquared = value
-  }
-
-  Object.defineProperty Vector2d::, 'rotate', {
-    get: ->
-      Math.atan2(@y, @x) * 180 / Math.PI
-    set: (dir)->
-      math.checkTypes [value], ['number']
-      len = @magnitude
-      @x = Math.cos(dir*Math.PI/180)*len
-      @y = Math.sin(dir*Math.PI/180)*len
-      dir
-  }
+  Object.defineProperties Vector2d::,
+    magnitude:
+      get: ->
+        Math.sqrt @magnitudeSquared
+      set: (value)->
+        math.checkTypes [value], ['number']
+        magnitude = @magnitude
+        @x = (@x / magnitude) * value
+        @y = (@y / magnitude) * value
+        value
+    magnitudeSquared:
+      get: ->
+        @x*@x+@y*@y
+      set: (value)->
+        math.checkTypes [value], ['number']
+        @length = Math.sqrt value
+        value
+    length:
+      get: ->
+        @magnitude
+      set: (value)->
+        math.checkTypes [value], ['number']
+        @magnitude = value
+    lengthSquared:
+      get: ->
+        @magnitudeSquared
+      set: (value)->
+        math.checkTypes [value], ['number']
+        @magnitudeSquared = value
+    rotate:
+      get: ->
+        Math.atan2(@y, @x) * 180 / Math.PI
+      set: (dir)->
+        math.checkTypes [dir], ['number']
+        len = @magnitude
+        @x = Math.cos(dir*Math.PI/180)*len
+        @y = Math.sin(dir*Math.PI/180)*len
+        dir
 
   dot: (b)->
     math.checkTypes [b], [Vector2d]
@@ -497,7 +483,4 @@ class Vector2d
     math.checkTypes [b], [Vector2d]
     @dot b is 0
 
-if module? and module.exports?
-  module.exports = Vector2d
-else
-  window.Vector2d = Vector2d
+window.Vector2d = Vector2d

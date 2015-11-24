@@ -29,15 +29,15 @@ class MathVector2d
       a = callback(a, b)
     a
 
-  vector: (args, argsCount, types, x, y)->
-    @x = @component.apply @, ['x', argsCount, args, types, x] if x?
-    @y = @component.apply @, ['y', argsCount, args, types, y] if y?
-    @
+  vector: (v, args, argsCount, types, x, y)->
+    v.x = @component v, 'x', argsCount, args, types, x if x?
+    v.y = @component v, 'y', argsCount, args, types, y if y?
+    v
 
-  component: (property, countArguments, args, argumentTypes, callback)->
+  component: (v, property, countArguments, args, argumentTypes, callback)->
     argumentsLength = args.length
     throw new Error if argumentsLength < countArguments
-    a = @[property]
+    a = v[property]
     for i in [0...argumentsLength]
       b = @checkType args[i], argumentTypes[countArguments-1], property
       a = callback(a, b)
@@ -60,5 +60,4 @@ class MathVector2d
       else
         throw new TypeError if not (args[i] instanceof types[i])
 
-
-window.math = MathVector2d
+module.exports = new MathVector2d
