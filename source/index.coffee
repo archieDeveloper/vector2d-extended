@@ -1,833 +1,524 @@
 'use strict'
 
+math = require 'mathVector2d'
+constError = ->
+    throw new Error
+
 class Vector2d
 
-  # Конструктор
-  #
-  # @param [Number] x Компонент вектора X
-  # @param [Number] y Компонент вектора Y
-  #
   constructor: (x, y) ->
     if !(@ instanceof Vector2d)
       return new Vector2d x, y
     @x = x || 0
     @y = y || 0
 
-  # Static Methods
+  Object.defineProperties @,
+    ZERO:
+      get: ->
+        new Vector2d
+      set: constError
+    ONE:
+      get: ->
+        new Vector2d 1, 1
+      set: constError
+    UP:
+      get: ->
+        new Vector2d 0, -1
+      set: constError
+    DOWN:
+      get: ->
+        new Vector2d 0, 1
+      set: constError
+    RIGHT:
+      get: ->
+        new Vector2d 1, 0
+      set: constError
+    LEFT:
+      get: ->
+        new Vector2d -1, 0
+      set: constError
 
-  # Нулевой вектор
-  #
-  # @return [Vector2d]
-  #
-  @zero: ->
-    new Vector2d
-
-  # Орт
-  #
-  # @return [Vector2d]
-  #
-  @one: ->
-    new Vector2d 1, 1
-
-  # Единичный вектор направленный вверх
-  #
-  # @return [Vector2d]
-  #
-  @up: ->
-    new Vector2d 0, -1
-
-  # Единичный вектор направленный вниз
-  #
-  # @return [Vector2d]
-  #
-  @down: ->
-    new Vector2d 0, 1
-
-  # Единичный вектор направленный вправо
-  #
-  # @return [Vector2d]
-  #
-  @right: ->
-    new Vector2d 1, 0
-
-  # Единичный вектор направленный влево
-  #
-  # @return [Vector2d]
-  #
-  @left: ->
-    new Vector2d -1, 0
-
-  # Укорачивает вектор до максимальной длинны
-  #
-  # @param [Vector2d] a Вектор который нужно укоротить
-  # @param [Number] maxLength Максимальная длинна вектора
-  #
-  # @return [Vector2d] A new vector
-  #
   @clampMagnitude: (a, maxLength)->
-    b = a.clone()
-    if b.magnitudeSquared > maxLength * maxLength
-      b.normalize().multiply(maxLength)
+    math.checkTypes [a, maxLength], [Vector2d, 'number']
+    b = do a.clone
+    b.magnitude = maxLength if b.magnitudeSquared > maxLength * maxLength
     b
 
-  # 
-  #
-  # @param [Vector2d] a Первый вектор
-  # @param [Vector2d] b Второй вектор
-  # @param [Number] l Коофицент (0 соответсвует вектору a, 1 - вектору b, 0.5 среднее между a и b)
-  #
-  # @return [Vector2d] A new vector
-  #
+  @clampLength: Vector2d::clampMagnitude
+
   @lerp: (a, b, l)->
-    if l < 0 then l = 0
-    if l > 1 then l = 1
-    new Vector2d(a.x+(b.x-a.x)*l, a.y+(b.y-a.y)*l)
-  
-  # Покомпонентное умножение векторов
-  #
-  # @param [Vector2d] a Первый вектор
-  # @param [Vector2d] b Второй вектор
-  #
-  # @return [Vector2d] A new vector
-  #
-  @scale: (a, b)->
-    new Vector2d a.x*b.x, a.y*b.y
-  
-  # Покомпонентное умножение векторов
-  #
-  # @param [Vector2d] a Первый вектор
-  # @param [Vector2d] b Второй вектор
-  #
-  # @return [Vector2d] A new vector
-  #
-  @scaleX: (a, b)->
-    new Vector2d a.x*b.x, 0
-  
-  # Покомпонентное умножение векторов
-  #
-  # @param [Vector2d] a Первый вектор
-  # @param [Vector2d] b Второй вектор
-  #
-  # @return [Vector2d] A new vector
-  #
-  @scaleY: (a, b)->
-    new Vector2d 0, a.y*b.y
+    math.checkTypes [a, b, l], [Vector2d, Vector2d, 'number']
+    l = 0 if l < 0
+    l = 1 if l > 1
+    new Vector2d a.x+(b.x-a.x)*l, a.y+(b.y-a.y)*l
 
-  # Сложение векторов
-  #
-  # @param [Vector2d] a Первый вектор
-  # @param [Vector2d] b Второй вектор
-  #
-  # @return [Vector2d] A new vector
-  #
-  @add: (a, b)->
-    new Vector2d a.x+b.x, a.y+b.y
+  @scale: ()->
+    math.staticVector(
+      arguments,
+      [Vector2d],
+      math.functions.multiply,
+      math.functions.multiply
+    )
 
-  # Сложение векторов
-  #
-  # @param [Vector2d] a Первый вектор
-  # @param [Vector2d] b Второй вектор
-  #
-  # @return [Vector2d] A new vector
-  #
-  @addX: (a, b)->
-    new Vector2d a.x+b.x, 0
+  @scaleX: ()->
+    math.staticVector(
+      arguments,
+      [Vector2d],
+      math.functions.multiply
+    )
 
-  # Сложение векторов
-  #
-  # @param [Vector2d] a Первый вектор
-  # @param [Vector2d] b Второй вектор
-  #
-  # @return [Vector2d] A new vector
-  #
-  @addY: (a, b)->
-    new Vector2d 0, a.y+b.y
+  @scaleY: ()->
+    math.staticVector(
+      arguments,
+      [Vector2d],
+      null,
+      math.functions.multiply
+    )
 
-  # Вычитание векторов
-  #
-  # @param [Vector2d] a Первый вектор
-  # @param [Vector2d] b Второй вектор
-  #
-  # @return [Vector2d] A new vector
-  #
-  @subtract: (a, b)->
-    new Vector2d a.x-b.x, a.y-b.y
+  @add: ()->
+    math.staticVector(
+      arguments,
+      [Vector2d],
+      math.functions.add,
+      math.functions.add
+    )
 
-  # Вычитание векторов
-  #
-  # @param [Vector2d] a Первый вектор
-  # @param [Vector2d] b Второй вектор
-  #
-  # @return [Vector2d] A new vector
-  #
-  @subtractX: (a, b)->
-    new Vector2d a.x-b.x, 0
+  @addX: ()->
+    math.staticVector(
+      arguments,
+      [Vector2d],
+      math.functions.add
+    )
 
-  # Вычитание векторов
-  #
-  # @param [Vector2d] a Первый вектор
-  # @param [Vector2d] b Второй вектор
-  #
-  # @return [Vector2d] A new vector
-  #
-  @subtractY: (a, b)->
-    new Vector2d 0, a.y-b.y
+  @addY: ()->
+    math.staticVector(
+      arguments,
+      [Vector2d],
+      null,
+      math.functions.add
+    )
 
-  # умножение вектора на скаляр
-  #
-  # @param [Vector2d] a Первый вектор
-  # @param [Vector2d] b Второй вектор
-  #
-  # @return [Vector2d] A new vector
-  #
-  @multiply: (a, scalar)->
-    new Vector2d a.x*scalar, a.y*scalar
+  @subtract: ()->
+    math.staticVector(
+      arguments,
+      [Vector2d],
+      math.functions.subtract,
+      math.functions.subtract
+    )
 
-  # умножение вектора на скаляр
-  #
-  # @param [Vector2d] a Первый вектор
-  # @param [Vector2d] b Второй вектор
-  #
-  # @return [Vector2d] A new vector
-  #
-  @multiplyX: (a, scalar)->
-    new Vector2d a.x*scalar, a.y
+  @subtractX: ()->
+    math.staticVector(
+      arguments,
+      [Vector2d],
+      math.functions.subtract
+    )
 
-  # умножение вектора на скаляр
-  #
-  # @param [Vector2d] a Первый вектор
-  # @param [Vector2d] b Второй вектор
-  #
-  # @return [Vector2d] A new vector
-  #
-  @multiplyY: (a, scalar)->
-    new Vector2d a.x, a.y*scalar
+  @subtractY: ()->
+    math.staticVector(
+      arguments,
+      [Vector2d],
+      null,
+      math.functions.subtract
+    )
 
-  # Деление вектора на скаляр
-  #
-  # @param [Vector2d] a Первый вектор
-  # @param [Vector2d] b Второй вектор
-  #
-  # @return [Vector2d] A new vector
-  #
-  @divide: (a, scalar)->
-    new Vector2d a.x/scalar, a.y/scalar
+  @multiply: ()->
+    math.staticVector(
+      arguments,
+      ['number'],
+      math.functions.multiply,
+      math.functions.multiply
+    )
 
-  # Деление вектора на скаляр
-  #
-  # @param [Vector2d] a Первый вектор
-  # @param [Vector2d] b Второй вектор
-  #
-  # @return [Vector2d] A new vector
-  #
-  @divideX: (a, scalar)->
-    new Vector2d a.x/scalar, a.y
+  @multiplyX: ()->
+    math.staticVector(
+      arguments,
+      ['number'],
+      math.functions.multiply,
+      math.functions.self
+    )
 
-  # Деление вектора на скаляр
-  #
-  # @param [Vector2d] a Первый вектор
-  # @param [Vector2d] b Второй вектор
-  #
-  # @return [Vector2d] A new vector
-  #
-  @divideY: (a, scalar)->
-    new Vector2d a.x, a.y/scalar
+  @multiplyY: ()->
+    math.staticVector(
+      arguments,
+      ['number'],
+      math.functions.self,
+      math.functions.multiply
+    )
 
-  # Нормализация вектора
-  #
-  # @param [Vector2d] a Вектор
-  #
-  # @return [Vector2d] A new vector
-  #
+  @divide: ()->
+    math.staticVector(
+      arguments,
+      ['number'],
+      math.functions.divide,
+      math.functions.divide
+    )
+
+  @divideX: ()->
+    math.staticVector(
+      arguments,
+      ['number'],
+      math.functions.divide,
+      math.functions.self
+    )
+
+  @divideY: ()->
+    math.staticVector(
+      arguments,
+      ['number'],
+      math.functions.self,
+      math.functions.divide
+    )
+
   @normalize: (a)->
+    math.checkTypes [a], [Vector2d]
     magnitude = a.magnitude
     new Vector2d a.x/magnitude, a.y/magnitude
 
-  # Проекция вектора a на вектор b
-  #
-  # @param [Vector2d] a Первый вектор
-  # @param [Vector2d] b Второй вектор
-  #
-  # @return [Vector2d] A new vector
-  #
   @project: (a, b)->
+    math.checkTypes [a, b], [Vector2d, Vector2d]
     c = ((a.x * b.x)+(a.y * b.y)) / ((b.x*b.x)+(b.y*b.y))
     new Vector2d b.x*c, b.y*c
-
-  # Округление компонент вектора
-  #
-  # @param [Vector2d] a Вектор
-  #
-  # @return [Vector2d] A new vector
-  #
+                                                                                
   @round: (a)->
+    math.checkTypes [a], [Vector2d]
     new Vector2d Math.round(a.x), Math.round(a.y)
 
-  # Округление компонент вектора
-  #
-  # @param [Vector2d] a Вектор
-  #
-  # @return [Vector2d] A new vector
-  #
   @roundX: (a)->
+    math.checkTypes [a], [Vector2d]
     new Vector2d Math.round(a.x), a.y
 
-  # Округление компонент вектора
-  #
-  # @param [Vector2d] a Вектор
-  #
-  # @return [Vector2d] A new vector
-  #
   @roundY: (a)->
+    math.checkTypes [a], [Vector2d]
     new Vector2d a.x, Math.round(a.y)
 
-  # Инвертирование вектора
-  #
-  # @param [Vector2d] a Вектор
-  #
-  # @return [Vector2d] A new vector
-  #
   @invert: (a)->
+    math.checkTypes [a], [Vector2d]
     new Vector2d -a.x, -a.y
 
-  # Инвертирование вектора
-  #
-  # @param [Vector2d] a Вектор
-  #
-  # @return [Vector2d] A new vector
-  #
   @invertX: (a)->
+    math.checkTypes [a], [Vector2d]
     new Vector2d -a.x, a.y
 
-  # Инвертирование вектора
-  #
-  # @param [Vector2d] a Вектор
-  #
-  # @return [Vector2d] A new vector
-  #
   @invertY: (a)->
+    math.checkTypes [a], [Vector2d]
     new Vector2d a.x, -a.y
 
   # Methods
 
   # Returns Vector2d
 
-  # Прибавить к текущему вектору вектор b
-  #
-  # @param [Vector2d] b 
-  #
-  # @return [Vector2d] this
-  #
-  add: (b)->
-    @addX b
-    @addY b
+  add: ()->
+    @addX.apply @, arguments
+    @addY.apply @, arguments
     @
 
-  # Прибавить к текущему вектору вектор b
-  #
-  # @param [Vector2d] b 
-  #
-  # @return [Vector2d] this
-  #
-  addX: (b)->
-    @x += b.x
+  addX: ()->
+    math.vector
+      v: @,
+      args: arguments,
+      x: math.functions.add
+
+  addY: ()->
+    math.vector
+      v: @,
+      args: arguments,
+      y: math.functions.add
+
+  subtract: ()->
+    @subtractX.apply @, arguments
+    @subtractY.apply @, arguments
     @
 
-  # Прибавить к текущему вектору вектор b
-  #
-  # @param [Vector2d] b 
-  #
-  # @return [Vector2d] this
-  #
-  addY: (b)->
-    @y += b.y
+  subtractX: ()->
+    math.vector
+      v: @,
+      args: arguments,
+      x: math.functions.subtract
+
+  subtractY: ()->
+    math.vector
+      v: @,
+      args: arguments,
+      y: math.functions.subtract
+
+  multiply: ()->
+    @multiplyX.apply @, arguments
+    @multiplyY.apply @, arguments
     @
 
-  # Вычесть из текущего вектора вектор b
-  #
-  # @param [Vector2d] b 
-  #
-  # @return [Vector2d] this
-  #
-  subtract: (b)->
-    @subtractX b
-    @subtractY b
+  multiplyX: ()->
+    math.vector
+      v: @,
+      args: arguments,
+      types: ['number'],
+      x: math.functions.multiply
+
+  multiplyY: ()->
+    math.vector
+      v: @,
+      args: arguments,
+      types: ['number'],
+      y: math.functions.multiply
+
+  divide: ()->
+    @divideX.apply @, arguments
+    @divideY.apply @, arguments
     @
 
-  # Вычесть из текущего вектора вектор b
-  #
-  # @param [Vector2d] b 
-  #
-  # @return [Vector2d] this
-  #
-  subtractX: (b)->
-    @x -= b.x
-    @
+  divideX: ()->
+    math.vector
+      v: @,
+      args: arguments,
+      types: ['number'],
+      x: math.functions.divide
 
-  # Вычесть из текущего вектора вектор b
-  #
-  # @param [Vector2d] b 
-  #
-  # @return [Vector2d] this
-  #
-  subtractY: (b)->
-    @y -= b.y
-    @
+  divideY: ()->
+    math.vector
+      v: @,
+      args: arguments,
+      types: ['number'],
+      y: math.functions.divide
 
-  # Умножить вектор на скаляр
-  #
-  # @param [Number] scalar 
-  #
-  # @return [Vector2d] this
-  #
-  multiply: (scalar)->
-    @multiplyX scalar
-    @multiplyY scalar
-    @
-
-  # Умножить вектор на скаляр
-  #
-  # @param [Number] scalar 
-  #
-  # @return [Vector2d] this
-  #
-  multiplyX: (scalar)->
-    @x *= scalar
-    @
-
-  # Умножить вектор на скаляр
-  #
-  # @param [Number] scalar 
-  #
-  # @return [Vector2d] this
-  #
-  multiplyY: (scalar)->
-    @y *= scalar
-    @
-
-  # Разделить вектор на скаляр
-  #
-  # @param [Number] scalar 
-  #
-  # @return [Vector2d] this
-  #
-  divide: (scalar)->
-    @divideX scalar
-    @divideY scalar
-    @
-
-  # Разделить вектор на скаляр
-  #
-  # @param [Number] scalar 
-  #
-  # @return [Vector2d] this
-  #
-  divideX: (scalar)->
-    @x /= scalar
-    @
-
-  # Разделить вектор на скаляр
-  #
-  # @param [Number] scalar 
-  #
-  # @return [Vector2d] this
-  #
-  divideY: (scalar)->
-    @y /= scalar
-    @
-
-  # Нормализация вектора
-  #
-  # @return [Vector2d] this
-  #
   normalize: ->
     @length = 1
     @
 
-  # Проекция вектора b на текущий вектор
-  #
-  # @param [Vector2d] b
-  #
-  # @return [Vector2d] this
-  #
   project: (b)->
+    math.checkTypes [b], [Vector2d]
     c = ((@x * b.x)+(@y * b.y)) / ((b.x*b.x)+(b.y*b.y))
     @x = b.x * c
     @y = b.y * c
     @
 
-  # Округление вектора до целочисленного
-  #
-  # @return [Vector2d] this
-  #
   round: ->
     @roundX()
     @roundY()
     @
 
-  # Округление вектора до целочисленного
-  #
-  # @return [Vector2d] this
-  #
   roundX: ->
     @x = Math.round(@x)
     @
 
-  # Округление вектора до целочисленного
-  #
-  # @return [Vector2d] this
-  #
   roundY: ->
     @y = Math.round(@y)
     @
 
-  # Устанавливает текущий вектор в 0
-  #
-  # @return [Vector2d] this
-  #
   zero: ->
     @zeroX()
     @zeroY()
     @
 
-  # Устанавливает текущий вектор в 0
-  #
-  # @return [Vector2d] this
-  #
   zeroX: ->
     @x = 0
     @
 
-  # Устанавливает текущий вектор в 0
-  #
-  # @return [Vector2d] this
-  #
   zeroY: ->
     @y = 0
     @
 
-  # Клонирует текущий вектор
-  #
-  # @return [Vector2d] A new vector
-  #
   clone: ->
     new Vector2d @x, @y
 
-  # Копирует компоненты вектора b
-  #
-  # @return [Vector2d] this
-  #
   equate: (b)->
+    math.checkTypes [b], [Vector2d]
     @equateX b
     @equateY b
     @
 
-  # Копирует компоненты вектора b
-  #
-  # @return [Vector2d] this
-  #
   equateX: (b)->
+    math.checkTypes [b], [Vector2d]
     @x = b.x
     @
 
-  # Копирует компоненты вектора b
-  #
-  # @return [Vector2d] this
-  #
   equateY: (b)->
+    math.checkTypes [b], [Vector2d]
     @y = b.y
     @
 
-  # Меняет направление вектора на противоположное
-  #
-  # @return [Vector2d] this
-  #
   invert: ->
     @invertX()
     @invertY()
     @
 
-  # Меняет направление вектора на противоположное
-  #
-  # @return [Vector2d] this
-  #
   invertX: ->
     @x = -@x
     @
 
-  # Меняет направление вектора на противоположное
-  #
-  # @return [Vector2d] this
-  #
   invertY: ->
     @y = -@y
     @
 
-  # 
-  #
-  # @param [Vector2d] b Второй вектор
-  # @param [Number] l Коофицент
-  #
-  # @return [Vector2d] this
-  #
   lerp: (b, l)->
-    if l < 0 then l = 0
-    if l > 1 then l = 1
+    math.checkTypes [b, l], [Vector2d, 'number']
+    l = 0 if l < 0
+    l = 1 if l > 1
     @x = @x+(b.x-@x)*l
     @y = @y+(b.y-@y)*l
     @
-  
-  # Умножение векторов по компонентно
-  #
-  # @param [Vector2d] b Второй вектор
-  #
-  # @return [Vector2d] this
-  #
-  scale: (b)->
-    @scaleX b
-    @scaleY b
+
+  scale: ()->
+    @scaleX.apply @, arguments
+    @scaleY.apply @, arguments
     @
-  
-  # Умножение векторов по компонентно
-  #
-  # @param [Vector2d] b Второй вектор
-  #
-  # @return [Vector2d] this
-  #
-  scaleX: (b)->
-    @x *= b.x
-    @
-  
-  # Умножение векторов по компонентно
-  #
-  # @param [Vector2d] b Второй вектор
-  #
-  # @return [Vector2d] this
-  #
-  scaleY: (b)->
-    @y *= b.y
-    @
-  
-  # Обрезать вектор по максимальной длине
-  #
-  # @param [Number] maxLength Максимальная длинна вектора
-  #
-  # @return [Vector2d] this
-  #
+
+  scaleX: ()->
+    math.vector
+      v: @,
+      args: arguments,
+      x: math.functions.multiply
+
+  scaleY: ()->
+    math.vector
+      v: @,
+      args: arguments,
+      y: math.functions.multiply
+
   clampMagnitude: (maxLength)->
-    if @magnitudeSquared > maxLength * maxLength
-      @normalize().multiply(maxLength)
+    math.checkTypes [maxLength], ['number']
+    @magnitude = maxLength if @magnitudeSquared > maxLength * maxLength
     @
+
+  clampLength: @clampMagnitude
 
   # Returns number
 
-  # Длинна вектора
-  #
-  # @return [Number]
-  #
-  Object.defineProperty Vector2d::, 'magnitude', {
-    get: ->
-      Math.sqrt @magnitudeSquared
-    set: (value)->
-      magnitude = @magnitude
-      @x = (@x / magnitude) * value
-      @y = (@y / magnitude) * value
-      value
-  }
+  Object.defineProperties Vector2d::,
+    magnitude:
+      get: ->
+        Math.sqrt @magnitudeSquared
+      set: (value)->
+        math.checkTypes [value], ['number']
+        magnitude = @magnitude
+        @x = (@x / magnitude) * value
+        @y = (@y / magnitude) * value
+        value
+    magnitudeSquared:
+      get: ->
+        @x*@x+@y*@y
+      set: (value)->
+        math.checkTypes [value], ['number']
+        @length = Math.sqrt value
+        value
+    length:
+      get: ->
+        @magnitude
+      set: (value)->
+        math.checkTypes [value], ['number']
+        @magnitude = value
+    lengthSquared:
+      get: ->
+        @magnitudeSquared
+      set: (value)->
+        math.checkTypes [value], ['number']
+        @magnitudeSquared = value
+    rotate:
+      get: ->
+        Math.atan2(@y, @x) * 180 / Math.PI
+      set: (dir)->
+        math.checkTypes [dir], ['number']
+        len = @magnitude
+        @x = Math.cos(dir*Math.PI/180)*len
+        @y = Math.sin(dir*Math.PI/180)*len
+        dir
 
-  # Длинна ветора в квадрате
-  #
-  # @return [Number]
-  #
-  Object.defineProperty Vector2d::, 'magnitudeSquared', {
-    get: ->
-      @x*@x+@y*@y
-    set: (value)->
-      @length = Math.sqrt value
-      value
-  }
-
-  # Длинна вектора
-  #
-  # @return [Number]
-  #
-  Object.defineProperty Vector2d::, 'length', {
-    get: ->
-      @magnitude
-    set: (value)->
-      @magnitude = value
-  }
-
-  # Длинна ветора в квадрате
-  #
-  # @return [Number]
-  #
-  Object.defineProperty Vector2d::, 'lengthSquared', {
-    get: ->
-      @magnitudeSquared
-    set: (value)->
-      @magnitudeSquared = value
-  }
-
-  # Поворот вектора в градусах
-  #
-  # @return [Number]
-  #
-  Object.defineProperty Vector2d::, 'rotate', {
-    get: ->
-      Math.atan2(@y, @x) * 180 / Math.PI
-    set: (dir)->
-      len = @magnitude
-      @x = Math.cos(dir*Math.PI/180)*len
-      @y = Math.sin(dir*Math.PI/180)*len
-      dir
-  }
-
-  # Dot product
-  #
-  # @return [Number]
-  #
   dot: (b)->
+    math.checkTypes [b], [Vector2d]
     @x * b.x + @y * b.y
 
-  # Cross product
-  #
-  # @return [Number]
-  #
   cross: (b)->
+    math.checkTypes [b], [Vector2d]
     @x * b.y - @y * b.x
 
-  # Дистанция между текущим вектором и вектором b
-  #
-  # @return [Number]
-  #
   distance: (b)->
+    math.checkTypes [b], [Vector2d]
     Math.sqrt distanceSquared b
 
-  # Дистанция между текущим вектором и вектором b в квадрате
-  #
-  # @return [Number]
-  #
   distanceSquared: (b)->
+    math.checkTypes [b], [Vector2d]
     dx = @x - b.x
     dy = @y - b.y
     dx * dx + dy * dy
 
-  # Угол между векторами
-  #
-  # @param [Vector2d] b Второй вектор
-  #
-  # @return [Number]
-  #
   angle: (b)->
+    math.checkTypes [b], [Vector2d]
     aMagnitude = @magnitude
     bMagnitude = b.magnitude
     dot = (@x/aMagnitude) * (b.x/bMagnitude) + (@y/aMagnitude) * (b.y/bMagnitude)
-    if dot < -1 then dot = -1
-    if dot > 1 then dot = 1
+    dot = -1 if dot < -1
+    dot = 1 if dot > 1
     Math.acos(dot) * 57.29578
+
+  areaTriangle: (b)->
+    math.checkTypes [b], [Vector2d]
+    @areaParallelogram(b)/2
+
+  areaParallelogram: (b)->
+    math.checkTypes [b], [Vector2d]
+    Math.abs @cross(b)
 
   # Returns boolean
 
-  # Является ли вектор нулевым?
-  #
-  # @return [Boolean]
-  #
   isZero: ->
     @isZeroX() and @isZeroY()
 
-  # Является ли вектор нулевым?
-  #
-  # @return [Boolean]
-  #
   isZeroX: ->
     @x is 0
 
-  # Является ли вектор нулевым?
-  #
-  # @return [Boolean]
-  #
   isZeroY: ->
     @y is 0
 
-  # Равен ли текущий вектор, вектору b?
-  #
-  # @param [Vector2d] b
-  #
-  # @return [Boolean]
-  #
   isEqual: (b)->
+    math.checkTypes [b], [Vector2d]
     @isEqualX(b) and @isEqualY(b)
 
-  # Равен ли текущий вектор, вектору b?
-  #
-  # @param [Vector2d] b
-  #
-  # @return [Boolean]
-  #
   isEqualX: (b)->
+    math.checkTypes [b], [Vector2d]
     @x is b.x
 
-  # Равен ли текущий вектор, вектору b?
-  #
-  # @param [Vector2d] b
-  #
-  # @return [Boolean]
-  #
   isEqualY: (b)->
+    math.checkTypes [b], [Vector2d]
     @y is b.y
 
-  # Является ли вектор NaN
-  #
-  # @return [Boolean]
-  #
   isNaN: ->
     @isNaNX() or @isNaNY
 
-  # Является ли вектор NaN
-  #
-  # @return [Boolean]
-  #
   isNaNX: ->
     isNaN @.x
 
-  # Является ли вектор NaN
-  #
-  # @return [Boolean]
-  #
   isNaNY: ->
     isNaN @.y
 
-  # Является ли вектор числом
-  #
-  # @return [Boolean]
-  #
   isFinite: ->
     @isFiniteX() or @isFiniteY()
 
-  # Является ли вектор числом
-  #
-  # @return [Boolean]
-  #
   isFiniteX: ->
     isFinite @.x
 
-  # Является ли вектор числом
-  #
-  # @return [Boolean]
-  #
   isFiniteY: ->
     isFinite @.y
 
-  # Повернуты ли векторы в одну сторону?
-  #
-  # @return [Boolean]
-  #
   isEqualRotate: (b)->
+    math.checkTypes [b], [Vector2d]
     @rotate.toFixed(2) is b.rotate.toFixed(2)
 
+  isEqualInvertRotate: (b)->
+    math.checkTypes [b], [Vector2d]
+    179.9 < Math.abs(@rotate.toFixed(2) - b.rotate.toFixed(2)) < 180.1
 
-if module? and module.exports?
-  module.exports = Vector2d
-else
-  window.Vector2d = Vector2d
+  isCollinear: (b)->
+    math.checkTypes [b], [Vector2d]
+    if @isZeroX() or @isZeroY() or b.isZeroX() or b.isZeroY()
+      if @isZeroX() and not @isZeroY() then an = @y else an = @x
+      if b.isZeroX() and not b.isZeroY() then bn = b.y else bn = b.x
+      n = bn/an
+      nax = @x * n
+      nay = @y * n
+      b.x is nax and b.y is nay
+    else
+      @x/b.x is @y/b.y
+
+  isOrthogonal: (b)->
+    math.checkTypes [b], [Vector2d]
+    @dot b is 0
+
+window.Vector2d = Vector2d

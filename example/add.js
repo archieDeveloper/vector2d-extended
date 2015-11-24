@@ -65,78 +65,90 @@ keyboard = Keyboard.getInstance();
 car = (function() {
   var car, vFtraction, vU, Engineforce, vFdrag, vFrr, vFlong, vA, vV, vP, Crr, Cdrag, M;
 
-  vVisual = Vector2d.right();
-
-  vU = Vector2d.right();
+  vU = Vector2d.UP;
   Engineforce = 0;
-  vV = Vector2d.zero();
+  vV = Vector2d.ZERO;
   Cdrag = 0.4257;
   Crr = Cdrag * 30;
   M = 1500;
   dt = 0.3;
 
-  vV = Vector2d();
-  vP = Vector2d();
+  vV = Vector2d.ZERO;
+  vP = Vector2d.ZERO;
+  vFtraction = Vector2d.ZERO;
+  vFdrag = Vector2d.ZERO
+  vFrr = Vector2d.ZERO
+  vFlong = Vector2d.ZERO
+  vA = Vector2d.ZERO
+  vADT = Vector2d.ZERO
+  vVDT = Vector2d.ZERO
 
-  vFtraction = vU.clone().multiply(Engineforce);
-  vFdrag = vV.clone().multiply(-Cdrag).multiply(vV.length)
-  vFrr = vV.clone().multiply(-Crr)
-  vFlong = vFtraction.clone().add(vFdrag).add(vFrr)
-  vA = vFlong.clone().divide(M)
-  vV = vA.clone().multiply(dt).add(vV)
-  vP = vV.clone().multiply(dt).add(vP)
+  var a = Vector2d(5, 0);
+  var b = Vector2d(0, 5);
+  console.log(Vector2d.add(a, b));
 
-  var posWheel1 = Vector2d();
-  var rotateWheel = Vector2d.right();
-  var rW = Vector2d();
+  var posWheel1 = Vector2d.ZERO;
+  var rotateWheel = Vector2d.RIGHT;
+  var rW = Vector2d.ZERO;
   var rectCar = Vector2d(2, 1);
 
   var L = 0.6128355544951826*2;
   var R = 0;
-  var vW = Vector2d.one();
+  var vW = Vector2d.ONE;
 
   var ll = Vector2d(0.6128355544951826, -0.5142300877492314);
 
-  var vWW = Vector2d();
+  var vWW = Vector2d.ZERO;
   car = function() {
-    if (vP.x < -25) {
-      vP.x = 25
-    }
-    if (vP.x > 25) {
-      vP.x = -25
-    }
+    w();
+    phisics();
+    gas();
+    rule();
+    drawRect(vP, vU, rectCar.x, rectCar.y);
+    drawWheel(-40, rW, true);
+    drawWheel(40, rW, true);
+    drawWheel(-40, vU, false);
+    drawWheel(40, vU, false);
+  };
 
-    if (vP.y < -15) {
-      vP.y = 15
-    }
-    if (vP.y > 15) {
-      vP.y = -15
-    }
-    if (keyboard.isDown('R'.charCodeAt(0))) {
-      window.location.href = window.location.href;
-    }
-    rotateWheel.rotate *= 0.9;
-
-    vVisual.rotate = vU.rotate;
+  var phisics = function() {
     vFtraction.equate(vU).multiply(Engineforce);
-    vFdrag.equate(vV).multiply(-Cdrag).multiply(vV.length)
-    vFrr.equate(vV).multiply(-Crr)
-    vFlong.equate(vFtraction).add(vFdrag).add(vFrr)
-    vA.equate(vFlong).divide(M)
-    vV.add(vA.clone().multiply(dt));
-    
-
+    vFdrag.equate(vV).multiply(-Cdrag).multiply(vV.length);
+    vFrr.equate(vV).multiply(-Crr);
+    vFlong.equate(vFtraction).add(vFdrag, vFrr);
+    vA.equate(vFlong).divide(M);
+    vADT.equate(vA).multiply(dt);
+    vV.add(vADT);
     R = L/Math.cos(Math.PI/180*(90 - rotateWheel.rotate));
     vW.length = R;
     vW.rotate = rotateWheel.rotate - 90;
-
     vWW.equate(vV).divide(R);
     vWW.rotate += 90;
-
     vU.add(vWW).normalize();
-    // vU.rotate += 1;
+    vVDT.equate(vV).multiply(dt);
+    vP.add(vVDT);
+  };
 
-    vP.add(vV.clone().multiply(dt))
+  var drawWheel = function(a, b, t) {
+    ll.rotate = vU.rotate + a;
+    if (t) {
+      posWheel1.equate(vP).add(ll);
+    } else {
+      posWheel1.equate(vP).subtract(ll);
+    }
+    rW.equate(vU).rotate += rotateWheel.rotate;
+    drawRect(posWheel1, b, 0.2, 0.1);
+  };
+
+  var rule = function() {
+    rotateWheel.rotate *= 0.9;
+    if (keyboard.isPressed('D'.charCodeAt(0))) rotateWheel.rotate += 2.5;
+    if (keyboard.isPressed('A'.charCodeAt(0))) rotateWheel.rotate -= 2.5;
+    if (rotateWheel.rotate < -45) rotateWheel.rotate = -45;
+    if (rotateWheel.rotate > 45) rotateWheel.rotate = 45;
+  };
+
+  var gas = function() {
     if (keyboard.isPressed('W'.charCodeAt(0))) {
       Engineforce = 50;
     } else if (keyboard.isPressed('S'.charCodeAt(0))) {
@@ -144,43 +156,14 @@ car = (function() {
     } else {
       Engineforce = 0;
     }
-    if (keyboard.isPressed('D'.charCodeAt(0))) {
-      rotateWheel.rotate += 2.5;
-    }
-    if (keyboard.isPressed('A'.charCodeAt(0))) {
-      rotateWheel.rotate -= 2.5;
-    }
-    if (rotateWheel.rotate < -45) {
-      rotateWheel.rotate = -45;
-    }
-    if (rotateWheel.rotate > 45) {
-      rotateWheel.rotate = 45;
-    }
+  };
 
-
-    drawRect(vP, vU, rectCar.x, rectCar.y);
-    
-    ll.rotate = vU.rotate - 40;
-    posWheel1.equate(vP).add(ll);
-    rW.equate(vU).rotate += rotateWheel.rotate;
-    drawRect(posWheel1, rW, 0.2, 0.1);
-
-    ll.rotate = vU.rotate + 40;
-    posWheel1.equate(vP).add(ll);
-    rW.equate(vU).rotate += rotateWheel.rotate;
-    drawRect(posWheel1, rW, 0.2, 0.1);
-
-    ll.rotate = vU.rotate - 40;
-    posWheel1.equate(vP).subtract(ll);
-    rW.equate(vU).rotate += rotateWheel.rotate;
-    drawRect(posWheel1, vU, 0.2, 0.1);
-
-    ll.rotate = vU.rotate + 40;
-    posWheel1.equate(vP).subtract(ll);
-    rW.equate(vU).rotate += rotateWheel.rotate;
-    drawRect(posWheel1, vU, 0.2, 0.1);
-
-    // drawVector2d(color.pink, '', ll);
+  var w = function() {
+    if (vP.x < -25) vP.x = 25
+    if (vP.x > 25) vP.x = -25
+    if (vP.y < -15) vP.y = 15
+    if (vP.y > 15) vP.y = -15
+    if (keyboard.isDown('R'.charCodeAt(0))) window.location.href = window.location.href;
   };
 
   return car;
