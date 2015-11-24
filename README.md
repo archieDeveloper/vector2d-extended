@@ -49,6 +49,8 @@ Help the project - test, find bugs, supplementing the documentation, create new 
 
   * .x:**Number**
   * .y:**Number**
+  * .magnitude:**Number**
+  * .magnitudeSquared:**Number**
   * .length:**Number**
   * .lengthSquared:**Number**
   * .rotate:**Number**
@@ -150,3 +152,6 @@ Help the project - test, find bugs, supplementing the documentation, create new 
     * .isEqualX(vector:**Vector2d**):**Boolean**
     * .isEqualY(vector:**Vector2d**):**Boolean**
     * .isEqualRotate(vector:**Vector2d**):**Boolean**
+    * .isEqualInvertRotate: (vector:**Vector2d**):**Boolean**
+    * .isCollinear: (vector:**Vector2d**):**Boolean**
+    * .isOrthogonal: (vector:**Vector2d**):**Boolean**

@@ -465,7 +465,7 @@ class Vector2d
 
   isEqualInvertRotate: (b)->
     math.checkTypes [b], [Vector2d]
-    179.9 < Math.abs(@rotate.toFixed(2) - b.rotate.toFixed()) < 180.1
+    179.9 < Math.abs(@rotate.toFixed(2) - b.rotate.toFixed(2)) < 180.1
 
   isCollinear: (b)->
     math.checkTypes [b], [Vector2d]
