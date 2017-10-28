@@ -521,4 +521,4 @@ class Vector2d
     math.checkTypes [b], [Vector2d]
     @dot b is 0
 
-window.Vector2d = Vector2d
+module.exports = Vector2d

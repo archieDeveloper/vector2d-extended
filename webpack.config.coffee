@@ -6,6 +6,7 @@ module.exports =
     output:
         path: path.join __dirname, './'
         filename: 'index.js'
+        library: 'Vector2d'
     module:
         loaders: [
             test: /\.coffee$/, loader: 'coffee-loader'
