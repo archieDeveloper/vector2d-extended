@@ -3,11 +3,11 @@ import Vector2d from './Vector2d';
 class MathVector2d {
 	constructor () {
 		this.functions = {
-			add: (a, b) => a + b,
-			subtract: (a, b) => a - b,
-			multiply: (a, b) => a * b,
-			divide: (a, b) => a / b,
-			self: (a) => a
+			add: (a: number, b: number) => a + b,
+			subtract: (a: number, b: number) => a - b,
+			multiply: (a: number, b: number) => a * b,
+			divide: (a: number, b: number) => a / b,
+			self: (a: number) => a
 		};
 	}
 

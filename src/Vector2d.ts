@@ -1,38 +1,30 @@
 import math from './mathVector2d';
 
 class Vector2d {
-	constructor (x, y) {
-		if (!(this instanceof Vector2d)) {
-			return new Vector2d(x, y);
-		}
-		this.x = x || 0;
-		this.y = y || 0;
+	constructor (public x: number = 0, public y: number = 0) {
+		math.checkTypes([x, y], ['number', 'number']);
 	}
 
-	static constructor (x, y) {
-		console.log('lol', x, y);
-	}
-
-	static get ZERO () {
+	static get ZERO (): Vector2d {
 		return new Vector2d();
 	}
-	static get ONE () {
+	static get ONE (): Vector2d {
 		return new Vector2d(1, 1);
 	}
-	static get UP () {
+	static get UP (): Vector2d {
 		return new Vector2d(0, -1);
 	}
-	static get DOWN () {
+	static get DOWN (): Vector2d {
 		return new Vector2d(0, 1);
 	}
-	static get RIGHT () {
+	static get RIGHT (): Vector2d {
 		return new Vector2d(1, 0);
 	}
-	static get LEFT () {
+	static get LEFT (): Vector2d {
 		return new Vector2d(-1, 0);
 	}
 
-	static clampMagnitude (a, maxLength) {
+	static clampMagnitude (a: Vector2d, maxLength: number) {
 		math.checkTypes([a, maxLength], [Vector2d, 'number']);
 		return a.clone().clampMagnitude(maxLength);
 	}
@@ -41,7 +33,7 @@ class Vector2d {
 		return Vector2d.clampMagnitude.apply(this, arguments);
 	}
 
-	static lerp (a, b, l) {
+	static lerp (a: Vector2d, b: Vector2d, l: number) {
 		math.checkTypes([a, b, l], [Vector2d, Vector2d, 'number']);
 		const c = a.clone();
 		return c.lerp(b, l);
@@ -179,49 +171,49 @@ class Vector2d {
 		);
 	}
 
-	static normalize (a) {
+	static normalize (a: Vector2d) {
 		math.checkTypes([a], [Vector2d]);
 		const b = a.clone();
 		return b.normalize();
 	}
 
-	static project (a, b) {
+	static project (a: Vector2d, b: Vector2d) {
 		math.checkTypes([a, b], [Vector2d, Vector2d]);
 		const c = a.clone();
 		return c.project(b);
 	}
 
-	static round (a) {
+	static round (a: Vector2d) {
 		math.checkTypes([a], [Vector2d]);
 		const b = a.clone();
 		return b.round();
 	}
 
-	static roundX (a) {
+	static roundX (a: Vector2d) {
 		math.checkTypes([a], [Vector2d]);
 		const b = a.clone();
 		return b.roundX();
 	}
 
-	static roundY (a) {
+	static roundY (a: Vector2d) {
 		math.checkTypes([a], [Vector2d]);
 		const b = a.clone();
 		return b.roundY();
 	}
 
-	static invert (a) {
+	static invert (a: Vector2d) {
 		math.checkTypes([a], [Vector2d]);
 		const b = a.clone();
 		return b.invert();
 	}
 
-	static invertX (a) {
+	static invertX (a: Vector2d) {
 		math.checkTypes([a], [Vector2d]);
 		const b = a.clone();
 		return b.invertX();
 	}
 
-	static invertY (a) {
+	static invertY (a: Vector2d) {
 		math.checkTypes([a], [Vector2d]);
 		const b = a.clone();
 		return b.invertY();
@@ -231,14 +223,21 @@ class Vector2d {
 
 	// Returns Vector2d
 
-	add () {
+	set (x: number, y: number): Vector2d {
+		math.checkTypes([x, y], ['number', 'number']);
+		this.x = x;
+		this.y = y;
+		return this;
+	}
+
+	add (): Vector2d {
 		this.addX.apply(this, arguments);
 		this.addY.apply(this, arguments);
 		return this;
 	}
 
 
-	addX () {
+	addX (): Vector2d {
 		return math.vector({
 			v: this,
 			args: arguments,
@@ -246,7 +245,7 @@ class Vector2d {
 		});
 	}
 
-	addY () {
+	addY (): Vector2d {
 		return math.vector({
 			v: this,
 			args: arguments,
@@ -254,13 +253,13 @@ class Vector2d {
 		});
 	}
 
-	subtract () {
+	subtract (): Vector2d {
 		this.subtractX.apply(this, arguments);
 		this.subtractY.apply(this, arguments);
 		return this;
 	}
 
-	subtractX () {
+	subtractX (): Vector2d {
 		return math.vector({
 			v: this,
 			args: arguments,
@@ -268,7 +267,7 @@ class Vector2d {
 		});
 	}
 
-	subtractY () {
+	subtractY (): Vector2d {
 		return math.vector({
 			v: this,
 			args: arguments,
@@ -276,13 +275,13 @@ class Vector2d {
 		});
 	}
 
-	multiply () {
+	multiply (): Vector2d {
 		this.multiplyX.apply(this, arguments);
 		this.multiplyY.apply(this, arguments);
 		return this;
 	}
 
-	multiplyX () {
+	multiplyX (): Vector2d {
 		return math.vector({
 			v: this,
 			args: arguments,
@@ -291,7 +290,7 @@ class Vector2d {
 		});
 	}
 
-	multiplyY () {
+	multiplyY (): Vector2d {
 		return math.vector({
 			v: this,
 			args: arguments,
@@ -300,13 +299,13 @@ class Vector2d {
 		});
 	}
 
-	divide () {
+	divide (): Vector2d {
 		this.divideX.apply(this, arguments);
 		this.divideY.apply(this, arguments);
 		return this;
 	}
 
-	divideX () {
+	divideX (): Vector2d {
 		return math.vector({
 			v: this,
 			args: arguments,
@@ -315,7 +314,7 @@ class Vector2d {
 		});
 	}
 
-	divideY () {
+	divideY (): Vector2d {
 		return math.vector({
 			v: this,
 			args: arguments,
@@ -324,12 +323,12 @@ class Vector2d {
 		});
 	}
 
-	normalize () {
+	normalize (): Vector2d {
 		this.length = 1;
 		return this;
 	}
 
-	project (b) {
+	project (b: Vector2d): Vector2d {
 		math.checkTypes([b], [Vector2d]);
 		const c = ((this.x * b.x) + (this.y * b.y)) / ((b.x * b.x) + (b.y * b.y));
 		this.x = b.x * c;
@@ -337,79 +336,79 @@ class Vector2d {
 		return this;
 	}
 
-	round () {
+	round (): Vector2d {
 		this.roundX();
 		this.roundY();
 		return this;
 	}
 
-	roundX () {
+	roundX (): Vector2d {
 		this.x = Math.round(this.x);
 		return this;
 	}
 
-	roundY () {
+	roundY (): Vector2d {
 		this.y = Math.round(this.y);
 		return this;
 	}
 
-	zero () {
+	zero (): Vector2d {
 		this.zeroX();
 		this.zeroY();
 		return this;
 	}
 
-	zeroX () {
+	zeroX (): Vector2d {
 		this.x = 0;
 		return this;
 	}
 
-	zeroY () {
+	zeroY (): Vector2d {
 		this.y = 0;
 		return this;
 	}
 
-	clone () {
+	clone (): Vector2d {
 		return new Vector2d(this.x, this.y);
 	}
 
-	equate (b) {
+	equate (b: Vector2d): Vector2d {
 		math.checkTypes([b], [Vector2d]);
 		this.equateX(b);
 		this.equateY(b);
 		return this;
 	}
 
-	equateX (b) {
+	equateX (b: Vector2d): Vector2d {
 		math.checkTypes([b], [Vector2d]);
 		this.x = b.x
 		return this;
 	}
 
-	equateY (b) {
+	equateY (b: Vector2d): Vector2d {
 		math.checkTypes([b], [Vector2d]);
 		this.y = b.y
 		return this;
 	}
 
-	invert () {
+	invert (): Vector2d {
 		this.invertX();
 		this.invertY();
 		return this;
 	}
 		
 
-	invertX () {
+	invertX (): Vector2d {
 		this.x = -this.x;
 		return this;
 	}
 
-	invertY () {
+	invertY (): Vector2d {
 		this.y = -this.y;
 		return this;
 	}
 
-	lerp (b, l) {
+	lerp (b: Vector2d, l: number): Vector2d {
 		math.checkTypes([b, l], [Vector2d, 'number']);
 		if (l < 0) {
 			l = 0;
@@ -422,13 +421,13 @@ class Vector2d {
 		return this;
 	}
 
-	scale () {
+	scale (): Vector2d {
 		this.scaleX.apply(this, arguments);
 		this.scaleY.apply(this, arguments);
 		return this;
 	}
 
-	scaleX () {
+	scaleX (): Vector2d {
 		return math.vector({
 			v: this,
 			args: arguments,
@@ -436,7 +435,7 @@ class Vector2d {
 		});
 	}
 
-	scaleY () {
+	scaleY (): Vector2d {
 		return math.vector({
 			v: this,
 			args: arguments,
@@ -444,7 +443,7 @@ class Vector2d {
 		});
 	}
 
-	clampMagnitude (maxLength) {
+	clampMagnitude (maxLength: number): Vector2d {
 		math.checkTypes([maxLength], ['number']);
 		if (this.magnitudeSquared > maxLength * maxLength) {
 			this.magnitude = maxLength;
@@ -452,197 +451,182 @@ class Vector2d {
 		return this;
 	}
 
-	clampLength () {
+	clampLength (): Vector2d {
 		return this.clampMagnitude.apply(this, arguments);
 	}
 
 	// Returns number
 
-	get lengthSquared () {
+	get lengthSquared (): number {
 		return this.magnitudeSquared;
 	}
-	set lengthSquared (value) {
+	set lengthSquared (value: number) {
 		math.checkTypes([value], ['number']);
 		this.magnitudeSquared = value;
 	}
 
-	get rotate () {
+	get rotate (): number {
 		return Math.atan2(this.y, this.x) * 180 / Math.PI;
 	}
-	set rotate (dir) {
+	set rotate (dir: number) {
 		math.checkTypes([dir], ['number'])
 		const len = this.magnitude;
 		this.x = Math.cos(dir * Math.PI / 180) * len
 		this.y = Math.sin(dir * Math.PI / 180) * len
-		return dir;
 	}
 
-	get magnitudeSquared () {
+	get magnitudeSquared (): number {
 		return this.x * this.x + this.y * this.y;
 	}
-	set magnitudeSquared (value) {
+	set magnitudeSquared (value: number) {
 		math.checkTypes([value], ['number']);
 		this.length = Math.sqrt(value);
-		return value;
 	}
 
-	get magnitude () {
+	get magnitude (): number {
 		return Math.sqrt(this.magnitudeSquared);
 	}
-	set magnitude (value) {
+	set magnitude (value: number) {
 		math.checkTypes([value], ['number']);
 		const magnitude = this.magnitude;
 		this.x = (this.x / magnitude) * value;
 		this.y = (this.y / magnitude) * value;
-		return value;
 	}
 
-
-	get length () {
+	get length (): number {
 		return this.magnitude;
 	}
-	set length (value) {
+	set length (value: number) {
 		math.checkTypes([value], ['number']);
 		this.magnitude = value;
 	}
 
-
-	dot (b) {
+	dot (b: Vector2d): number {
 		math.checkTypes([b], [Vector2d]);
 		return this.x * b.x + this.y * b.y;
 	}
 
-	cross (b) {
+	cross (b: Vector2d): number {
 		math.checkTypes([b], [Vector2d]);
 		return this.x * b.y - this.y * b.x;
 	}
 
-	distance (b) {
+	distance (b: Vector2d): number {
 		math.checkTypes([b], [Vector2d]);
 		return Math.sqrt(this.distanceSquared(b));
 	}
 
-	distanceSquared (b) {
+	distanceSquared (b: Vector2d): number {
 		math.checkTypes([b], [Vector2d])
 		const dx = this.x - b.x;
 		const dy = this.y - b.y;
 		return dx * dx + dy * dy;
 	}
 
-	angle (b) {
+	angle (b: Vector2d): number {
 		math.checkTypes([b], [Vector2d]);
 		const aMagnitude = this.magnitude;
 		const bMagnitude = b.magnitude;
 		let dot = (this.x/aMagnitude) * (b.x/bMagnitude) + (this.y/aMagnitude) * (b.y/bMagnitude);
 		if (dot < -1) {
 			dot = -1;
-		}
-		if (dot > 1) {
+		} else if (dot > 1) {
 			dot = 1;
 		}
 		return Math.acos(dot) * 57.29578;
 	}
 
-	areaTriangle (b) {
+	areaTriangle (b: Vector2d): number {
 		math.checkTypes([b], [Vector2d]);
 		return this.areaParallelogram(b) / 2;
 	}
 
-	areaParallelogram (b) {
+	areaParallelogram (b: Vector2d): number {
 		math.checkTypes([b], [Vector2d]);
 		return Math.abs(this.cross(b))
 	}
 
 	// Returns boolean
 
-	isZero () {
+	isZero (): boolean {
 		return this.isZeroX() && this.isZeroY();
 	}
 
-	isZeroX () {
+	isZeroX (): boolean {
 		return this.x === 0;
 	}
 
-	isZeroY () {
+	isZeroY (): boolean {
 		return this.y === 0;
 	}
 
-	isEqual (b) {
+	isEqual (b: Vector2d): boolean {
 		math.checkTypes([b], [Vector2d]);
 		return this.isEqualX(b) && this.isEqualY(b);
 	}
 
-	isEqualX (b) {
+	isEqualX (b: Vector2d): boolean {
 		math.checkTypes([b], [Vector2d]);
 		return this.x === b.x;
 	}
 
-	isEqualY (b) {
+	isEqualY (b: Vector2d): boolean {
 		math.checkTypes([b], [Vector2d]);
 		return this.y === b.y;
 	}
 
-	isNaN () {
+	isNaN (): boolean {
 		return this.isNaNX() || this.isNaNY();
 	}
 
-	isNaNX () {
+	isNaNX (): boolean {
 		return isNaN(this.x);
 	}
 
-	isNaNY () {
+	isNaNY (): boolean {
 		return isNaN(this.y);
 	}
 
-	isFinite () {
+	isFinite (): boolean {
 		return this.isFiniteX() || this.isFiniteY();
 	}
 
-	isFiniteX () {
+	isFiniteX (): boolean {
 		return isFinite(this.x);
 	}
 
-	isFiniteY () {
+	isFiniteY (): boolean {
 		return isFinite(this.y);
 	}
 
-	isEqualRotate (b) {
+	isEqualRotate (b: Vector2d): boolean {
 		math.checkTypes([b], [Vector2d]);
 		return this.rotate.toFixed(2) === b.rotate.toFixed(2);
 	}
 
-	isEqualInvertRotate (b) {
-		var ref;
+	isEqualInvertRotate (b: Vector2d): boolean {
 		math.checkTypes([b], [Vector2d]);
-		return (179.9 < (ref = Math.abs(this.rotate.toFixed(2) - b.rotate.toFixed(2))) && ref < 180.1);
+		const ref: number = Math.abs(this.rotate.toFixed(2) - b.rotate.toFixed(2));
+		return (179.9 < ref && ref < 180.1);
 	}
 
-	isCollinear (b) {
-		var an, bn, n, nax, nay;
+	isCollinear (b: Vector2d): boolean {
 		math.checkTypes([b], [Vector2d]);
 		if (this.isZeroX() || this.isZeroY() || b.isZeroX() || b.isZeroY()) {
-			if (this.isZeroX() && !this.isZeroY()) {
-				an = this.y;
-			} else {
-				an = this.x;
-			}
-			if (b.isZeroX() && !b.isZeroY()) {
-				bn = b.y;
-			} else {
-				bn = b.x;
-			}
-			n = bn / an;
-			nax = this.x * n;
-			nay = this.y * n;
+			const an: number = this.isZeroX() && !this.isZeroY() ? this.y : this.x;
+			const bn: number = b.isZeroX() && !b.isZeroY() ? b.y : b.x;
+			const n: number = bn / an;
+			const nax: number = this.x * n;
+			const nay: number = this.y * n;
 			return b.x === nax && b.y === nay;
 		} else {
 			return this.x / b.x === this.y / b.y;
 		}
 	}
 
-	isOrthogonal (b) {
+	isOrthogonal (b: Vector2d): boolean {
 		math.checkTypes([b], [Vector2d]);
-		return this.dot(b === 0);
+		return this.dot(b) === 0;
 	}
 
 };

@@ -84,10 +84,6 @@ car = (function() {
   vADT = Vector2d.ZERO
   vVDT = Vector2d.ZERO
 
-  var a = new Vector2d(5, 0);
-  var b = new Vector2d(0, 5);
-  console.log(Vector2d.add(a, b));
-
   var posWheel1 = Vector2d.ZERO;
   var rotateWheel = Vector2d.RIGHT;
   var rW = Vector2d.ZERO;
