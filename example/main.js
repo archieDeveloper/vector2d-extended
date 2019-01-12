@@ -166,11 +166,11 @@ init = function() {
   div.appendChild(canvas);
 
   drawGrid();
-  var vx1 = Vector2d(-canvas.width/2/sizeGrid+1, 0);
-  var vx2 = Vector2d(canvas.width/sizeGrid-2, 0);
+  var vx1 = new Vector2d(-canvas.width/2/sizeGrid+1, 0);
+  var vx2 = new Vector2d(canvas.width/sizeGrid-2, 0);
 
-  var vy1 = Vector2d(0, -canvas.height/2/sizeGrid+1);
-  var vy2 = Vector2d(0, canvas.height/sizeGrid-2);
+  var vy1 = new Vector2d(0, -canvas.height/2/sizeGrid+1);
+  var vy2 = new Vector2d(0, canvas.height/sizeGrid-2);
   drawVector2d(color.white, '', vx2, vx1, true, backgroundContext);
   drawVector2d(color.white, '', vy2, vy1, true, backgroundContext);
 
