@@ -1,9 +1,8 @@
 var path = require('path');
-var webpack = require('webpack');
 var UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
-	entry: './source/Vector2d.js',
+	entry: './src/Vector2d.ts',
 	mode: 'development',
 	output: {
 		path: path.join(__dirname, './'),
@@ -14,18 +13,15 @@ module.exports = {
 		libraryExport: 'default'
 	},
 	module: {
-		rules: [
-			{
-				test: /\.m?js$/,
-				exclude: /(node_modules|bower_components)/,
-				use: {
-					loader: 'babel-loader',
-					options: {
-						presets: ['@babel/preset-env']
-					}
-				}
-			}
-		]
+    rules: [{
+      // Include ts, tsx, js, and jsx files.
+      test: /\.(ts|js)x?$/,
+      exclude: /node_modules/,
+      loader: 'babel-loader',
+    }],
+  },
+	resolve: {
+		extensions: ['.ts', '.tsx', '.js', '.json']
 	},
 	optimization: {
 		minimizer: [
