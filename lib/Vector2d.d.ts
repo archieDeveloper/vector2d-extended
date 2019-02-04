@@ -2,6 +2,7 @@ declare class Vector2d {
     x: number;
     y: number;
     constructor(x?: number, y?: number);
+    toString(): string;
     static readonly ZERO: Vector2d;
     static readonly ONE: Vector2d;
     static readonly UP: Vector2d;

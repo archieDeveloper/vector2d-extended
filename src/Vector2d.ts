@@ -1,5 +1,14 @@
+function toFixed (number: number, fixed: number = 0): number {
+	const fix = Math.pow(10, fixed);
+	return Math.floor(number * fix) / fix;
+}
+
 class Vector2d {
 	constructor (public x: number = 0, public y: number = 0) {}
+
+	toString () {
+		return '{x:' + this.x + ',y:' + this.y + '}';
+	}
 
 	static get ZERO (): Vector2d {
 		return new Vector2d();
@@ -192,8 +201,8 @@ class Vector2d {
 	}
 
 	project (b: Vector2d): Vector2d {
-		const c: number = ((this.x * b.x) + (this.y * b.y)) / ((b.x * b.x) + (b.y * b.y));
-		return this.set(b.x * c, b.y * c);
+		const c: number = this.dot(b) / b.magnitudeSquared;
+		return this.equate(b).multiply(c);
 	}
 
 	round (): Vector2d {
@@ -292,11 +301,17 @@ class Vector2d {
 	}
 	set rotate (dir: number) {
 		const len: number = this.magnitude;
-		this.set(Math.cos(dir * Math.PI / 180) * len, Math.sin(dir * Math.PI / 180) * len);
+		const radian: number = dir * Math.PI / 180;
+		const x: number = Math.cos(radian) * len;
+		const y: number = Math.sin(radian) * len;
+		this.set(
+			toFixed(x, 10),
+			toFixed(y, 10)
+		);
 	}
 
 	get magnitudeSquared (): number {
-		return this.x * this.x + this.y * this.y;
+		return this.dot(this);
 	}
 	set magnitudeSquared (value: number) {
 		this.magnitude = Math.sqrt(value);
@@ -307,7 +322,7 @@ class Vector2d {
 	}
 	set magnitude (value: number) {
 		const magnitude: number = this.magnitude;
-		this.set((this.x / magnitude) * value, (this.y / magnitude) * value)
+		this.divide(magnitude).multiply(value);
 	}
 
 	dot (b: Vector2d): number {
@@ -399,11 +414,11 @@ class Vector2d {
 	}
 
 	isEqualRotate (b: Vector2d): boolean {
-		return this.rotate.toFixed(2) === b.rotate.toFixed(2);
+		return toFixed(this.rotate, 2) === toFixed(b.rotate, 2);
 	}
 
 	isEqualInvertRotate (b: Vector2d): boolean {
-		const ref = Math.abs(parseFloat(this.rotate.toFixed(2)) - parseFloat(b.rotate.toFixed(2)));
+		const ref = Math.abs(toFixed(this.rotate, 2) - toFixed(b.rotate, 2));
 		return (179.9 < ref && ref < 180.1);
 	}
 
