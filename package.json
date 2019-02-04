@@ -1,12 +1,13 @@
 {
   "name": "vector2d-extended",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "repository": {
     "type": "git",
     "url": "https://github.com/archieDeveloper/vector2d-extended.git"
   },
   "description": "Vector2d class",
   "main": "index.js",
+  "types": "lib/Vector2d",
   "scripts": {
   	"dev": "webpack --watch",
     "test": "mocha --watch",
