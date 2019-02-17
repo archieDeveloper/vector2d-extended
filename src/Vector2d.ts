@@ -297,13 +297,12 @@ class Vector2d {
 
 	// Returns number
 	get rotate (): number {
-		return Math.atan2(this.y, this.x) * 180 / Math.PI;
+		return Math.atan2(this.y, this.x);
 	}
 	set rotate (dir: number) {
 		const len: number = this.magnitude;
-		const radian: number = dir * Math.PI / 180;
-		const x: number = Math.cos(radian) * len;
-		const y: number = Math.sin(radian) * len;
+		const x: number = Math.cos(dir) * len;
+		const y: number = Math.sin(dir) * len;
 		this.set(
 			toFixed(x, 10),
 			toFixed(y, 10)
@@ -352,7 +351,7 @@ class Vector2d {
 		} else if (dot > 1) {
 			dot = 1;
 		}
-		return Math.acos(dot) * 57.29578;
+		return Math.acos(dot);
 	}
 
 	areaTriangle (b: Vector2d): number {
@@ -418,8 +417,8 @@ class Vector2d {
 	}
 
 	isEqualInvertRotate (b: Vector2d): boolean {
-		const ref = Math.abs(toFixed(this.rotate, 2) - toFixed(b.rotate, 2));
-		return (179.9 < ref && ref < 180.1);
+		const ref = Math.abs(toFixed(this.rotate, 6) - toFixed(b.rotate, 6));
+		return (3.14158 < ref && ref < 3.14160);
 	}
 
 	isCollinear (b: Vector2d): boolean {
